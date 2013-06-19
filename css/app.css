@@ -1,0 +1,17 @@
+/* overrides */
+.app_thin {font-weight: 200 !important}
+.app_normal {font-weight: normal !important}
+.app_bold {font-weight: bold !important}
+.app_hide {display: none !important}
+.app_lgray {color: #aaa}
+.app_gray {color: #888}
+.app_dgray {color: #555}
+.app_black {color: #000 !important}
+.app_title {text-align: center; line-height: 110%; margin: 40px 0}
+.app_thes {font-size: 90%}
+.app_chapter {line-height: 110%; margin: 24px 0 6px 0 !important}
+.app_spaced {line-height: 200%; margin-top: 19px}
+.app_quote {text-align: right; padding-left: 40%; font-size: 80%}
+.app_text {font-family: optima-regular, georgia; padding: 0 40px}
+.app_smaller {font-size: 90%}
+.app_photo {height: 192px; margin-bottom: 12px}
