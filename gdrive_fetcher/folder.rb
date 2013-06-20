@@ -71,10 +71,14 @@ module GDriveImporter
       eos
 
       each do |file|
-        link = "texts/#{file.title_for_save}.html"
+        link = "/texts/#{@title_for_save}/#{file.title_for_save}.html"
         result << <<-eos
-        <h4 class="app_chapter"><a href="#{link}">#{file.title}</a></h4>
-        <p><a class="app_black" href="#{link}">LEAD TEXT GOES HERE.</a></p>
+        <h4 class="app_chapter">
+          <%= link_to '#{file.title}', '#{link}' %>
+        </h4>
+        <p>
+          <%= link_to truncate('#{file.first_paragraph}', :length => 150), '#{link}', :class => "app_black" %>
+        </p>
         eos
       end
       result << '</div>'
