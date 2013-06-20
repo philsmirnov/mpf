@@ -16,11 +16,16 @@
             <!-- Бейсик (Базовый практикум внимательного общения) — принятое в Мастерской название учебного формата психотехнической коммуникации. Бейсик — один из ключевых элементов психотехники, входит в первый слой психологической Работы. На бейсике специально создаются ситуации, которые дают людям возможность раскрыться перед другим в той мере, в какой они этого хотят, выслушать другого и понять, что при этом происходит. Каждая ситуация включает три позиции – (1) рассказывающего, (2) слушающего/расспрашивающего, (3) наблюдателя (супервизора). -->
           </p>
 
-          <p><span class="app_bold">Связанные понятия:</span> <a href="thes1.html">Контактная граница</a>, <a href="thes1.html">Невроз</a></p>
+          <% if current_page.data.linked_articles && !current_page.data.linked_articles.empty? %>
+          <p><span class="app_bold">Связанные понятия:</span>
+            <%= current_page.data.linked_articles.map { |la| la[:link] }.join(', ') %>
+          </p>
+          <% end %>
         </div>
       </div>
 
     </div>
+    <% if current_page.data.linked_texts && !current_page.data.linked_texts.empty? %>
     <div class="row">
 
       <div class="large-12 columns">
@@ -30,16 +35,14 @@
 
     </div>
     <div class="row">
-
       <div class="large-12 columns app_smaller">
-        <h4 class="app_normal"><a href="text1.html">Исследование лабиринта - артефакты и порталы</a></h4>
-        <p><a href="text1.html" class="app_dgray">Человек говорит: «Надо же что-то с этим делать!», — а между тем все, что он умеет делать и делает, как раз и привело его в тупиковую ситуацию лабиринта.</a></p>
-
-        <h4 class="app_normal"><a href="text1.html">Присутствие</a></h4>
-        <p><a href="text1.html" class="app_dgray">Бейсик (Базовый практикум внимательного общения) — принятое в Мастерской название учебного формата психотехнической коммуникации.</a></p>
+        <%current_page.data.linked_texts.each do |txt| %>
+        <h4 class="app_normal"><%= txt[:link] %></h4>
+        <p class="app_dgray"><%= txt[:first_paragraph] %></p>
+        <%end%>
       </div>
     </div>
-
+    <% end %>
 
     <%= partial 'bottom_scripts' %>
     <%= partial 'analytics' %>

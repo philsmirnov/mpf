@@ -31,7 +31,7 @@ module GDriveImporter
     end
 
     def create_regex_and_find_item(k, is_folder)
-      link_title = k.first.strip
+      link_title = (k.is_a?(Array) ? k.first : k).strip
       regexp = Regexp.new(Regexp.escape(regexp_helper link_title), 'i')
       find_item_in_collection(regexp, link_title, is_folder)
     end

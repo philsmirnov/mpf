@@ -28,9 +28,11 @@ editable_text_collection = session.collection_by_url('https://docs.google.com/fe
 
 coder = HTMLEntities.new
 collection = GDriveImporter::FileCollection.new(editable_text_collection, coder)
+text_converter = GDriveImporter::TextConverter.new
 
 text_converter = GDriveImporter::TextConverter.new
 root_path ='./source/texts'
+
 text_linker = GDriveImporter::TextLinker.new(
     collection,
     /(?<=\()\s?с[рм]\.?[^\)]*?(?=\))/im,
@@ -104,12 +106,20 @@ text_linker = GDriveImporter::TextLinker.new(
     [/(?<=<p>)(.*?)(?=<\/p>)/]
 )
 
+article_linker = GDriveImporter::TextLinker.new(
+    thesaurus,
+    /(?<=<p>см. также:|ср\.:).*?(?=<\/p>)/i,
+    [/(?<=<em class="underline">).*?(?=<\/em>)/i,
+    /([^,]*)/i]
+)
+
 root_path = './source/'
 path = thesaurus.generate_path(root_path)
 path.mkpath
 
 thesaurus.
-#    take(2).
+#    drop(3).
+#    take(1).
     each do |file|
   puts "#{file.number} #{file.title}"
   file.fetch
@@ -120,8 +130,26 @@ thesaurus.
   file.contents.sub!('</p> <p>', ' ')
 
   text_linker.process_links(file) do |links_array|
-    links_array.map { |item| "<p>#{item[:fof].link_to(file, item[:title], 'texts')} </p>" }.join("\n")
+    file.metadata[:linked_texts] = links_array.map do |item|
+      {
+          :link => item[:fof].link_to(file, item[:title], 'texts'),
+          :first_paragraph => item[:fof].respond_to?(:first_paragraph) ? item[:fof].first_paragraph : nil
+      }
+    end
+    nil
   end
+
+  article_linker.process_links(file) do |links_array|
+    file.metadata[:linked_articles] = links_array.map do |item|
+      {
+          :link => item[:fof].link_to(file, item[:title]),
+          :first_paragraph => item[:fof].respond_to?(:first_paragraph) ? item[:fof].first_paragraph : nil
+      }
+    end
+    nil
+  end
+
+  file.contents = file.contents.sub('<p>См. также:</p>', ' ').sub('<p>Тексты на тему:</p>', ' ')
 
   file.show_next_three = false
   file.save(path + file.generate_filename)
