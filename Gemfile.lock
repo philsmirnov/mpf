@@ -1,0 +1,161 @@
+GIT
+  remote: git://github.com/middleman/middleman-sprockets.git
+  revision: de8ba68cec69424c401ca702827a34b504a76511
+  specs:
+    middleman-sprockets (3.1.2)
+      middleman-core (>= 3.0.14)
+      middleman-more (>= 3.0.14)
+      sprockets (~> 2.1)
+      sprockets-helpers (~> 1.0.0)
+      sprockets-sass (~> 1.0.0)
+
+GIT
+  remote: git://github.com/middleman/middleman.git
+  revision: f0707c09689c731ba397a893432688f58b845922
+  specs:
+    middleman (3.1.0)
+      coffee-script (~> 2.2.0)
+      compass (>= 0.12.2)
+      execjs (~> 1.4.0)
+      haml (>= 3.1.6)
+      kramdown (~> 1.0.0)
+      middleman-core (= 3.1.0)
+      middleman-more (= 3.1.0)
+      middleman-sprockets (>= 3.1.2)
+      sass (>= 3.1.20)
+      uglifier (~> 2.1.0)
+    middleman-core (3.1.0)
+      activesupport (~> 3.2.6)
+      bundler (~> 1.1)
+      i18n (~> 0.6.1)
+      listen (~> 1.1.6)
+      rack (>= 1.4.5)
+      rack-test (~> 0.6.1)
+      thor (>= 0.15.2, < 2.0)
+      tilt (~> 1.3.6)
+    middleman-more (3.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activesupport (3.2.12)
+      i18n (~> 0.6)
+      multi_json (~> 1.0)
+    addressable (2.3.4)
+    awesome_print (1.1.0)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
+    chunky_png (1.2.8)
+    coderay (1.0.9)
+    coffee-script (2.2.0)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.6.2)
+    compass (0.12.2)
+      chunky_png (~> 1.2)
+      fssm (>= 0.2.7)
+      sass (~> 3.1)
+    css_parser (1.3.4)
+      addressable
+    debug_inspector (0.0.2)
+    execjs (1.4.0)
+      multi_json (~> 1.0)
+    faraday (0.8.7)
+      multipart-post (~> 1.1)
+    ffi (1.9.0)
+    fssm (0.2.10)
+    google_drive (0.3.6)
+      nokogiri (>= 1.4.4, != 1.5.2, != 1.5.1)
+      oauth (>= 0.3.6)
+      oauth2 (>= 0.5.0)
+    haml (4.0.3)
+      tilt
+    hike (1.2.3)
+    htmlentities (4.3.1)
+    httpauth (0.2.0)
+    i18n (0.6.4)
+    jwt (0.1.8)
+      multi_json (>= 1.5)
+    kramdown (1.0.2)
+    libv8 (3.11.8.17)
+    listen (1.1.6)
+      rb-fsevent (>= 0.9.3)
+      rb-inotify (>= 0.9)
+      rb-kqueue (>= 0.2)
+    method_source (0.8.1)
+    mini_portile (0.5.0)
+    multi_json (1.7.7)
+    multi_xml (0.5.4)
+    multipart-post (1.2.0)
+    nokogiri (1.6.0)
+      mini_portile (~> 0.5.0)
+    oauth (0.4.7)
+    oauth2 (0.9.1)
+      faraday (~> 0.8)
+      httpauth (~> 0.1)
+      jwt (~> 0.1.4)
+      multi_json (~> 1.0)
+      multi_xml (~> 0.5)
+      rack (~> 1.2)
+    pry (0.9.12.2)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
+    pry-exception_explorer (0.2.3)
+      pry-stack_explorer (>= 0.4.6)
+    pry-stack_explorer (0.4.9)
+      binding_of_caller (>= 0.7)
+      pry (~> 0.9.11)
+    rack (1.5.2)
+    rack-offline (0.6.4)
+    rack-test (0.6.2)
+      rack (>= 1.0)
+    rb-fsevent (0.9.3)
+    rb-inotify (0.9.0)
+      ffi (>= 0.5.0)
+    rb-kqueue (0.2.0)
+      ffi (>= 0.5.0)
+    ref (1.0.5)
+    roman-numerals (0.3.0)
+    russian (0.6.0)
+      i18n (>= 0.5.0)
+    sass (3.2.9)
+    slop (3.4.5)
+    sprockets (2.10.0)
+      hike (~> 1.2)
+      multi_json (~> 1.0)
+      rack (~> 1.0)
+      tilt (~> 1.1, != 1.3.0)
+    sprockets-helpers (1.0.1)
+      sprockets (~> 2.0)
+    sprockets-sass (1.0.1)
+      sprockets (~> 2.0)
+      tilt (~> 1.1)
+    therubyracer (0.11.4)
+      libv8 (~> 3.11.8.12)
+      ref
+    thor (0.18.1)
+    tilt (1.3.7)
+    uglifier (2.1.1)
+      execjs (>= 0.3.0)
+      multi_json (~> 1.0, >= 1.0.2)
+    unicode (0.4.4)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  activesupport
+  awesome_print
+  css_parser
+  google_drive
+  htmlentities
+  middleman!
+  middleman-sprockets!
+  pry
+  pry-exception_explorer
+  rack-offline
+  roman-numerals
+  russian
+  therubyracer
+  unicode

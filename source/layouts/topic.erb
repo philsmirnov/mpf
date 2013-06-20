@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ru" manifest="offline.appcache">
+<head>
+  <%= partial 'head' %>
+</head>
+<body>
+    <%= partial 'topbar' %>
+    <div class="row">
+
+      <div class="large-12 columns">
+        <hr>
+        <div class="panel app_thes">
+          <h2 class="app_normal"><%= current_page_title %></h2>
+          <p class="app_black">
+            <%= yield %>
+            <!-- Бейсик (Базовый практикум внимательного общения) — принятое в Мастерской название учебного формата психотехнической коммуникации. Бейсик — один из ключевых элементов психотехники, входит в первый слой психологической Работы. На бейсике специально создаются ситуации, которые дают людям возможность раскрыться перед другим в той мере, в какой они этого хотят, выслушать другого и понять, что при этом происходит. Каждая ситуация включает три позиции – (1) рассказывающего, (2) слушающего/расспрашивающего, (3) наблюдателя (супервизора). -->
+          </p>
+
+          <p><span class="app_bold">Связанные понятия:</span> <a href="thes1.html">Контактная граница</a>, <a href="thes1.html">Невроз</a></p>
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+
+      <div class="large-12 columns">
+        <h4 class="app_normal app_lgray">Читать по теме:</h4>
+        <hr />
+      </div>
+
+    </div>
+    <div class="row">
+
+      <div class="large-12 columns app_smaller">
+        <h4 class="app_normal"><a href="text1.html">Исследование лабиринта - артефакты и порталы</a></h4>
+        <p><a href="text1.html" class="app_dgray">Человек говорит: «Надо же что-то с этим делать!», — а между тем все, что он умеет делать и делает, как раз и привело его в тупиковую ситуацию лабиринта.</a></p>
+
+        <h4 class="app_normal"><a href="text1.html">Присутствие</a></h4>
+        <p><a href="text1.html" class="app_dgray">Бейсик (Базовый практикум внимательного общения) — принятое в Мастерской название учебного формата психотехнической коммуникации.</a></p>
+      </div>
+    </div>
+
+
+    <%= partial 'bottom_scripts' %>
+    <%= partial 'analytics' %>
+
+</body>
+</html>

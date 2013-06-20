@@ -1,0 +1,15 @@
+mail: vic.ivanoff@gmail.com
+password:
+mode: dev
+
+regexps:
+  labirint: "Лабиринт"
+  resources: "Управление ресурсами"
+  work: "Работа над собой"
+  trinity: "Личность, воля, понимание"
+  psycotechnics: "Психотехника"
+  basic: "Бейсик"
+  psycoterapy: "Психотерапия"
+  mechanisms: "Невротические механизмы"
+  socium: "Социум"
+  family: "Семья"

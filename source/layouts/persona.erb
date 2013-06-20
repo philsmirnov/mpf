@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ru" manifest="offline.appcache">
+<head>
+  <%= partial 'head' %>
+</head>
+<body>
+    <%= partial 'topbar' %>
+
+
+    <div class="row">
+
+      <div class="large-12 columns">
+        <hr>
+        <div class="panel app_thes">
+          <%= image_tag 'img/bateson.jpg', :class => 'app_photo' %>
+          <h3 class="app_thin"><%= current_page_title %></h3>
+          <p class="app_black">
+            <%= yield %>
+          </p>
+        </div>
+      </div>
+
+
+    </div>
+
+    <%= partial 'bottom_scripts' %>
+    <%= partial 'analytics' %>
+
+</body>
+</html>

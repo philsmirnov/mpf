@@ -1,0 +1,69 @@
+<div class="contain-to-grid">
+  <nav class="top-bar" data-options="is_hover:false">
+    <ul class="title-area">
+      <!-- Title Area -->
+      <li class="name">
+        <h1>
+          <% link_to '/index.html' do %>
+              <span class="app_normal app_lgray">Человек в Лабиринте&nbsp;&nbsp;</span>
+          <% end %>
+        </h1>
+      </li>
+      <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+      <li class="toggle-topbar menu-icon">
+        <%= link_to '/home.html' %>
+      </li>
+    </ul>
+
+    <section class="top-bar-section">
+      <!-- Left Nav Section -->
+      <ul class="left">
+        <li class="active">
+          <% link_to '/home.html' do %>
+            <i zclass="foundicon-compass"></i> Оглавление
+          <% end %>
+        </li>
+
+        <li>
+          <% link_to '/thesaurus.html' do %>
+            <i zclass="foundicon-network accessibility"></i> Тезаурус
+          <% end %>
+        </li>
+
+        <li>
+          <% link_to '/personas.html' do %>
+            <i zclass="foundicon-adult accessibility"></i> Персоналии
+          <% end %>
+        </li>
+
+        <li>
+          <% link_to '/groups.html' do %>
+            <i zclass="foundicon-calendar"></i></i> Мастерская
+          <% end %>
+        </li>
+
+        <li>
+          <% link_to '/about.html' do %>
+            <i zclass=]"foundicon-question accessibility"></i> ?
+          <% end %>
+        </li>
+      </ul>
+
+      <!-- Right Nav Section -->
+      <ul class="right">
+        <li class="has-form">
+          <form>
+            <div class="row collapse">
+              <div class="small-8 columns">
+                <input type="text" value="">
+              </div>
+              <div class="small-4 columns">
+                <a href="#" class="button"><i class="foundicon-search"></i></a>
+              </div>
+            </div>
+          </form>
+        </li>
+      </ul>
+    </section>
+  </nav>
+</div>

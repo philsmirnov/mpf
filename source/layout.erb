@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ru" manifest="offline.appcache">
+<head>
+    <%= partial "head" %>
+</head>
+    <body>
+        <%= partial "topbar" %>
+        <!-- Add your site or application content here -->
+        <%= yield %>        
+
+        <%= partial "bottom_scripts" %>        
+        <%= partial "analytics" %>
+    </body>
+</html>
