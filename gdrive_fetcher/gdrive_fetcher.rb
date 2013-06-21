@@ -63,7 +63,7 @@ collection.each_file do |file|
 end
 
 
-home = {'title' => 'Содержание'}
+home = {'title' => 'Оглавление'}
 chapters = []
 
 collection.each do |folder|
@@ -82,7 +82,8 @@ collection.each do |folder|
         {
             :title_for_save => "#{folder.title_for_save}/#{file.title_for_save}.html",
             :number => file.number,
-            :title => file.title
+            :title => file.title,
+            :first_paragraph => file.first_paragraph
         }
       end
   }

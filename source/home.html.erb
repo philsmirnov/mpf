@@ -1,3 +1,6 @@
+---
+title: Оглавление
+---
 
 <%= partial 'there_is_exit' %>
 
@@ -9,9 +12,11 @@
     <h3 class="app_thin app_lgray">Глава <%= first_chapter[:number] %>. <%= first_chapter[:title] %></h3>
     <% first_chapter.files.each do |file| %>
         <h4 class="app_chapter">
-          <%= link_to file[:title], "texts/#{file[:title_for_save]}" %>
+          <%= link_to file[:title], "/texts/#{file[:title_for_save]}" %>
         </h4>
-        <p><a class="app_black" href="texts/<%= file[:title_for_save] %>">LEAD TEXT GOES HERE.</a></p>
+        <p>
+          <%= link_to truncate("#{file[:first_paragraph]}", :length => 150), "/texts/#{file[:title_for_save]}", :class => "app_black" %>
+        </p>
     <% end %>
   </div>
 </div>
