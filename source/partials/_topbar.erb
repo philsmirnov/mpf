@@ -18,33 +18,33 @@
     <section class="top-bar-section">
       <!-- Left Nav Section -->
       <ul class="left">
-        <li class="active">
+        <li <% if (request.path_info =~/texts/) | request.path_info =~/home/ %>    class="active" <% end %>>
           <% link_to '/home.html' do %>
             <i zclass="foundicon-compass"></i> Оглавление
           <% end %>
         </li>
 
-        <li>
+        <li <% if (request.path_info =~/glos/) | request.path_info =~/thesaur/ %>  class="active" <% end %>>
           <% link_to '/thesaurus.html' do %>
             <i zclass="foundicon-network accessibility"></i> Тезаурус
           <% end %>
         </li>
 
-        <li>
+        <li <% if (request.path_info =~/personalii/) | request.path_info =~/personas/ %>  class="active" <% end %>>
           <% link_to '/personas.html' do %>
             <i zclass="foundicon-adult accessibility"></i> Персоналии
           <% end %>
         </li>
 
-        <li>
+        <li <% if request.path_info =~/groups/ %>  class="active" <% end %>>
           <% link_to '/groups.html' do %>
             <i zclass="foundicon-calendar"></i></i> Мастерская
           <% end %>
         </li>
 
-        <li>
+        <li <% if request.path_info =~/about/ %>  class="active" <% end %>>
           <% link_to '/about.html' do %>
-            <i zclass=]"foundicon-question accessibility"></i> ?
+            <i zclass="foundicon-question accessibility"></i> ?
           <% end %>
         </li>
       </ul>
