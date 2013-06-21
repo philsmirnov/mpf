@@ -3,7 +3,13 @@
   <p class="app_spaced">
     <!--если ссылка активна <span class="app_bold">1. Лабиринт</span><br>  -->
     <% data.home.chapters.each do |chapter|  %>
-        <%= link_to "#{chapter[:number]}. #{chapter[:title]}", "/texts/#{chapter[:title_for_save]}/index.html" %>
+        <% regexp =  Regexp.new(Regexp.escape(chapter[:title_for_save])) %>
+        <% link_is_active = current_page.path =~ regexp %>
+        <% link_to "/texts/#{chapter[:title_for_save]}/index.html" do %>
+            <% if link_is_active %> <span class="app_bold"> <% end %>
+            <%= "#{chapter[:number]}. #{chapter[:title]}" %>
+            <% if link_is_active %> </span> <% end %>
+        <% end %>
         <br>
     <% end %>
   </p>
