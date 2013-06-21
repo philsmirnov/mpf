@@ -34,12 +34,13 @@
             <hr />
           </div>
 
-
           <% current_page.data.read_later.each do |text| %>
 
           <div class="large-4 columns app_smaller">
             <h4 class="app_normal"><a href="<%= text[:link] %>"><%= text[:title] %></a></h4>
-            <p><a href="<%= text[:link] %>" class="app_dgray">LEAD GOES HERE.</a></p>
+            <p>
+              <%= link_to truncate(text[:first_paragraph], :length => 150), text[:link], :class => 'app_dgray'  %>
+            </p>
           </div>
 
           <% end %>

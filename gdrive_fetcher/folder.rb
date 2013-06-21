@@ -93,7 +93,8 @@ module GDriveImporter
         {
             :title => file.title,
             :link  => "#{file.title_for_save}.html",
-            :number => file.number
+            :number => file.number,
+            :first_paragraph => file.first_paragraph
         }
       end
     end
