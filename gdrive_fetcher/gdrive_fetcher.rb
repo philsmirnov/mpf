@@ -50,16 +50,18 @@ collection.each_file do |file|
 
   text_converter.convert file
 
-  path = file.parent_folder.generate_path(root_path)
-
   text_linker.process_links(file) do |links_array|
     'см. ' + links_array.map { |item|
       item[:fof].link_to(file, item[:title])
     }.join(', ')
   end
+  sleep 1
+end
+
+collection.each_file do |file|
+  path = file.parent_folder.generate_path(root_path)
   path.mkpath
   file.save(path + file.generate_filename)
-  sleep 1
 end
 
 
