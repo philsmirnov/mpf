@@ -10,9 +10,7 @@
         </h1>
       </li>
       <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-      <li class="toggle-topbar menu-icon">
-        <%= link_to '/home.html' %>
-      </li>
+      <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
     </ul>
 
     <section class="top-bar-section">
@@ -26,7 +24,7 @@
 
         <li <% if (current_page.path =~/glos/) || current_page.path =~/thesaur/ %>  class="active" <% end %>>
           <% link_to '/thesaurus.html' do %>
-            <i zclass="foundicon-network accessibility"></i> Тезаурус
+            <i zclass="foundicon-network accessibility"></i> Глоссарий
           <% end %>
         </li>
 
