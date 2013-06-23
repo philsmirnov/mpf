@@ -4,12 +4,15 @@ module GDriveImporter
 
   class TextLinker
 
+    attr_accessor :regexp_lambda
+
     MAIN_REGEX = /(?<=\()\s?с[рм]\.?[^\)]*?(?=\))/im
 
-    def initialize(text_collection, main_regexp, regexps)
-      @collection = text_collection
+    def initialize(text_collections, main_regexp, regexps)
+      @collections = text_collections
       @main_regexp = main_regexp
       @regexps = regexps
+      @regexp_lambda = Proc.new if block_given?
     end
 
     def regexp_helper(s)
@@ -17,22 +20,30 @@ module GDriveImporter
     end
 
     def find_item_in_collection(regexp, title, is_folder)
-      iterator = is_folder ? @collection : @collection.files
-      item = iterator.find do |f|
-        if f =~ regexp
-          puts "found #{f.class}: #{f.number} #{f.title}"
-          true
-        else
-          false
+      @collections.each do |collection|
+        iterator = is_folder ? collection : collection.files
+        item = iterator.find do |f|
+          if f =~ regexp
+            puts "found #{f.class}: #{f.number} #{f.title}"
+            true
+          else
+            false
+          end
         end
+        return {:title => title, :fof => item} if item
       end
-      return {:title => title, :fof => item} if item
       nil
     end
 
     def create_regex_and_find_item(k, is_folder)
       link_title = (k.is_a?(Array) ? k.first : k).strip
-      regexp = Regexp.new(Regexp.escape(regexp_helper link_title), 'i')
+      link_title = regexp_helper link_title
+      if @regexp_lambda
+        regexp =@regexp_lambda.call(link_title)
+      else
+        regexp = Regexp.new(Regexp.escape(link_title), 'i')
+      end
+
       find_item_in_collection(regexp, link_title, is_folder)
     end
 
@@ -51,7 +62,7 @@ module GDriveImporter
             items << item if item
           end
         end
-        yield(items)
+        yield(items, raw_link_text)
       end
     end
   end

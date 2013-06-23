@@ -12,6 +12,7 @@ module GDriveImporter
 
     def convert(file)
       @parser = CssParser::Parser.new
+      @file   = file
       bad_rules = []
 
       doc = Nokogiri::HTML(file.original_contents)
@@ -35,7 +36,7 @@ module GDriveImporter
       .gsub(/["](?=[\s\.!\?,:;\)\][[:space:]]])(?![>])/, '»')
       .gsub(/“/, '«')
       .gsub(/”/, '»')
-      file.first_paragraph = fragment.at_css('p').text
+      file.first_paragraph = fragment.at_css('p').text unless file.first_paragraph
       fragment
     end
 
@@ -53,6 +54,20 @@ module GDriveImporter
       good_rules = []
 
       @parser.add_block!(css_block)
+
+      lead_selection_rules = []
+      @parser.each_rule_set do |rule_set|
+        next if rule_set.selectors.none? { |s| s =~ /\.c\d/ }
+        if rule_set.declarations_to_s =~ /background-color: #ffff00/
+          lead_selection_rules << rule_set
+        end
+      end
+      puts "LEAD SELECTION RULES COUNT > 1"  if lead_selection_rules.count > 1
+      lead = nil
+      lead_selection_rules.each do |rule|
+        lead = doc.css(rule.selectors.first).map {|node| node.inner_html}.join('')
+      end
+      @file.first_paragraph = lead
 
       rename_rules.each { |rename_rule|
         tmp_rules = []

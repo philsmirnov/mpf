@@ -59,6 +59,7 @@ module GDriveImporter
         read_later = @parent_folder.next_three(self)
         @metadata['read_later'] = read_later if read_later
       end
+      @metadata['first_paragraph'] = @first_paragraph
       f.write(generate_metadata)
       f.write(@contents)
       f.close
