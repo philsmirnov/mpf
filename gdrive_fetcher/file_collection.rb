@@ -9,7 +9,7 @@ module GDriveImporter
     def initialize(collection, coder)
       @folders = []
       @coder = coder
-      collection.files.
+      collection.subcollections.
         sort_by {|f| f.title}.
         each{|folder| import_folder folder}
     end

@@ -73,7 +73,7 @@ GEM
       sprockets (~> 2.1)
       sprockets-helpers (~> 1.0.0)
       sprockets-sass (~> 1.0.0)
-    mini_portile (0.5.0)
+    mini_portile (0.5.1)
     multi_json (1.7.7)
     multi_xml (0.5.4)
     multipart-post (1.2.0)
