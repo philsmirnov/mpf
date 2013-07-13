@@ -71,6 +71,7 @@ title: "#{title}"
   <%= partial 'sidebar_contents'%>
 
   <div class="large-8 columns">
+    <img src='../img/chapters/#{@number}.png'>
     <h3 class="app_thin app_lgray">Глава #{@number}. #{title}</h3>
       eos
 
