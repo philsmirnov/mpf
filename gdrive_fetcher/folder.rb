@@ -61,6 +61,10 @@ module GDriveImporter
 
     def content_table
       result = <<-eos
+---
+title: "#{title}"
+---
+
 <%= partial 'there_is_exit' %>
 
 <div class="row">

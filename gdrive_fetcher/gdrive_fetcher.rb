@@ -120,9 +120,6 @@ personas.
   file.save_original "./gdrive_fetcher/gdrive_originals/google_#{file.title}.html" if settings['mode'] == 'dev'
   text_converter.convert(file)
 
-  #убираем отбивку
-  #file.contents.sub!('</p> <p>', ' ')
-
   text_linker.process_links(file) do |links_array|
     links_array.map { |item| "<p>#{item[:fof].link_to(file, item[:title], 'texts')} </p>" }.join("\n")
   end
