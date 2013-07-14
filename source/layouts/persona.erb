@@ -12,7 +12,8 @@
       <div class="large-12 columns">
         <hr>
         <div class="panel app_thes">
-          <%= image_tag '../img/bateson.jpg', :class => 'app_photo' %>
+          <% img_path = "../img/personas/#{current_page_title.gsub(/^\d\d/, '').parameterize}.png" %>
+          <%= image_tag img_path, :class => 'app_photo' %>
           <h3 class="app_thin"><%= current_page_title %></h3>
           <p class="app_black">
             <%= yield %>
