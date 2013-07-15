@@ -24,7 +24,7 @@ module GDriveImporter
 
       @title = gdrive_folder.title
       @number = @title[/^\d\d/].to_i
-      @title = @title.gsub(/^\d\d/, '').strip
+      @title = @title.gsub(/^\d\d/, '').gsub(/\+*/, '').strip
 
       @title_for_search = make_title_for_search(@title)
       @title_for_save = make_title_for_save(@title)

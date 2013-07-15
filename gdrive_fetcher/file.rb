@@ -20,7 +20,7 @@ module GDriveImporter
 
       @title = file.title
       @number = @title[/^\d\d/].to_i
-      @title = @title.gsub(/^\d\d/, '').strip
+      @title = @title.gsub(/^\d\d/, '').gsub(/\+*/, '').strip
 
       @parent_folder = folder
       @metadata = {}
