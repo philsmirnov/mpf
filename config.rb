@@ -1,4 +1,10 @@
+# encoding: UTF-8
 require 'rack/offline'
+require 'active_support/core_ext/string/inflections'
+require 'russian'
+
+I18n.locale = :'ru'
+I18n.reload!
 
 ###
 # Compass

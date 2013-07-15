@@ -14,7 +14,9 @@ title: Персоналии
       <% group.each do |file| %>
           <div class="large-4 columns">
             <div class="panel app_thes">
-              <a href="<%= file[:link] %>"><img class="app_photo" src="img/bateson.jpg"></a>
+              <a href="<%= file[:link] %>">
+                <%= image_tag "/img/personas/#{file[:title].parameterize}.png", :class => 'app_photo' %>
+              </a>
               <h3 class="app_thin"><a href="<%= file[:link] %>"><%= file[:title] %></a></h3>
               <p><a href="<%= file[:link] %>" class="app_black"><%= file[:first_line] %></a></p>
             </div>

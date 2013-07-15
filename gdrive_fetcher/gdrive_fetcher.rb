@@ -37,7 +37,7 @@ text_linker = GDriveImporter::TextLinker.new(
     /(?<=\()\s?с[рм]\.?[^\)]*?(?=\))/im,
     [/["«“]([^"»”]*?)["»”]/, /с[мр]\.?[[:space:]]*?(.*)/i]
 )
-
+=begin
 collection.files.each do |file|
   puts "#{file.number} #{file.title}"
   file.fetch
@@ -98,6 +98,7 @@ f = File.new('./data/home.yml', 'w+')
 f.write(home.to_yaml)
 f.close
 
+=end
 personas_collection = session.collection_by_url('https://docs.google.com/feeds/default/private/full/folder%3A0B_j0BZPW4BVtMjMzcmVhTktiUFE?v=3')
 personas = GDriveImporter::Folder.new(personas_collection, coder)
 personas.import
@@ -148,7 +149,7 @@ f = File.new('./data/personas.yml', 'w+')
 f.write(personas_yaml.to_yaml)
 f.close
 
-
+=begin
 
 thesaurus_collection = session.collection_by_url('https://docs.google.com/feeds/default/private/full/folder%3A0B_j0BZPW4BVtR09BMXg3TFhJbG8?v=3')
 thesaurus = GDriveImporter::Folder.new(thesaurus_collection, coder)
@@ -248,3 +249,4 @@ thesaurus_yaml['groups'] = groups
 f = File.new('./data/tezaurus.yml', 'w+')
 f.write(thesaurus_yaml.to_yaml)
 f.close
+=end
