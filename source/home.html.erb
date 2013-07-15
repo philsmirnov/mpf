@@ -12,6 +12,8 @@ title: Оглавление
     <h3 class="app_thin app_lgray">Глава <%= first_chapter[:number] %>. <%= first_chapter[:title] %></h3>
     <% first_chapter.files.each do |file| %>
         <h4 class="app_chapter">
+          <% puts file[:title_for_save] %>
+          <%= puts url_for "/texts/#{file[:title_for_save]}" %>
           <%= link_to file[:title], "/texts/#{file[:title_for_save]}" %>
         </h4>
         <p>
