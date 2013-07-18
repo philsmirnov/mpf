@@ -3,16 +3,22 @@
 require 'yaml'
 require 'pathname'
 require 'unicode'
+require 'forwardable'
+require 'date'
 require_relative 'file_utils'
+
 
 module GDriveImporter
 
   class File
 
     include FileUtils
+    extend Forwardable
 
     attr_accessor :contents, :original_contents, :title, :metadata, :show_next_three, :first_paragraph
     attr_reader :parent_folder, :title_for_save, :number
+
+    def_delegators :@gdrive_file, :resource_id, :resource_type, :document_feed_url, :human_url, :document_feed_entry
 
     def initialize(folder, file, coder)
       @gdrive_file = file
@@ -39,8 +45,22 @@ module GDriveImporter
       .gsub(/(?<=[[:space:]])\-(?=[[:space:]])/, '—')
     end
 
+    def fetch_text
+      sio = StringIO.new()
+      url = @gdrive_file.document_feed_entry.css("content").first["src"] + "&format=txt"
+      session = @gdrive_file.instance_variable_get :@session
+
+      body = session.request(:get, url, :response_type => :raw, :auth => :writely)
+      sio.write(body)
+      return sio.string
+    end
+
     def generate_metadata
       @metadata.to_yaml << '---' << "\n\n"
+    end
+
+    def updated_at
+      Time.parse(@gdrive_file.document_feed_entry.css("updated").text)
     end
 
     def generate_path(path)

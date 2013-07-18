@@ -1,6 +1,7 @@
 mail: vic.ivanoff@gmail.com
 password:
 mode: dev
+base_url: http://gerome.ru/mp2
 
 regexps:
   labirint: "Лабиринт"

@@ -11,6 +11,7 @@ require 'russian'
 require_relative 'text_converter'
 require_relative 'file_collection'
 require_relative 'text_linker'
+require_relative 'schema'
 
 
 Bundler.setup
@@ -41,6 +42,25 @@ text_linker = GDriveImporter::TextLinker.new(
 collection.files.each do |file|
   puts "#{file.number} #{file.title}"
   file.fetch
+  #binding.pry
+  a = Article.where(:resource_id => file.resource_id).first
+  if a
+    # update if needed
+    puts "a.updated_at  #{a.updated_at }"
+    puts "file.updated_at #{file.updated_at}"
+    binding.pry
+
+    if a.updated_at < file.updated_at
+      a.content = file.fetch_text
+      a.updated_at = file.updated_at
+      a.save
+    end
+  else
+    # save to db
+    a = Article.from_file(file, 'text', settings['base_url'])
+    a.save
+  end
+
   file.save_original "./gdrive_fetcher/gdrive_originals/google_#{file.title}.html" if settings['mode'] == 'dev'
 
   text_converter.convert file
