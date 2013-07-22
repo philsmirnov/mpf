@@ -91,7 +91,8 @@ collection.files.each do |file|
       raw_text
     else
       item = links_array.first
-      item[:fof].link_to(file, item[:title])
+      #item[:fof].link_to(file, item[:title])
+      "<%= link_to('#{item[:fof].title', '/#{item[:fof].title_for_save}.html') %>"
     end
   end
 
