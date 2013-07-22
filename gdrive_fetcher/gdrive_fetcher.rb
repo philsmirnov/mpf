@@ -13,7 +13,6 @@ require_relative 'file_collection'
 require_relative 'text_linker'
 require_relative 'schema'
 
-
 Bundler.setup
 
 I18n.locale = :'ru'
@@ -38,6 +37,27 @@ text_linker = GDriveImporter::TextLinker.new(
     /(?<=\()\s?с[рм]\.?[^\)]*?(?=\))/im,
     [/["«“]([^"»”]*?)["»”]/, /с[мр]\.?[[:space:]]*?(.*)/i]
 )
+
+
+thesaurus_collection = session.collection_by_url('https://docs.google.com/feeds/default/private/full/folder%3A0B_j0BZPW4BVtR09BMXg3TFhJbG8?v=3')
+thesaurus = GDriveImporter::Folder.new(thesaurus_collection, coder)
+thesaurus.import
+
+personas_collection = session.collection_by_url('https://docs.google.com/feeds/default/private/full/folder%3A0B_j0BZPW4BVtMjMzcmVhTktiUFE?v=3')
+personas = GDriveImporter::Folder.new(personas_collection, coder)
+personas.import
+
+
+article_linker = GDriveImporter::TextLinker.new(
+    [thesaurus, personas],
+    /<em class="underline">.*?<\/em>/i,
+    [/(?<=<em class="underline">).*?(?=<\/em>)/i]
+) do |link_title|
+  regexp = Regexp.new(Regexp.escape(link_title[0..-2]), 'i')
+  puts regexp
+  regexp
+end
+
 
 collection.files.each do |file|
   puts "#{file.number} #{file.title}"
@@ -69,6 +89,15 @@ collection.files.each do |file|
     'см. ' + links_array.map { |item|
       item[:fof].link_to(file, item[:title])
     }.join(', ')
+  end
+
+  article_linker.process_links(file) do |links_array, raw_text|
+    if links_array.empty?
+      raw_text
+    else
+      item = links_array.first
+      item[:fof].link_to(file, item[:title])
+    end
   end
 
   #LEAD
@@ -118,9 +147,6 @@ f = File.new('./data/home.yml', 'w+')
 f.write(home.to_yaml)
 f.close
 
-personas_collection = session.collection_by_url('https://docs.google.com/feeds/default/private/full/folder%3A0B_j0BZPW4BVtMjMzcmVhTktiUFE?v=3')
-personas = GDriveImporter::Folder.new(personas_collection, coder)
-personas.import
 
 text_linker = GDriveImporter::TextLinker.new(
     [collection],
@@ -153,7 +179,6 @@ personas_yaml = {'title' => 'Персоналии'}
 groups = []
 
 personas.each_slice(3) do |group_of_files|
-
   groups << group_of_files.map do |file|
     {
         :link => "#{personas.title_for_save}/#{file.title_for_save}.html",
@@ -161,17 +186,12 @@ personas.each_slice(3) do |group_of_files|
         :first_line => file.first_paragraph
     }
   end
-
 end
+
 personas_yaml['groups'] = groups
 f = File.new('./data/personas.yml', 'w+')
 f.write(personas_yaml.to_yaml)
 f.close
-
-
-thesaurus_collection = session.collection_by_url('https://docs.google.com/feeds/default/private/full/folder%3A0B_j0BZPW4BVtR09BMXg3TFhJbG8?v=3')
-thesaurus = GDriveImporter::Folder.new(thesaurus_collection, coder)
-thesaurus.import
 
 text_linker = GDriveImporter::TextLinker.new(
     [collection],
@@ -179,23 +199,12 @@ text_linker = GDriveImporter::TextLinker.new(
     [/(?<=<p>)(.*?)(?=<\/p>)/]
 )
 
-article_linker = GDriveImporter::TextLinker.new(
+second_article_linker = GDriveImporter::TextLinker.new(
     [thesaurus],
     /(?<=<p>см. также:|ср\.:).*?(?=<\/p>)/i,
     [/(?<=<em class="underline">).*?(?=<\/em>)/i,
     /([^,]*)/i]
 )
-
-second_article_linker = GDriveImporter::TextLinker.new(
-    [thesaurus, personas],
-    /<em class="underline">.*?<\/em>/i,
-    [/(?<=<em class="underline">).*?(?=<\/em>)/i]
-) do |link_title|
-  regexp = Regexp.new(Regexp.escape(link_title[0..-2]), 'i')
-  puts regexp
-  regexp
-end
-
 
 root_path = './source/'
 path = thesaurus.generate_path(root_path)
@@ -223,7 +232,16 @@ thesaurus.
     nil
   end
 
-  article_linker.process_links(file) do |links_array|
+  article_linker.process_links(file) do |links_array, raw_text|
+    if links_array.empty?
+      raw_text
+    else
+      item = links_array.first
+      item[:fof].link_to(file, item[:title])
+    end
+  end
+
+  second_article_linker.process_links(file) do |links_array|
     file.metadata[:linked_articles] = links_array.map do |item|
       {
           :link => item[:fof].link_to(file, item[:title]),
@@ -233,16 +251,11 @@ thesaurus.
     nil
   end
 
-  second_article_linker.process_links(file) do |links_array, raw_text|
-    if links_array.empty?
-      raw_text
-    else
-      item = links_array.first
-      item[:fof].link_to(file, item[:title])
-    end
-  end
 
-  file.contents = file.contents.sub('<p>См. также:</p>', ' ').sub('<p>Тексты на тему:</p>', ' ')
+  file.contents = file.contents.
+      sub('<p>См. также:</p>', ' ').
+      sub('<p>Тексты на тему:</p>', ' ').
+      sub('<p>Cр.:</p>', ' ')
 
   file.show_next_three = false
   file.save(path + file.generate_filename)
@@ -261,8 +274,8 @@ thesaurus.each_slice(3) do |group_of_files|
         :first_line => file.first_paragraph
     }
   end
-
 end
+
 thesaurus_yaml['groups'] = groups
 f = File.new('./data/tezaurus.yml', 'w+')
 f.write(thesaurus_yaml.to_yaml)
