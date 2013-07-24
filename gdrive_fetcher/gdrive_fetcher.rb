@@ -91,10 +91,8 @@ collection.files.each do |file|
       raw_text
     else
       item = links_array.first
-      #item[:fof].link_to(file, item[:title])
       folder_title = item[:fof].parent_folder.title_for_save =~ /glos/ ? 'glossariy' : 'personalii'
-
-      "<%= link_to('#{item[:fof].title}',  '/#{folder_title}/#{item[:fof].title_for_save}.html') %>"
+      "<%= link_to('#{raw_text}',  '/#{folder_title}/#{item[:fof].title_for_save}.html') %>"
     end
   end
 
