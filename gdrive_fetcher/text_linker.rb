@@ -39,7 +39,7 @@ module GDriveImporter
       link_title = (k.is_a?(Array) ? k.first : k).strip
       link_title = regexp_helper link_title
       if @regexp_lambda
-        regexp =@regexp_lambda.call(link_title)
+        regexp = @regexp_lambda.call(link_title)
       else
         regexp = Regexp.new(Regexp.escape(link_title), 'i')
       end
