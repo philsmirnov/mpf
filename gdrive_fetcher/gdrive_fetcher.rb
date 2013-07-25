@@ -60,7 +60,7 @@ article_linker = GDriveImporter::TextLinker.new(
       map{|l| Regexp.escape(l)}.
       map{|w| w + '.{0,7}' }.join('')
   else
-    regexp_text = regexp_words.first
+    regexp_text = regexp_words.first[0..-3]
   end
 
   regexp = Regexp.new(Regexp.escape(regexp_text), 'i')
