@@ -53,11 +53,12 @@ article_linker = GDriveImporter::TextLinker.new(
     /<em class="underline">.*?<\/em>/i,
     [/(?<=<em class="underline">).*?(?=<\/em>)/i]
 ) do |link_title|
-  regexp_words = link_title.split(' ').
-      map{|l| l.length > 4 ? l[0..-4] : l }.
-      map{|l| Regexp.escape(l)}
+  regexp_words = link_title.split(' ')
   if regexp_words.length > 1
-    regexp_text  = regexp_words.map{|w| w + '.{0,7}' }.join('')
+    regexp_text  = regexp_words.
+      map{|l| l.length > 4 ? l[0..-4] : l }.
+      map{|l| Regexp.escape(l)}.
+      map{|w| w + '.{0,7}' }.join('')
   else
     regexp_text = regexp_words.first
   end
