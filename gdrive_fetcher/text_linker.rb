@@ -22,7 +22,7 @@ module GDriveImporter
     def find_item_in_collection(regexp, title, is_folder)
       @collections.each do |collection|
         iterator = is_folder ? collection : collection.files
-        item = iterator.find do |f|
+        items = iterator.select do |f|
           if f =~ regexp
             puts "found #{f.class}: #{f.number} #{f.title}"
             true
@@ -30,6 +30,7 @@ module GDriveImporter
             false
           end
         end
+        item = items.min_by{|i| i.length}
         return {:title => title, :fof => item} if item
       end
       nil
