@@ -30,7 +30,7 @@ module GDriveImporter
             false
           end
         end
-        item = items.min_by{|i| i.length}
+        item = items.min_by{|i| i.title.length}
         return {:title => title, :fof => item} if item
       end
       nil
