@@ -74,19 +74,7 @@ end
 collection.files.each do |file|
   puts "#{file.number} #{file.title}"
   file.fetch
-  a = Article.where(:resource_id => file.resource_id).first
-  if a
-    # update if needed
-    if a.updated_at < file.updated_at
-      a.content = file.fetch_text
-      a.updated_at = file.updated_at
-      a.save
-    end
-  else
-    # save to db
-    a = Article.from_file(file, 'text', settings['base_url'])
-    a.save
-  end
+  Article.create_or_update(file, 'text', settings['base_url'])
 
   file.save_original "./gdrive_fetcher/gdrive_originals/google_#{file.title}.html" if settings['mode'] == 'dev'
 
@@ -171,6 +159,7 @@ personas.
     each do |file|
   puts "#{file.number} #{file.title}"
   file.fetch
+  Article.create_or_update(file, 'persona', settings['base_url'])
   file.save_original "./gdrive_fetcher/gdrive_originals/google_#{file.title}.html" if settings['mode'] == 'dev'
   text_converter.convert(file)
 
@@ -224,6 +213,7 @@ thesaurus.
     each do |file|
   puts "#{file.number} #{file.title}"
   file.fetch
+  Article.create_or_update(file, 'thesaurus', settings['base_url'])
   file.save_original "./gdrive_fetcher/gdrive_originals/google_#{file.title}.html" if settings['mode'] == 'dev'
   text_converter.convert(file)
 

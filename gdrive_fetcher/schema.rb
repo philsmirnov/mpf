@@ -4,6 +4,20 @@ class Article < ActiveRecord::Base
   record_timestamps = false
   skip_time_zone_conversion_for_attributes = [:updated_at]
 
+  def self.create_or_update(file, article_type, base_url)
+    a = Article.where(:resource_id => file.resource_id).first
+    if a
+      # update if needed
+      if a.updated_at < file.updated_at
+        a.content = file.fetch_text
+        a.updated_at = file.updated_at
+      end
+    else
+      # save to db
+      a = Article.from_file(file, article_type, base_url)
+    end
+    a.save
+  end
 
   def self.from_file(file, article_type, base_url)
     self.new(
