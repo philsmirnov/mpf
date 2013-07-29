@@ -56,11 +56,13 @@ article_linker = GDriveImporter::TextLinker.new(
   regexp_words = link_title.split(' ')
   if regexp_words.length > 1
     regexp_text  = regexp_words.
-      map{|l| l.length > 4 ? l[0..-4] : l }.
+      map{|l| l.length > 4 ? l[0..-4] : l[0..-2] }.
       map{|l| Regexp.escape(l)}.
       map{|w| w + '.{0,7}' }.join('')
   else
-    regexp_text = regexp_words.first[0..-3]
+    regexp_text = regexp_words.first
+    regexp_text = regexp_text[0..-3] if regexp_text.length > 5
+    regexp_text = regexp_text[0..-2] if regexp_text.length > 4
   end
 
   regexp = Regexp.new(Regexp.escape(regexp_text), 'i')
