@@ -12,6 +12,7 @@ require_relative 'text_converter'
 require_relative 'file_collection'
 require_relative 'text_linker'
 require_relative 'schema'
+require 'thinking_sphinx'
 
 Bundler.setup
 
@@ -53,19 +54,11 @@ article_linker = GDriveImporter::TextLinker.new(
     /<em class="underline">.*?<\/em>/i,
     [/(?<=<em class="underline">).*?(?=<\/em>)/i]
 ) do |link_title|
-  regexp_words = link_title.split(' ')
-  if regexp_words.length > 1
-    regexp_text  = regexp_words.
-      map{|l| l.length > 4 ? l[0..-4] : l[0..-2] }.
-      map{|l| Regexp.escape(l)}.
-      map{|w| w + '.{0,7}' }.join('')
-  else
-    regexp_text = regexp_words.first
-    regexp_text = regexp_text[0..-3] if regexp_text.length > 5
-    regexp_text = regexp_text[0..-2] if regexp_text.length > 4
-  end
-
-  regexp = Regexp.new(Regexp.escape(regexp_text), 'i')
+  regexp_text = ThinkingSphinx::Connection.take { |con| con.execute "CALL KEYWORDS('#{link_title}', 'article_core')"}.
+      map {|res| res['normalized'].encode('ISO-8859-1').force_encoding('UTF-8')}.
+      map{|w| Regexp.escape(w) + '.{0,7}'}.
+      join('')
+  regexp = Regexp.new(regexp_text, 'i')
   puts regexp
   regexp
 end
