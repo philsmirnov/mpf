@@ -40,9 +40,6 @@ module GDriveImporter
     def fetch
       @original_contents = @gdrive_file.download_to_string(:content_type => 'text/html')
       @original_contents = ::Unicode::normalize_C(@coder.decode(@original_contents))
-      @original_contents = @original_contents
-      .gsub(/[[:space:]]{1,4}/, ' ')
-      .gsub(/(?<=[[:space:]])\-(?=[[:space:]])/, '—')
     end
 
     def fetch_text
@@ -51,6 +48,9 @@ module GDriveImporter
       session = @gdrive_file.instance_variable_get :@session
 
       body = session.request(:get, url, :response_type => :raw, :auth => :writely)
+      body = RestClient.post('http://typograf.ru/webservice/', :text => body, :chr => 'UTF-8')
+      sleep 1
+
       sio.write(body)
       return sio.string
     end

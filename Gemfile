@@ -19,4 +19,5 @@ gem 'russian'
 gem 'roman-numerals'
 gem 'mysql2'
 gem 'pg'
-gem 'thinking-sphinx'
+gem 'thinking-sphinx', :require => nil
+gem 'rest-client'

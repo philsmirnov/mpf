@@ -13,6 +13,7 @@ require_relative 'file_collection'
 require_relative 'text_linker'
 require_relative 'schema'
 require 'thinking_sphinx'
+require 'rest_client'
 
 Bundler.setup
 
@@ -20,6 +21,9 @@ I18n.locale = :'ru'
 I18n.reload!
 
 settings = YAML.load_file('fetcher_settings.yml')
+
+#framework = ThinkingSphinx::Framework::Plain.new
+#ThinkingSphinx::Configuration.instance.framework = framework
 
 # You can also use OAuth. See document of
 # GoogleDrive.login_with_oauth for details.
@@ -63,7 +67,6 @@ article_linker = GDriveImporter::TextLinker.new(
   regexp
 end
 
-
 collection.files.each do |file|
   puts "#{file.number} #{file.title}"
   file.fetch
@@ -94,6 +97,7 @@ collection.files.each do |file|
     file.first_paragraph = file.contents.match(/LEAD(.*?)LEAD/)[1]
   end
 
+  file.contents = RestClient.post('http://typograf.ru/webservice/', :text => file.contents, :chr => 'UTF-8')
   sleep 1
 end
 
@@ -136,7 +140,6 @@ f = File.new('./data/home.yml', 'w+')
 f.write(home.to_yaml)
 f.close
 
-
 text_linker = GDriveImporter::TextLinker.new(
     [collection],
     /(?<=Тексты на тему:<\/p>).(.*)/im,
@@ -160,7 +163,17 @@ personas.
     links_array.map { |item| "<p>#{item[:fof].link_to(file, item[:title], 'texts')} </p>" }.join("\n")
   end
 
+  article_linker.process_links(file) do |links_array, raw_text|
+    if links_array.empty?
+      raw_text
+    else
+      item = links_array.first
+      item[:fof].link_to(file, item[:title])
+    end
+  end
+
   file.show_next_three = false
+  file.contents = RestClient.post('http://typograf.ru/webservice/', :text => file.contents, :chr => 'UTF-8')
   file.save(path + file.generate_filename)
   sleep 1
 end
@@ -249,6 +262,7 @@ thesaurus.
       sub('<p>Cр.:</p>', ' ')
 
   file.show_next_three = false
+  file.contents = RestClient.post('http://typograf.ru/webservice/', :text => file.contents, :chr => 'UTF-8')
   file.save(path + file.generate_filename)
   sleep 1
 end

@@ -85,6 +85,7 @@ GEM
       sprockets-helpers (~> 1.0.0)
       sprockets-sass (~> 1.0.0)
     middleware (0.1.0)
+    mime-types (1.23)
     mini_portile (0.5.1)
     multi_json (1.7.7)
     multi_xml (0.5.4)
@@ -120,6 +121,8 @@ GEM
     rb-kqueue (0.2.0)
       ffi (>= 0.5.0)
     ref (1.0.5)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     riddle (1.5.7)
     roman-numerals (0.3.0)
     russian (0.6.0)
@@ -169,6 +172,7 @@ DEPENDENCIES
   pry
   pry-exception_explorer
   rack-offline
+  rest-client
   roman-numerals
   russian
   therubyracer

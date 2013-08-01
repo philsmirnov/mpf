@@ -32,10 +32,11 @@ module GDriveImporter
 
       fragment = Nokogiri::HTML.fragment(doc.at_css('body').inner_html)
       file.contents = fragment.to_html
-      file.contents = file.contents.gsub(/(?<=[[:space:]\(])["]/, '«')
-      .gsub(/["](?=[\s\.!\?,:;\)\][[:space:]]])(?![>])/, '»')
-      .gsub(/“/, '«')
-      .gsub(/”/, '»')
+      #file.contents = RestClient.post('http://typograf.ru/webservice/', :text => file.contents, :chr => 'UTF-8')
+      #file.contents = file.contents.gsub(/(?<=[[:space:]\(])["]/, '«')
+      #.gsub(/["](?=[\s\.!\?,:;\)\][[:space:]]])(?![>])/, '»')
+      #.gsub(/“/, '«')
+      #.gsub(/”/, '»')
       file.first_paragraph = fragment.at_css('p').text unless file.first_paragraph
       fragment
     end
