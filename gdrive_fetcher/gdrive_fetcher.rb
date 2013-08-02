@@ -21,6 +21,7 @@ I18n.locale = :'ru'
 I18n.reload!
 
 settings = YAML.load_file('fetcher_settings.yml')
+typograph_settings = IO.read('typograph.xml')
 
 #framework = ThinkingSphinx::Framework::Plain.new
 #ThinkingSphinx::Configuration.instance.framework = framework
@@ -97,7 +98,7 @@ collection.files.each do |file|
     file.first_paragraph = file.contents.match(/LEAD(.*?)LEAD/)[1]
   end
 
-  file.contents = RestClient.post('http://typograf.ru/webservice/', :text => file.contents, :chr => 'UTF-8')
+  file.contents = RestClient.post('http://typograf.ru/webservice/', :text => file.contents, :chr => 'UTF-8', :xml => typograph_settings)
   sleep 1
 end
 
@@ -173,7 +174,7 @@ personas.
   end
 
   file.show_next_three = false
-  file.contents = RestClient.post('http://typograf.ru/webservice/', :text => file.contents, :chr => 'UTF-8')
+  file.contents = RestClient.post('http://typograf.ru/webservice/', :text => file.contents, :chr => 'UTF-8', :xml => typograph_settings)
   file.save(path + file.generate_filename)
   sleep 1
 end
@@ -262,7 +263,7 @@ thesaurus.
       sub('<p>Cр.:</p>', ' ')
 
   file.show_next_three = false
-  file.contents = RestClient.post('http://typograf.ru/webservice/', :text => file.contents, :chr => 'UTF-8')
+  file.contents = RestClient.post('http://typograf.ru/webservice/', :text => file.contents, :chr => 'UTF-8', :xml => typograph_settings)
   file.save(path + file.generate_filename)
   sleep 1
 end
@@ -285,3 +286,5 @@ thesaurus_yaml['groups'] = groups
 f = File.new('./data/tezaurus.yml', 'w+')
 f.write(thesaurus_yaml.to_yaml)
 f.close
+
+
