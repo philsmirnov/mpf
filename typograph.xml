@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="windows-1251" ?>
 <preferences>
-  <tags delete="0">1</tags>
+  <tags delete="0">0</tags>
   <paragraph insert="1">
     <start><![CDATA[<p>]]></start>
     <end><![CDATA[</p>]]></end>
@@ -8,7 +8,7 @@
   <newline insert="1"><![CDATA[<br />]]></newline>
   <cmsNewLine valid="0" />
   <dos-text delete="0" />
-  <nowraped insert="1" nonbsp="0" length="0">
+  <nowraped insert="0" nonbsp="0" length="0">
     <start><![CDATA[<nobr>]]></start>
     <end><![CDATA[</nobr>]]></end>
   </nowraped>
