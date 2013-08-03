@@ -76,6 +76,7 @@ collection.files.each do |file|
   file.save_original "./gdrive_fetcher/gdrive_originals/google_#{file.title}.html" if settings['mode'] == 'dev'
 
   text_converter.convert file
+  file.contents = RestClient.post('http://typograf.ru/webservice/', :text => file.contents, :chr => 'UTF-8', :xml => typograph_settings)
 
   text_linker.process_links(file) do |links_array|
     'см. ' + links_array.map { |item|
@@ -98,7 +99,7 @@ collection.files.each do |file|
     file.first_paragraph = file.contents.match(/LEAD(.*?)LEAD/)[1]
   end
 
-  file.contents = RestClient.post('http://typograf.ru/webservice/', :text => file.contents, :chr => 'UTF-8', :xml => typograph_settings)
+
   sleep 1
 end
 
@@ -159,6 +160,7 @@ personas.
   Article.create_or_update(file, 'persona', settings['base_url'])
   file.save_original "./gdrive_fetcher/gdrive_originals/google_#{file.title}.html" if settings['mode'] == 'dev'
   text_converter.convert(file)
+  file.contents = RestClient.post('http://typograf.ru/webservice/', :text => file.contents, :chr => 'UTF-8', :xml => typograph_settings)
 
   text_linker.process_links(file) do |links_array|
     links_array.map { |item| "<p>#{item[:fof].link_to(file, item[:title], 'texts')} </p>" }.join("\n")
@@ -174,7 +176,6 @@ personas.
   end
 
   file.show_next_three = false
-  file.contents = RestClient.post('http://typograf.ru/webservice/', :text => file.contents, :chr => 'UTF-8', :xml => typograph_settings)
   file.save(path + file.generate_filename)
   sleep 1
 end
@@ -226,6 +227,7 @@ thesaurus.
 
   #убираем отбивку
   file.contents.sub!('</p> <p>', ' ')
+  file.contents = RestClient.post('http://typograf.ru/webservice/', :text => file.contents, :chr => 'UTF-8', :xml => typograph_settings)
 
   text_linker.process_links(file) do |links_array|
     file.metadata[:linked_texts] = links_array.map do |item|
@@ -263,7 +265,6 @@ thesaurus.
       sub('<p>Cр.:</p>', ' ')
 
   file.show_next_three = false
-  file.contents = RestClient.post('http://typograf.ru/webservice/', :text => file.contents, :chr => 'UTF-8', :xml => typograph_settings)
   file.save(path + file.generate_filename)
   sleep 1
 end
