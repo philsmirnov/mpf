@@ -59,6 +59,7 @@ article_linker = GDriveImporter::TextLinker.new(
     /<em class="underline">.*?<\/em>/i,
     [/(?<=<em class="underline">).*?(?=<\/em>)/i]
 ) do |link_title|
+  link_title = Unicode::normalize_C(coder.decode(link_title))
   regexp_text = ThinkingSphinx::Connection.take { |con| con.execute "CALL KEYWORDS('#{link_title}', 'article_core')"}.
       map {|res| res['normalized'].encode('ISO-8859-1').force_encoding('UTF-8')}.
       map{|w| Regexp.escape(w) + '.{0,7}'}.
