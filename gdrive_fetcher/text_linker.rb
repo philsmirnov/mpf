@@ -16,6 +16,7 @@ module GDriveImporter
     end
 
     def regexp_helper(s)
+      s = Unicode::normalize_C(coder.decode(s))
       s.gsub(/[:\-,\.]/, ' ').gsub(/^\d\d/, '').gsub(/[[:space:]][[:space:]]/, ' ').gsub(/(?<=[^0-9\s])(\d)/, ' \\1')
     end
 
