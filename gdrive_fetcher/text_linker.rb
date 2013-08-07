@@ -52,6 +52,7 @@ module GDriveImporter
 
     def process_links(file)
       file.contents.gsub!(@main_regexp) do |raw_link_text|
+        raw_link_text = Unicode::normalize_C(@coder.decode(raw_link_text))
         puts raw_link_text
 
         is_folder = raw_link_text =~ /с[мр]\.?[[:space:]]*(п(\.|\s)|пап)/i
