@@ -17,7 +17,7 @@ module GDriveImporter
     end
 
     def regexp_helper(s)
-      s = Unicode::normalize_C(@coder.decode(s))
+      s = Unicode::normalize_C(@coder.decode(s)).gsub(/[[:space:]]{1,4}/, ' ')
       s.gsub(/[:\-,\.]/, ' ').gsub(/^\d\d/, '').gsub(/[[:space:]][[:space:]]/, ' ').gsub(/(?<=[^0-9\s])(\d)/, ' \\1')
     end
 
@@ -46,7 +46,6 @@ module GDriveImporter
       else
         regexp = Regexp.new(Regexp.escape(link_title), 'i')
       end
-
       find_item_in_collection(regexp, link_title, is_folder)
     end
 

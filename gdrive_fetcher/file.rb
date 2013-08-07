@@ -40,7 +40,6 @@ module GDriveImporter
     def fetch
       @original_contents = @gdrive_file.download_to_string(:content_type => 'text/html')
       @original_contents = ::Unicode::normalize_C(@coder.decode(@original_contents))
-      .gsub(/[[:space:]]{1,4}/, ' ')
     end
 
     def fetch_text

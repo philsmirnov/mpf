@@ -59,7 +59,7 @@ article_linker = GDriveImporter::TextLinker.new(
     /<em class="underline">.*?<\/em>/i,
     [/(?<=<em class="underline">).*?(?=<\/em>)/i]
 ) do |link_title|
-  link_title = Unicode::normalize_C(coder.decode(link_title))
+  link_title = Unicode::normalize_C(coder.decode(link_title)).gsub(/[[:space:]]{1,4}/, ' ')
   regexp_text = ThinkingSphinx::Connection.take { |con| con.execute "CALL KEYWORDS('#{link_title}', 'article_core')"}.
       map {|res| res['normalized'].encode('ISO-8859-1').force_encoding('UTF-8')}.
       map{|w| Regexp.escape(w) + '.{0,7}'}.
@@ -99,7 +99,6 @@ collection.files.each do |file|
   if file.contents =~ /LEAD(.*?)LEAD/
     file.first_paragraph = file.contents.match(/LEAD(.*?)LEAD/)[1]
   end
-
 
   sleep 1
 end
