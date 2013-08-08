@@ -17,7 +17,7 @@ module GDriveImporter
     end
 
     def regexp_helper(s)
-      s = Unicode::normalize_C(@coder.decode(s)).gsub(/[[:space:]]{1,4}/, ' ')
+      s = Unicode::normalize_C(@coder.decode(s)).gsub(/[[:space:]]{1,4}/, ' ').strip
       s.gsub(/[:\-,\.]/, ' ').gsub(/^\d\d/, '').gsub(/[[:space:]][[:space:]]/, ' ').gsub(/(?<=[^0-9\s])(\d)/, ' \\1')
     end
 
@@ -39,7 +39,7 @@ module GDriveImporter
     end
 
     def create_regex_and_find_item(k, is_folder)
-      link_title = (k.is_a?(Array) ? k.first : k).strip
+      link_title = k.is_a?(Array) ? k.first : k
       link_title = regexp_helper link_title
       if @regexp_lambda
         regexp = @regexp_lambda.call(link_title)

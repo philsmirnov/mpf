@@ -1,7 +1,7 @@
 
 module FileUtils
   def make_title_for_search(s)
-    result = s.gsub(/[:\-,\.]/, ' ').gsub(/^\d\d/, '').gsub(/[[:space:]]{1,3}/, ' ')
+    result = s.gsub(/[\(:\-,\.\)]/, ' ').gsub(/^\d\d/, '').gsub(/[[:space:]]{1,3}/, ' ')
     ::Unicode::normalize_C result
   end
 
