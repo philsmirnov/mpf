@@ -144,7 +144,7 @@ f.close
 
 text_linker = GDriveImporter::TextLinker.new(
     [collection],
-    /(?<=Тексты на тему:<\/p>).(.*)/im,
+    /(?<=Тексты на&nbsp;тему:<\/p>).(.*)/im,
     [/(?<=<p>)(.*?)(?=<\/p>)/]
 )
 
@@ -200,7 +200,7 @@ f.close
 
 text_linker = GDriveImporter::TextLinker.new(
     [collection],
-    /(?<=Тексты на тему:<\/p>).(.*)/im,
+    /(?<=Тексты на&nbsp;тему:<\/p>).(.*)/im,
     [/(?<=<p>)(.*?)(?=<\/p>)/]
 )
 
