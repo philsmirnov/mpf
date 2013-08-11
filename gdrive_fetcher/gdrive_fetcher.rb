@@ -260,8 +260,8 @@ thesaurus.
 
 
   file.contents = file.contents.
-      sub('<p>См. также:</p>', ' ').
-      sub('<p>Тексты на тему:</p>', ' ').
+      sub('<p>См.&nbsp;также:</p>', ' ').
+      sub('<p>Тексты на&nbsp;тему:</p>', ' ').
       sub('<p>Cр.:</p>', ' ')
 
   file.show_next_three = false
@@ -287,5 +287,3 @@ thesaurus_yaml['groups'] = groups
 f = File.new('./data/tezaurus.yml', 'w+')
 f.write(thesaurus_yaml.to_yaml)
 f.close
-
-
