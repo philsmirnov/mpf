@@ -239,15 +239,6 @@ thesaurus.
     nil
   end
 
-  article_linker.process_links(file) do |links_array, raw_text|
-    if links_array.empty?
-      raw_text
-    else
-      item = links_array.first
-      item[:fof].link_to(file, item[:title])
-    end
-  end
-
   second_article_linker.process_links(file) do |links_array|
     file.metadata[:linked_articles] = links_array.map do |item|
       {
@@ -258,6 +249,14 @@ thesaurus.
     nil
   end
 
+  article_linker.process_links(file) do |links_array, raw_text|
+    if links_array.empty?
+      raw_text
+    else
+      item = links_array.first
+      item[:fof].link_to(file, item[:title])
+    end
+  end
 
   file.contents = file.contents.
       sub('<p>См.&nbsp;также:</p>', ' ').
