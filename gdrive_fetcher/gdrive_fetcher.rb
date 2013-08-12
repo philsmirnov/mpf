@@ -206,7 +206,7 @@ text_linker = GDriveImporter::TextLinker.new(
 
 second_article_linker = GDriveImporter::TextLinker.new(
     [thesaurus],
-    /(?<=<p>см. также:|ср\.:).*?(?=<\/p>)/i,
+    /(?<=<p>См.&nbsp;также:|ср\.:).*?(?=<\/p>)/i,
     [/(?<=<em class="underline">).*?(?=<\/em>)/i,
     /([^,]*)/i]
 )
