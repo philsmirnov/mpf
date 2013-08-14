@@ -6,8 +6,8 @@ module GDriveImporter
 
   class TextConverter
 
-    def initialize
-
+    def initialize(typograf)
+      @typograf = typograf
     end
 
     def convert(file)
@@ -31,8 +31,7 @@ module GDriveImporter
       change_tags_to_em(doc, found_rules)
 
       fragment = Nokogiri::HTML.fragment(doc.at_css('body').inner_html)
-      file.contents = fragment.to_html
-      #file.contents = RestClient.post('http://typograf.ru/webservice/', :text => file.contents, :chr => 'UTF-8')
+      file.contents = typograf.typograf(fragment.to_html)
       #file.contents = file.contents.gsub(/(?<=[[:space:]\(])["]/, '«')
       #.gsub(/["](?=[\s\.!\?,:;\)\][[:space:]]])(?![>])/, '»')
       #.gsub(/“/, '«')

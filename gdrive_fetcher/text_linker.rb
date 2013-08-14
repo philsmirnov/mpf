@@ -17,8 +17,10 @@ module GDriveImporter
     end
 
     def regexp_helper(s)
-      s = Unicode::normalize_C(@coder.decode(s)).gsub(/[[:space:]]{1,4}/, ' ').strip
-      s.gsub(/[:\-,\.]/, ' ').gsub(/^\d\d/, '').gsub(/[[:space:]][[:space:]]/, ' ').gsub(/(?<=[^0-9\s])(\d)/, ' \\1')
+      s.gsub(/[[:space:]]{1,4}/, ' ').strip.
+          gsub(/[:\-,\.]/, ' ').
+          gsub(/^\d\d/, '').
+          gsub(/(?<=[^0-9\s])(\d)/, ' \\1')
     end
 
     def find_item_in_collection(regexp, title, is_folder)
@@ -51,7 +53,6 @@ module GDriveImporter
 
     def process_links(file)
       file.contents.gsub!(@main_regexp) do |raw_link_text|
-        raw_link_text = Unicode::normalize_C(@coder.decode(raw_link_text))
         puts raw_link_text
 
         is_folder = raw_link_text =~ /с[мр]\.?[[:space:]]*(п(\.|\s)|пап)/i

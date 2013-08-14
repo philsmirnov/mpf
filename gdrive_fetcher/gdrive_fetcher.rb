@@ -7,13 +7,14 @@ require 'pry'
 require 'yaml'
 require 'active_support/core_ext/string/inflections'
 require 'russian'
+require 'thinking_sphinx'
+require 'rest_client'
 
 require_relative 'text_converter'
 require_relative 'file_collection'
 require_relative 'text_linker'
 require_relative 'schema'
-require 'thinking_sphinx'
-require 'rest_client'
+require_relative 'typograf_client'
 
 Bundler.setup
 
@@ -21,7 +22,6 @@ I18n.locale = :'ru'
 I18n.reload!
 
 settings = YAML.load_file('fetcher_settings.yml')
-typograph_settings = IO.read('typograph.xml')
 
 #framework = ThinkingSphinx::Framework::Plain.new
 #ThinkingSphinx::Configuration.instance.framework = framework
@@ -33,9 +33,10 @@ session = GoogleDrive.login(settings['mail'], settings['password'])
 editable_text_collection = session.collection_by_url('https://docs.google.com/feeds/default/private/full/folder%3A0ByqVdNbTHZeOU09jVEtxNklOSEE?v=3')
 
 coder = HTMLEntities.new
+typograf = TypografClient.new(IO.read('typograph.xml'))
 collection = GDriveImporter::FileCollection.new(editable_text_collection, coder)
 
-text_converter = GDriveImporter::TextConverter.new
+text_converter = GDriveImporter::TextConverter.new(typograf)
 root_path ='./source/texts'
 
 text_linker = GDriveImporter::TextLinker.new(
@@ -59,7 +60,7 @@ article_linker = GDriveImporter::TextLinker.new(
     /<em class="underline">.*?<\/em>/i,
     [/(?<=<em class="underline">).*?(?=<\/em>)/i]
 ) do |link_title|
-  link_title = Unicode::normalize_C(coder.decode(link_title)).gsub(/[[:space:]]{1,4}/, ' ')
+  link_title = link_title.gsub(/[[:space:]]{1,4}/, ' ')
   regexp_text = ThinkingSphinx::Connection.take { |con| con.execute "CALL KEYWORDS('#{link_title}', 'article_core')"}.
       map {|res| res['normalized'].encode('ISO-8859-1').force_encoding('UTF-8')}.
       map{|w| Regexp.escape(w) + '.{0,7}'}.
@@ -75,9 +76,7 @@ collection.files.each do |file|
   Article.create_or_update(file, 'text', settings['base_url'])
 
   file.save_original "./gdrive_fetcher/gdrive_originals/google_#{file.title}.html" if settings['mode'] == 'dev'
-
   text_converter.convert file
-  file.contents = RestClient.post('http://typograf.ru/webservice/', :text => file.contents, :chr => 'UTF-8', :xml => typograph_settings)
 
   text_linker.process_links(file) do |links_array|
     'см. ' + links_array.map { |item|
@@ -99,6 +98,7 @@ collection.files.each do |file|
   if file.contents =~ /LEAD(.*?)LEAD/
     file.first_paragraph = file.contents.match(/LEAD(.*?)LEAD/)[1]
   end
+
 
   sleep 1
 end
@@ -160,7 +160,6 @@ personas.
   Article.create_or_update(file, 'persona', settings['base_url'])
   file.save_original "./gdrive_fetcher/gdrive_originals/google_#{file.title}.html" if settings['mode'] == 'dev'
   text_converter.convert(file)
-  file.contents = RestClient.post('http://typograf.ru/webservice/', :text => file.contents, :chr => 'UTF-8', :xml => typograph_settings)
 
   text_linker.process_links(file) do |links_array|
     links_array.map { |item| "<p>#{item[:fof].link_to(file, item[:title], 'texts')} </p>" }.join("\n")
@@ -175,6 +174,7 @@ personas.
     end
   end
 
+  file.contents = typograf.typograf(file.contents)
   file.show_next_three = false
   file.save(path + file.generate_filename)
   sleep 1
@@ -227,7 +227,7 @@ thesaurus.
 
   #убираем отбивку
   file.contents.sub!('</p> <p>', ' ')
-  file.contents = RestClient.post('http://typograf.ru/webservice/', :text => file.contents, :chr => 'UTF-8', :xml => typograph_settings)
+
 
   text_linker.process_links(file) do |links_array|
     file.metadata[:linked_texts] = links_array.map do |item|
@@ -263,6 +263,8 @@ thesaurus.
       sub('<p>Тексты на&nbsp;тему:</p>', ' ').
       sub('<p>Cр.:</p>', ' ')
 
+
+  file.contents = typograf.typograf(file.contents)
   file.show_next_three = false
   file.save(path + file.generate_filename)
   sleep 1
