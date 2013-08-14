@@ -36,7 +36,7 @@ coder = HTMLEntities.new
 typograf = TypografClient.new(IO.read('typograph.xml'))
 collection = GDriveImporter::FileCollection.new(editable_text_collection, coder)
 
-text_converter = GDriveImporter::TextConverter.new(typograf)
+text_converter = GDriveImporter::TextConverter.new
 root_path ='./source/texts'
 
 text_linker = GDriveImporter::TextLinker.new(
@@ -90,6 +90,7 @@ collection.files.each do |file|
     else
       item = links_array.first
       folder_title = item[:fof].parent_folder.title_for_save =~ /glos/ ? 'glossariy' : 'personalii'
+      binding.pry
       "<%= link_to('#{raw_text}',  '/#{folder_title}/#{item[:fof].title_for_save}.html') %>"
     end
   end
@@ -98,8 +99,8 @@ collection.files.each do |file|
   if file.contents =~ /LEAD(.*?)LEAD/
     file.first_paragraph = file.contents.match(/LEAD(.*?)LEAD/)[1]
   end
-
-
+  binding.pry
+  file.contents = typograf.typograf(file.contents)
   sleep 1
 end
 
@@ -144,7 +145,7 @@ f.close
 
 text_linker = GDriveImporter::TextLinker.new(
     [collection],
-    /(?<=Тексты на&nbsp;тему:<\/p>).(.*)/im,
+    /(?<=Тексты на тему:<\/p>).(.*)/im,
     [/(?<=<p>)(.*?)(?=<\/p>)/]
 )
 
@@ -200,13 +201,13 @@ f.close
 
 text_linker = GDriveImporter::TextLinker.new(
     [collection],
-    /(?<=Тексты на&nbsp;тему:<\/p>).(.*)/im,
+    /(?<=Тексты на тему:<\/p>).(.*)/im,
     [/(?<=<p>)(.*?)(?=<\/p>)/]
 )
 
 second_article_linker = GDriveImporter::TextLinker.new(
     [thesaurus],
-    /(?<=<p>См.&nbsp;также:|ср\.:).*?(?=<\/p>)/i,
+    /(?<=<p>См. также:|ср\.:).*?(?=<\/p>)/i,
     [/(?<=<em class="underline">).*?(?=<\/em>)/i,
     /([^,]*)/i]
 )
@@ -259,8 +260,8 @@ thesaurus.
   end
 
   file.contents = file.contents.
-      sub('<p>См.&nbsp;также:</p>', ' ').
-      sub('<p>Тексты на&nbsp;тему:</p>', ' ').
+      sub('<p>См. также:</p>', ' ').
+      sub('<p>Тексты на тему:</p>', ' ').
       sub('<p>Cр.:</p>', ' ')
 
 

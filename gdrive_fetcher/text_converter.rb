@@ -6,10 +6,6 @@ module GDriveImporter
 
   class TextConverter
 
-    def initialize(typograf)
-      @typograf = typograf
-    end
-
     def convert(file)
       @parser = CssParser::Parser.new
       @file   = file
@@ -31,7 +27,8 @@ module GDriveImporter
       change_tags_to_em(doc, found_rules)
 
       fragment = Nokogiri::HTML.fragment(doc.at_css('body').inner_html)
-      file.contents = @typograf.typograf(fragment.to_html)
+      file.contents = fragment.to_html
+      #file.contents = @typograf.typograf(fragment.to_html)
       #file.contents = file.contents.gsub(/(?<=[[:space:]\(])["]/, '«')
       #.gsub(/["](?=[\s\.!\?,:;\)\][[:space:]]])(?![>])/, '»')
       #.gsub(/“/, '«')
