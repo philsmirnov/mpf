@@ -90,7 +90,6 @@ collection.files.each do |file|
     else
       item = links_array.first
       folder_title = item[:fof].parent_folder.title_for_save =~ /glos/ ? 'glossariy' : 'personalii'
-      binding.pry
       "<%= link_to('#{raw_text}',  '/#{folder_title}/#{item[:fof].title_for_save}.html') %>"
     end
   end
@@ -99,7 +98,6 @@ collection.files.each do |file|
   if file.contents =~ /LEAD(.*?)LEAD/
     file.first_paragraph = file.contents.match(/LEAD(.*?)LEAD/)[1]
   end
-  binding.pry
   file.contents = typograf.typograf(file.contents)
   sleep 1
 end
