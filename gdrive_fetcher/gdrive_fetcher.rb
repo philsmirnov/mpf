@@ -46,6 +46,7 @@ text_linker = GDriveImporter::TextLinker.new(
     [/["«“]([^"»”]*?)["»”]/, /с[мр]\.?[[:space:]]*?(.*)/i]
 )
 
+special_linker = GDriveImporter::TextLinker.new([collection, thesaurus, personas])
 
 thesaurus_collection = session.collection_by_url('https://docs.google.com/feeds/default/private/full/folder%3A0B_j0BZPW4BVtR09BMXg3TFhJbG8?v=3')
 thesaurus = GDriveImporter::Folder.new(thesaurus_collection, coder)
@@ -79,13 +80,15 @@ collection.files.each do |file|
   file.save_original "./gdrive_fetcher/gdrive_originals/google_#{file.title}.html" if settings['mode'] == 'dev'
   text_converter.convert file
 
-  text_linker.process_links(file) do |links_array|
+  special_linker.process_links(file.contents)
+
+  text_linker.process_links(file.contents) do |links_array|
     'см. ' + links_array.map { |item|
       item[:fof].link_to(file, item[:title])
     }.join(', ')
   end
 
-  article_linker.process_links(file) do |links_array, raw_text|
+  article_linker.process_links(file.contents) do |links_array, raw_text|
     if links_array.empty?
       raw_text
     else
@@ -161,11 +164,13 @@ personas.
   file.save_original "./gdrive_fetcher/gdrive_originals/google_#{file.title}.html" if settings['mode'] == 'dev'
   text_converter.convert(file)
 
-  text_linker.process_links(file) do |links_array|
+  special_linker.process_links(file.contents)
+
+  text_linker.process_links(file.contents) do |links_array|
     links_array.map { |item| "<p>#{item[:fof].link_to(file, item[:title], 'texts')} </p>" }.join("\n")
   end
 
-  article_linker.process_links(file) do |links_array, raw_text|
+  article_linker.process_links(file.contents) do |links_array, raw_text|
     if links_array.empty?
       raw_text
     else
@@ -228,8 +233,9 @@ thesaurus.
   #убираем отбивку
   file.contents.sub!('</p> <p>', ' ')
 
+  special_linker.process_links(file.contents)
 
-  text_linker.process_links(file) do |links_array|
+  text_linker.process_links(file.contents) do |links_array|
     file.metadata[:linked_texts] = links_array.map do |item|
       {
           :link => item[:fof].link_to(file, item[:title], 'texts'),
@@ -239,7 +245,7 @@ thesaurus.
     nil
   end
 
-  second_article_linker.process_links(file) do |links_array|
+  second_article_linker.process_links(file.contents) do |links_array|
     file.metadata[:linked_articles] = links_array.map do |item|
       {
           :link => item[:fof].link_to(file, item[:title]),
@@ -249,7 +255,7 @@ thesaurus.
     nil
   end
 
-  article_linker.process_links(file) do |links_array, raw_text|
+  article_linker.process_links(file.contents) do |links_array, raw_text|
     if links_array.empty?
       raw_text
     else

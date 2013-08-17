@@ -51,8 +51,8 @@ module GDriveImporter
       find_item_in_collection(regexp, link_title, is_folder)
     end
 
-    def process_links(file)
-      file.contents.gsub!(@main_regexp) do |raw_link_text|
+    def process_links(text)
+      text.gsub!(@main_regexp) do |raw_link_text|
         puts raw_link_text
 
         is_folder = raw_link_text =~ /с[мр]\.?[[:space:]]*(п(\.|\s)|пап)/i
