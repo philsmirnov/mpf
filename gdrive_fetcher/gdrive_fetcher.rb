@@ -13,6 +13,7 @@ require 'rest_client'
 require_relative 'text_converter'
 require_relative 'file_collection'
 require_relative 'text_linker'
+require_relative 'special_linker'
 require_relative 'schema'
 require_relative 'typograf_client'
 
