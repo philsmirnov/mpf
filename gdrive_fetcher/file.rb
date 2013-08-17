@@ -31,6 +31,7 @@ module GDriveImporter
       @parent_folder = folder
       @metadata = {}
       @metadata['title'] = @title
+      @metadata['chapter_title'] = folder.title if folder
 
       @title_for_search = make_title_for_search(@title)
       @title_for_save = make_title_for_save(@title)
@@ -48,7 +49,7 @@ module GDriveImporter
       session = @gdrive_file.instance_variable_get :@session
 
       body = session.request(:get, url, :response_type => :raw, :auth => :writely)
-      body = RestClient.post('http://typograf.ru/webservice/', :text => body, :chr => 'UTF-8')
+      #body = RestClient.post('http://typograf.ru/webservice/', :text => body, :chr => 'UTF-8')
       sleep 1
 
       sio.write(body)
@@ -80,6 +81,7 @@ module GDriveImporter
         @metadata['read_later'] = read_later if read_later
       end
       @metadata['first_paragraph'] = @first_paragraph
+      @metadata['pager'] = @parent_folder.pager(self)
       f.write(generate_metadata)
       f.write(@contents)
       f.close

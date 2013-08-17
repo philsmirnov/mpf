@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html class="no-js" lang="ru" manifest="offline.appcache">
+<html class="no-js" lang="ru" <%=partial 'manifest' %>>
 <head>
-    <%= partial "head" %>
+    <%= partial 'head' %>
 </head>
-    <body>
-        <%= partial "topbar" %>
-        <div id="results" class="row"></div>
-        <!-- Add your site or application content here -->
-        <%= yield %>        
+    <body class="<%= current_page.data.body_class %>">
+        <%= partial("topbar") unless current_page.data.dont_show_topbar %>
+
+        <%= yield %>
 
         <%= partial "bottom_scripts" %>        
-        <%= partial "analytics" %>
+        <!--% = partial "analytics" % -->
     </body>
 </html>

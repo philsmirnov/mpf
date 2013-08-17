@@ -1,41 +1,12 @@
 
-<%= javascript_include_tag 'helper.js' %>
-
-<%= javascript_include_tag 'vendor/jquery.js' %>
-
-
-<!--script>
-document.write('<script src=' +
-  ('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +
-'.js><\/script>')
-</script-->
-
-<%= javascript_include_tag 'foundation.min.js' %>
-
-<!--
-<script src="js/foundation/foundation.js"></script>
-<script src="js/foundation/foundation.alerts.js"></script>
-<script src="js/foundation/foundation.clearing.js"></script>
-<script src="js/foundation/foundation.cookie.js"></script>
-<script src="js/foundation/foundation.dropdown.js"></script>
-<script src="js/foundation/foundation.forms.js"></script>
-<script src="js/foundation/foundation.joyride.js"></script>
-<script src="js/foundation/foundation.magellan.js"></script>
-<script src="js/foundation/foundation.orbit.js"></script>
-<script src="js/foundation/foundation.reveal.js"></script>
-<script src="js/foundation/foundation.section.js"></script>
-<script src="js/foundation/foundation.tooltips.js"></script>
-<script src="js/foundation/foundation.topbar.js"></script>
-<script src="js/foundation/foundation.interchange.js"></script>
-<script src="js/foundation/foundation.placeholder.js"></script>
--->
-
+<%= javascript_include_tag 'helper.js', 'vendor/jquery.js', 'foundation.min.js' %>
+<%= javascript_include_tag 'foundation/foundation.section.js' %>
 <script>
     $(document).foundation();
     MBP.startupImage();
     MBP.preventZoom();
-
-
 </script>
 
-<%= javascript_include_tag 'main.js' %>
+<% if content_for? :js %>
+    <%= javascript_include_tag 'main.js' %>
+<% end %>

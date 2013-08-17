@@ -32,4 +32,13 @@ class Article < ActiveRecord::Base
             "#{file.title_for_save}.html"
     )
   end
+
+  def self.save_result
+    a = Article.where(:resource_id => file.resource_id).first
+    if a
+      a.content = file.fetch_text
+      a.result = file.contents
+      a.metadata = file.metadata.to_yaml
+    end
+  end
 end

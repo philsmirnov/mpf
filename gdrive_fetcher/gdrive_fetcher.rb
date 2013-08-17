@@ -22,6 +22,7 @@ I18n.locale = :'ru'
 I18n.reload!
 
 settings = YAML.load_file('fetcher_settings.yml')
+typograph_settings = IO.read('typograph.xml')
 
 #framework = ThinkingSphinx::Framework::Plain.new
 #ThinkingSphinx::Configuration.instance.framework = framework
@@ -205,7 +206,7 @@ text_linker = GDriveImporter::TextLinker.new(
 
 second_article_linker = GDriveImporter::TextLinker.new(
     [thesaurus],
-    /(?<=<p>См. также:|ср\.:).*?(?=<\/p>)/i,
+    /(?<=<p>см. также:|ср\.:).*?(?=<\/p>)/i,
     [/(?<=<em class="underline">).*?(?=<\/em>)/i,
     /([^,]*)/i]
 )

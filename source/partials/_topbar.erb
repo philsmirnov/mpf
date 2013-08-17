@@ -1,59 +1,31 @@
 <div class="contain-to-grid">
   <nav class="top-bar" data-options="is_hover:false">
-    <ul class="title-area">
-      <!-- Title Area -->
-      <li class="name">
-        <h1>
-          <% link_to '/index.html' do %>
-              <span class="app_normal app_lgray">Человек в Лабиринте&nbsp;&nbsp;</span>
-          <% end %>
-        </h1>
-      </li>
-      <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-      <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
-    </ul>
-
     <section class="top-bar-section">
-      <!-- Left Nav Section -->
-      <ul class="left">
-        <li <% if (current_page.path =~/texts/) || (current_page.path =~/home/) %>    class="active" <% end %>>
+      <ul class="row small-block-grid-5">
+        <li class="contents<%= active_class([/texts/,/home/])%>">
           <% link_to '/home.html' do %>
-            <i zclass="foundicon-compass"></i> Оглавление
+            <i class="foundicon"></i>
           <% end %>
         </li>
-
-        <li <% if (current_page.path =~/glos/) || current_page.path =~/thesaur/ %>  class="active" <% end %>>
+        <li class="glossary<%= active_class([/glos/, /thesaur/])%>">
           <% link_to '/thesaurus.html' do %>
-            <i zclass="foundicon-network accessibility"></i> Глоссарий
+            <i class="foundicon"></i>
           <% end %>
         </li>
-
-        <li <% if (current_page.path =~/personalii/) || current_page.path =~/personas/ %>  class="active" <% end %>>
+        <li class="persons<%= active_class([/personalii/,/personas/])%>">
           <% link_to '/personas.html' do %>
-            <i zclass="foundicon-adult accessibility"></i> Персоналии
+            <i class="foundicon"></i>
           <% end %>
         </li>
-
-        <li <% if current_page.path =~/about/ %>  class="active" <% end %>>
+        <li class="search<%= active_class([/search/])%>">
+          <% link_to '/search.html' do %>
+            <i class="foundicon"></i>
+          <% end %>
+        </li>
+        <li class="settings<%= active_class([/about/])%>">
           <% link_to '/about.html' do %>
-            <i zclass="foundicon-question accessibility"></i> ?
+            <i class="foundicon"></i>
           <% end %>
-        </li>
-      </ul>
-
-      <!-- Right Nav Section -->
-      <ul class="right">
-        <li class="has-form">
-          <form>
-            <div class="row collapse">
-              <div class="small-8 columns">
-                <input id="search-field" type="text" value="">
-              </div>
-              <div class="small-4 columns">
-                <a href="#" class="button"><i class="foundicon-search"></i></a>
-              </div>
-            </div>
-          </form>
         </li>
       </ul>
     </section>

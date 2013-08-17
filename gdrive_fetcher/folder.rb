@@ -104,5 +104,19 @@ title: "#{title}"
       end
     end
 
+    def pager(target)
+      pager = {}
+      i = find_index{|f| f == target}
+      converter = lambda {|f|
+        {
+            :title => f.title,
+            :link => "#{f.title_for_save}.html"
+        }
+      }
+      pager[:prev] = converter.call(@files[i-1]) if i - 1 > 0
+      pager[:next] = converter.call(@files[i+1]) if i + 1 < @files.count
+      pager
+    end
+
   end
 end

@@ -2,37 +2,27 @@
 title: Глоссарий
 ---
 
-<!--
-    <% data.tezaurus.groups.each do |group|%>
-      <div class="gridrow">
-        <% group.each do |file| %>
-            <div class="griditem">
-              <h5>3<sub class="typicn">)</sub></h5>
-              <h3><a href="<%= file[:link] %>"><%= file[:title] %></a></h3>
-              <a href="<%= file[:link] %>"> <%= file[:first_line] %></a>
-            </div>
-        <% end %>
-      </div>
-    <% end %>
- -->
 
 <div class="row">
-  <div class="large-12 columns">
-    <h2 class="app_title app_gray">Глоссарий</h2>
-    <hr />
+  <div class="large-12">
+    <h3 class="app_thin app_gray text-center">Глоссарий</h3>
   </div>
 </div>
 
-<% data.tezaurus.groups.each do |group|%>
-    <div class="row">
-      <% group.each do |file| %>
-          <div class="large-4 columns">
-            <div class="panel app_thes">
-              <h3 class="app_thin"><a href="<%= file[:link] %>"><%= file[:title] %></a> <span class="app_lgray">[1]</span></h3>
-              <p><a href="<%= file[:link] %>" class="app_black"><%= file[:first_line] %></a></p>
-            </div>
-          </div>
-      <% end %>
-    </div>
-<% end %>
+<div class="large-12 bg_gray">
 
+    <% data.tezaurus.groups.each do |group|%>
+        <div class="row">
+          <% group.each do |file| %>
+              <div class="large-4 columns">
+                <div class="panel app_thes">
+                  <h3 class="app_thin"><span class="zakl"><i></i>2</span><a href="<%= file[:link] %>"><%= file[:title] %></a></h3>
+
+                  <p><a href="<%= file[:link] %>" class="app_black"><%= file[:first_line] %></a></p>
+                </div>
+              </div>
+          <% end %>
+        </div>
+    <% end %>
+
+</div>

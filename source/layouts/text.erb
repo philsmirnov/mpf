@@ -1,55 +1,43 @@
-<!DOCTYPE html>
-<html class="no-js" lang="ru" manifest="../../offline.appcache">
-<head>
-  <%= partial 'head' %>
-</head>
-<body>
-    <%= partial 'topbar' %>
-    <div id="results" class="row"></div>
-    <div class="row">
-      <div class="large-12 columns">
-        <h2 class="app_title"><%= current_page_title %> </h2>
-      </div>
+<% wrap_layout :layout do %>
+<% c = current_chapter %>
+<%= partial :pager, :locals => {:title => "Глава #{c[:number]}. #{c[:title]}", :link => '/home.html'} %>
+
+<div class="row">
+  <div class="large-12 bg_gray">
+    <div class="app_text">
+      <h3 class="app_title app_thin text-center"><%= current_page_title %></h3>
+      <p class="app_epigraph">Принимаясь за&nbsp;дело, соберись с&nbsp;духом.</p>
+      <p class="app_epigraph">Козьма Прутков</p>
+      <%= yield %>
     </div>
+  </div>
 
-    <!--div class="row">
-      <div class="large-12 columns">
-        <p class="app_quote app_gray">И так без конца, без счета, без дней в тихом мраке ночи люди идут мимо Богини, жаждут чего-то, смотрят и дальше идут, и нет конца их движению.<br>
-          (Владимир Шмаков. Священная книга Тота)
-        </p>
-      </div>
-    </div-->
-
-
-    <div class="row">
-      <div class="large-12 columns">
-
-        <div class="app_text">
-          <%= yield %>
-        </div>
-      </div>
-
-      <% if current_page.data.read_later %>
-          <div class="large-12 columns">
-            <h3 class="app_normal app_lgray">Читать дальше:</h3>
-            <hr />
-          </div>
-
-          <% current_page.data.read_later.each do |text| %>
-
-          <div class="large-4 columns app_smaller">
-            <h4 class="app_normal"><a href="<%= text[:link] %>"><%= text[:title] %></a></h4>
-            <p>
-              <%= link_to truncate(text[:first_paragraph], :length => 150), text[:link], :class => 'app_dgray'  %>
-            </p>
-          </div>
-
-          <% end %>
-      <% end %>
+  <div class="large-12 bg_gray">
+    <div class="keywords clearfix">
+      <h4 class="app_title app_thin app_h4">Ключевые слова</h4>
+      <ul class="app_keywords">
+        <li><a href="#">бейсик</a></li>
+        <li><a href="#">психотерапия</a></li>
+        <li><a href="#">семейная история</a></li>
+        <li><a href="#">разотождествление</a></li>
+      </ul>
     </div>
+  </div>
+
+  <% if current_page.data.read_later %>
+  <div class="large-12 bg_gray">
+    <div class="app_next">
+      <h4 class="app_title app_thin app_h4">Читать дальше:</h4>
+      <ul class="ul_sub_cont app_dashed_top">
+        <% current_page.data.read_later.each do |text| %>
+        <li class="app_chapter"><a href="<%= text[:link] %>"><%= text[:title] %></a></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <% end %>
 
 
-    <%= partial 'bottom_scripts' %>
-    <%= partial 'analytics' %>
-</body>
-</html>
+</div>
+<%= partial :pager, :locals => {:title => "Глава #{c[:number]}. #{c[:title]}", :link => '/home.html'} %>
+<% end %>

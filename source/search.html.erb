@@ -1,0 +1,26 @@
+---
+title: Поиск
+---
+
+<div class="row">
+  <div class="large-12">
+    <div class="has-form">
+      <form action="search_results.html">
+        <input id="search-field" type="text" value="">
+      </form>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="large-12 bg_gray search_cont text-center">
+    <p class="app_lgray">Поиск идет по всем текстам и глоссарию.<br />Для поиска необходимо подключение к сети.</p>
+  </div>
+</div>
+
+
+<div id="results" class="row">
+  <div class="large-12 search_cont" style="display:none;">
+  </div>
+</div>
+
+<% content_for(:js, 'main.js') %>

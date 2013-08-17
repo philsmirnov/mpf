@@ -58,6 +58,8 @@ end
 
 set :relative_links, true
 
+set :offline, false
+
 
 # Proxy (fake) files
 # page "/this-page-has-no-template.html", :proxy => "/template-file.html" do
@@ -76,6 +78,31 @@ helpers do
   def current_page_title
     (current_page.data.title? && current_page.data.title)  || 'PAPPUSH'
   end
+
+  def active_class(regexps)
+    ' active' if regexps.any?{|r| current_page.path =~ r}
+  end
+
+  def double_dots
+    '../' * (current_page.url.count('/') - 1)
+  end
+
+  def current_chapter
+    #(current_page.data.chapter_title? && current_page.data.chapter_title)  || 'Глава 1. Лабиринт'
+    data.home.chapters.each do |c|
+      return c if c[:files].find {|f| f[:title_for_save] =~ Regexp.new(current_page.path.split('/').last)}
+    end
+    return nil
+  end
+
+  def pager(direction)
+    if current_page.data.pager && current_page.data.pager[direction]
+      current_page.data.pager[direction][:link]
+    else
+      "#"
+    end
+  end
+
 end
 
 set :css_dir, 'css'
@@ -108,6 +135,7 @@ configure :build do
   # Or use a different image path
   #set :http_path, "/mp"
 end
+
 
 offline = Rack::Offline.configure {}
 map('/offline.appcache') { run offline }

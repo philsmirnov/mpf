@@ -2,23 +2,50 @@
 title: Оглавление
 ---
 
-<%= partial 'there_is_exit' %>
-
 <div class="row">
-  <%= partial 'sidebar_contents'%>
+  <div class="large-12">
+    <h3 class="app_thin app_gray text-center">Оглавление</h3>
+    <!--ul class="ul_cont app_spaced li_none"-->
+      <div class="section-container accordion" data-section="accordion">
+      <li class="app_sup_chapter li_intro"><a href="intro.html">Введение</a></li>
 
-  <div class="large-8 columns">
-    <% first_chapter = data.home.chapters.first %>
-    <h3 class="app_thin app_lgray">Глава <%= first_chapter[:number] %>. <%= first_chapter[:title] %></h3>
-    <% first_chapter.files.each do |file| %>
-        <h4 class="app_chapter">
-          <% puts file[:title_for_save] %>
-          <%= puts url_for "/texts/#{file[:title_for_save]}" %>
-          <%= link_to file[:title], "/texts/#{file[:title_for_save]}" %>
-        </h4>
-        <p>
-          <%= link_to truncate("#{file[:first_paragraph]}", :length => 150), "/texts/#{file[:title_for_save]}", :class => "app_black" %>
-        </p>
-    <% end %>
+      <% data.home.chapters.each do |chapter|  %>
+          <section>
+          <!--li class="app_sup_chapter"-->
+            <p class="title" data-section-title>
+            <% link_to "/texts/#{chapter[:title_for_save]}/index.html" do %>
+                <span class="arrow"></span><%= "Глава #{chapter[:number]}. #{chapter[:title]}" %>
+            <% end %>
+            </p>
+            <div class="content" data-section-content>
+              <ul class="ul_sub_cont li_none">
+                <% chapter.files.each do |f| %>
+                    <li class="app_chapter">
+                      <%= link_to f[:title],  "/texts/#{f[:title_for_save]}" %>
+                    </li>
+                <% end %>
+              </ul>
+            </div>
+          </section>
+      <% end %>
+    </div>
+
+
+    <!--li class="app_sup_chapter li_labirint active">
+        <div class="li_activ_cont clearfix">
+            <a href="texts/labirint/">Глава 1. Лабиринт <span class="arrow"></span></a>
+            <p>Вся наша жизнь в каком-то смысле — сон, утверждает Гурджиев, — причем сон гипнотический. И в этом сне мы как-будто оказываемся в лабиринте. Лабиринт содержит петли и ловушки, но, как в компьютерной игре, также и артефакты, от которых можно получить энергию и полезные для перехода наверх средства, и порталы — места, где такой переход возможен.</p>
+            <span class="corner"></span>
+        </div>
+        <ul class="ul_sub_cont">
+            <li class="app_chapter"><a href="texts/labirint/labirint-zhizni.html">Лабиринт жизни</a></li>
+        </ul>
+
+    </li>
+
+</ul-->
   </div>
+
 </div>
+
+

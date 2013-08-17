@@ -3,24 +3,33 @@ title: Персоналии
 ---
 
 <div class="row">
-  <div class="large-12 columns">
-    <h2 class="app_title app_gray">Персоналии</h2>
-    <hr />
+  <div class="large-12">
+    <h3 class="app_thin app_gray text-center">Персоналии</h3>
   </div>
 </div>
 
 <% data.personas.groups.each do |group|%>
-    <div class="row">
-      <% group.each do |file| %>
-          <div class="large-4 columns">
-            <div class="panel app_thes">
-              <a href="<%= file[:link] %>">
-                <%= image_tag "/img/personas/#{file[:title].parameterize}.png", :class => 'app_photo' %>
-              </a>
-              <h3 class="app_thin"><a href="<%= file[:link] %>"><%= file[:title] %></a></h3>
-              <p><a href="<%= file[:link] %>" class="app_black"><%= file[:first_line] %></a></p>
-            </div>
-          </div>
-      <% end %>
+    <div class="large-12 bg_gray">
+        <div class="row">
+          <% group.each do |file| %>
+              <div class="large-4 columns">
+                <div class="panel app_thes app_personas">
+                  <table class="pers_top">
+                    <tr>
+                      <td class="td_app_photo">
+                        <a href="<%= file[:link] %>">
+                          <%= image_tag "/img/personas/#{file[:title].parameterize}.png", :class => 'app_photo' %>
+                        </a>
+                      </td>
+                      <td><h3 class="app_thin"><a href="<%= file[:link] %>"><%= file[:title] %> <span class="character">(1905-1972)</span></a></h3></td>
+                      <td class="td_read_more"><a href="<%= file[:link] %>" class="read_more"></a></td>
+                    </tr>
+                  </table>
+                  <p><a href="<%= file[:link] %>" class="app_gray"><%= file[:first_line] %></a></p>
+                </div>
+              </div>
+          <% end %>
+        </div>
     </div>
 <% end %>
+

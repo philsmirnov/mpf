@@ -90,7 +90,7 @@ select {
   margin-right: auto;
   margin-top: 0;
   margin-bottom: 0;
-  max-width: 62.5em;
+  /*max-width: 62.5em;*/
   *zoom: 1; }
   .row:before, .row:after {
     content: " ";
@@ -2610,9 +2610,11 @@ form.custom {
 /* Wrapped around .top-bar to contain to grid width */
 .contain-to-grid {
   width: 100%;
-  background: #444444; }
+  background:#fff;
+ }
   .contain-to-grid .top-bar {
-    margin-bottom: 0; }
+    margin-bottom: 0; 
+	background:#e5e5e5;}
 
 .fixed {
   width: 100%;
@@ -2623,10 +2625,8 @@ form.custom {
 
 .top-bar {
   overflow: hidden;
-  height: 45px;
   line-height: 45px;
   position: relative;
-  background: #444444;
   margin-bottom: 1.875em; }
   .top-bar ul {
     margin-bottom: 0;
@@ -2704,24 +2704,23 @@ form.custom {
         -webkit-box-shadow: 0 10px 0 1px #888888, 0 16px 0 1px #888888, 0 22px 0 1px #888888;
         box-shadow: 0 10px 0 1px #888888, 0 16px 0 1px #888888, 0 22px 0 1px #888888; }
 
-.top-bar-section {
+.top-bar-section, .bottom-bar-section {
   left: 0;
   position: relative;
   width: auto;
   -webkit-transition: left 300ms ease-out;
   -moz-transition: left 300ms ease-out;
   transition: left 300ms ease-out; }
-  .top-bar-section ul {
+  .top-bar-section ul, .bottom-bar-section ul {
     width: 100%;
     height: auto;
     display: block;
-    background: #222222;
     font-size: 16px;
     margin: 0; }
   .top-bar-section .divider,
-  .top-bar-section [role="separator"] {
-    border-bottom: solid 1px #2b2b2b;
-    border-top: solid 1px black;
+  .top-bar-section,
+  .bottom-bar-section .divider,
+  .bottom-bar-section [role="separator"] {
     clear: both;
     height: 1px;
     width: 100%; }
@@ -2732,8 +2731,7 @@ form.custom {
     padding: 12px 0 12px 0;
     padding-left: 15px;
     font-size: 0.8125em;
-    font-weight: bold;
-    background: #222222; }
+    font-weight: bold; }
     .top-bar-section ul li > a.hover {
       background: #090909;
       color: white; }
@@ -2755,7 +2753,7 @@ form.custom {
       .top-bar-section ul li > a.button.alert.hover {
         background: #970b0e; }
   .top-bar-section ul li.active > a {
-    background: #090909;
+    background: #fff;
     color: white; }
   .top-bar-section .has-form {
     padding: 15px; }
@@ -2813,9 +2811,8 @@ form.custom {
 
 @media only screen and (min-width: 58.75em) {
   .top-bar {
-    background: #444444;
     *zoom: 1;
-    overflow: visible; }
+    /*overflow: visible;*/ }
     .top-bar:before, .top-bar:after {
       content: " ";
       display: table; }
@@ -2836,34 +2833,33 @@ form.custom {
       position: relative;
       top: 8px; }
     .top-bar.expanded {
-      background: #444444; }
+       }
 
   .contain-to-grid .top-bar {
     max-width: 62.5em;
     margin: 0 auto; }
 
-  .top-bar-section {
+  .top-bar-section, .bottom-bar-section {
     -webkit-transition: none 0 0;
     -moz-transition: none 0 0;
     transition: none 0 0;
     left: 0 !important; }
-    .top-bar-section ul {
+    .top-bar-section ul, .bottom-bar-section ul {
       width: auto;
       height: auto !important;
       display: inline; }
       .top-bar-section ul li {
         float: left; }
-        .top-bar-section ul li .js-generated {
+        .top-bar-section ul li .js-generated, .bottom-bar-section ul li .js-generated {
           display: none; }
-    .top-bar-section li a:not(.button) {
-      padding: 0 15px;
-      line-height: 45px;
-      background: #444444; }
-      .top-bar-section li a:not(.button).hover {
+    .top-bar-section li a:not(.button), .bottom-bar-section li a:not(.button) {
+      padding: 10px 15px;
+      line-height: 45px; }
+      .top-bar-section li a:not(.button).hover, .top-bar-section li a:not(.button).hover {
         background: black; }
-    .top-bar-section .has-dropdown > a {
+    .top-bar-section .has-dropdown > a, .bottom-bar-section .has-dropdown > a {
       padding-right: 35px !important; }
-      .top-bar-section .has-dropdown > a:after {
+      .top-bar-section .has-dropdown > a:after, .bottom-bar-section .has-dropdown > a:after {
         content: "";
         display: block;
         width: 0;
@@ -3707,7 +3703,7 @@ kbd {
 .panel {
   border-style: solid;
   border-width: 1px;
-  border-color: #d9d9d9;
+  border-color: #f3f3f3;
   margin-bottom: 1.25em;
   padding: 1.25em;
   background: #fff; }

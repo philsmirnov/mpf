@@ -1,51 +1,44 @@
-<!DOCTYPE html>
-<html class="no-js" lang="ru" manifest="../offline.appcache">
-<head>
-  <%= partial 'head' %>
-</head>
-<body>
-    <%= partial 'topbar' %>
-    <div id="results" class="row"></div>
-    <div class="row">
+<% wrap_layout :layout do %>
 
-      <div class="large-12 columns">
-        <hr>
-        <div class="panel app_thes">
-          <h2 class="app_normal"><%= current_page_title %></h2>
+    <%= partial :pager, :locals => {:title => "Глоссарий", :link => '../thesaurus.html'} %>
+
+    <div class="row">
+      <div class="large-12 bg_gray">
+        <div class="app_text">
+          <h2 class="app_title app_thin text-center"><%= current_page_title %></h2>
           <p class="app_black">
             <%= yield %>
           </p>
-
-          <% if current_page.data.linked_articles && !current_page.data.linked_articles.empty? %>
-          <p><span class="app_bold">Связанные понятия:</span>
-            <%= current_page.data.linked_articles.map { |la| la[:link] }.join(', ') %>
-          </p>
-          <% end %>
         </div>
       </div>
 
-    </div>
+      <% if current_page.data.linked_articles && !current_page.data.linked_articles.empty? %>
+          <div class="large-12 bg_gray">
+            <div class="keywords clearfix">
+              <h4 class="app_title app_thin app_h4">Связанные понятия:</h4>
+              <ul class="app_keywords">
+                <li><a href="#">контакт</a></li>
+                <% current_page.data.linked_articles.each do |la|  %>
+                    <li><%=la[:link]%></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+      <% end %>
+
     <% if current_page.data.linked_texts && !current_page.data.linked_texts.empty? %>
-    <div class="row">
-
-      <div class="large-12 columns">
-        <h4 class="app_normal app_lgray">Читать по теме:</h4>
-        <hr />
-      </div>
-
-    </div>
-    <div class="row">
-      <div class="large-12 columns app_smaller">
-        <%current_page.data.linked_texts.each do |txt| %>
-        <h4 class="app_normal"><%= txt[:link] %></h4>
-        <p class="app_dgray"><%= txt[:first_paragraph] %></p>
-        <%end%>
-      </div>
-    </div>
+          <div class="large-12 bg_gray">
+            <div class="app_next">
+              <h4 class="app_title app_thin app_h4"><span class="zakl"><i></i>1</span>Тексты по теме:</h4>
+              <ul class="ul_sub_cont app_dashed_top">
+                <%current_page.data.linked_texts.each do |txt| %>
+                  <li class="app_chapter"><%= txt[:link] %></li>
+                <%end%>
+              </ul>
+            </div>
+          </div>
     <% end %>
 
-    <%= partial 'bottom_scripts' %>
-    <%= partial 'analytics' %>
+    </div>
 
-</body>
-</html>
+<% end %>
