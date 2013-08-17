@@ -54,7 +54,7 @@ personas_collection = session.collection_by_url('https://docs.google.com/feeds/d
 personas = GDriveImporter::Folder.new(personas_collection, coder)
 personas.import
 
-special_linker = GDriveImporter::TextLinker.new([collection, thesaurus, personas])
+special_linker = GDriveImporter::SpecialLinker.new([collection, thesaurus, personas])
 
 article_linker = GDriveImporter::TextLinker.new(
     [thesaurus, personas],
