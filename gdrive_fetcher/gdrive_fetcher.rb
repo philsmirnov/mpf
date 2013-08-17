@@ -46,8 +46,6 @@ text_linker = GDriveImporter::TextLinker.new(
     [/["«“]([^"»”]*?)["»”]/, /с[мр]\.?[[:space:]]*?(.*)/i]
 )
 
-special_linker = GDriveImporter::TextLinker.new([collection, thesaurus, personas])
-
 thesaurus_collection = session.collection_by_url('https://docs.google.com/feeds/default/private/full/folder%3A0B_j0BZPW4BVtR09BMXg3TFhJbG8?v=3')
 thesaurus = GDriveImporter::Folder.new(thesaurus_collection, coder)
 thesaurus.import
@@ -56,6 +54,7 @@ personas_collection = session.collection_by_url('https://docs.google.com/feeds/d
 personas = GDriveImporter::Folder.new(personas_collection, coder)
 personas.import
 
+special_linker = GDriveImporter::TextLinker.new([collection, thesaurus, personas])
 
 article_linker = GDriveImporter::TextLinker.new(
     [thesaurus, personas],
