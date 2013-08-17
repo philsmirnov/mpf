@@ -99,7 +99,7 @@ collection.files.each do |file|
   if file.contents =~ /LEAD(.*?)LEAD/
     file.first_paragraph = file.contents.match(/LEAD(.*?)LEAD/)[1]
   end
-  file.contents = typograf.typograf(file.contents)
+  file.contents = typograf.typografy(file.contents)
   sleep 1
 end
 
@@ -174,7 +174,7 @@ personas.
     end
   end
 
-  file.contents = typograf.typograf(file.contents)
+  file.contents = typograf.typografy(file.contents)
   file.show_next_three = false
   file.save(path + file.generate_filename)
   sleep 1
@@ -264,7 +264,7 @@ thesaurus.
       sub('<p>Cр.:</p>', ' ')
 
 
-  file.contents = typograf.typograf(file.contents)
+  file.contents = typograf.typografy(file.contents)
   file.show_next_three = false
   file.save(path + file.generate_filename)
   sleep 1

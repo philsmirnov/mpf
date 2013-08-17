@@ -4,7 +4,7 @@ class TypografClient
     @typograph_settings = typograph_settings
   end
 
-  def typograf(text)
+  def typografy(text)
     RestClient.post('http://typograf.ru/webservice/', :text => text, :chr => 'UTF-8', :xml => @typograph_settings).
     gsub(/&lt;%/, '<%').
     gsub(/%&gt;/, '%>')
