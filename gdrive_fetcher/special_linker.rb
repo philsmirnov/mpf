@@ -5,12 +5,12 @@ module GDriveImporter
   class SpecialLinker < TextLinker
 
     def initialize(collections)
-      super(collections, /\[\[.*?\]\[.*?\]\]/, [/(?<=\[\[).*?(?=\])/])
+      super(collections, /\[[^\]]*\]\s?\([^\)]*\)/, [/(?<=\().*(?=\))/])
     end
 
     def process_links(text)
       super(text) do |links_array, raw_text|
-        link_title = raw_text[/(?<=\]\[).*?(?=\])/]
+        link_title = raw_text[/(?<=\[).*(?=\])/]
         if links_array.empty?
           raw_text
         else

@@ -57,20 +57,8 @@ personas.import
 
 special_linker = GDriveImporter::SpecialLinker.new([collection, thesaurus, personas])
 
-article_linker = GDriveImporter::TextLinker.new(
-    [thesaurus, personas],
-    /<em class="underline">.*?<\/em>/i,
-    [/(?<=<em class="underline">).*?(?=<\/em>)/i]
-) do |link_title|
-  link_title = link_title.gsub(/[[:space:]]{1,4}/, ' ')
-  regexp_text = ThinkingSphinx::Connection.take { |con| con.execute "CALL KEYWORDS('#{link_title}', 'article_core')"}.
-      map {|res| res['normalized'].encode('ISO-8859-1').force_encoding('UTF-8')}.
-      map{|w| Regexp.escape(w) + '.{0,7}'}.
-      join('')
-  regexp = Regexp.new(regexp_text, 'i')
-  puts regexp
-  regexp
-end
+article_linker = GDriveImporter::ArticleLinker.new([thesaurus, personas])
+
 
 collection.files.each do |file|
   puts "#{file.number} #{file.title}"
@@ -88,14 +76,9 @@ collection.files.each do |file|
     }.join(', ')
   end
 
-  article_linker.process_links(file.contents) do |links_array, raw_text|
-    if links_array.empty?
-      raw_text
-    else
-      item = links_array.first
-      folder_title = item[:fof].parent_folder.title_for_save =~ /glos/ ? 'glossariy' : 'personalii'
-      "<%= link_to('#{raw_text}',  '/#{folder_title}/#{item[:fof].title_for_save}.html') %>"
-    end
+  found_articles = article_linker.process_links(file.contents)
+  file.metadata[:linked_articles] = found_articles.map do |item|
+    { :link => item[:fof].link_to(file, item[:title]) }
   end
 
   #LEAD
@@ -170,13 +153,9 @@ personas.
     links_array.map { |item| "<p>#{item[:fof].link_to(file, item[:title], 'texts')} </p>" }.join("\n")
   end
 
-  article_linker.process_links(file.contents) do |links_array, raw_text|
-    if links_array.empty?
-      raw_text
-    else
-      item = links_array.first
-      item[:fof].link_to(file, item[:title])
-    end
+  article_linker.process_links(file.contents)
+  file.metadata[:linked_articles] = found_articles.map do |item|
+    { :link => item[:fof].link_to(file, item[:title]) }
   end
 
   file.contents = typograf.typografy(file.contents)
@@ -255,13 +234,11 @@ thesaurus.
     nil
   end
 
-  article_linker.process_links(file.contents) do |links_array, raw_text|
-    if links_array.empty?
-      raw_text
-    else
-      item = links_array.first
-      item[:fof].link_to(file, item[:title])
-    end
+  article_linker.process_links(file.contents)
+  if file.metadata[:linked_articles] = nil || file.metadata[:linked_articles].length == 0
+    file.metadata[:linked_articles] = found_articles.map do |item|
+      { :link => item[:fof].link_to(file, item[:title]) }
+      end
   end
 
   file.contents = file.contents.

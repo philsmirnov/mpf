@@ -22,8 +22,10 @@ class SpecialLinkerTest < Test::Unit::TestCase
 
 
     sp = GDriveImporter::SpecialLinker.new [c]
-    res = sp.process_links " qdqdeowjd wdjdfj wdjwfjdwejf [[you][LUCKY YOU]]"
-    assert res == " qdqdeowjd wdjdfj wdjwfjdwejf <%= link_to('LUCKY YOU',  '/texts/col_title_for_save/title_for_save.html') %>"
+    result = "qdqdeowjd wdjdfj wdjwfjdwejf [LUCKY YOU](you)"
+    sp.process_links result
+    expected = "qdqdeowjd wdjdfj wdjwfjdwejf <%= link_to('LUCKY YOU',  '/texts/col_title_for_save/title_for_save.html') %>"
+    assert result == expected, lambda {"expected #{expected}, got #{result}"}
   end
 end
 
