@@ -14,6 +14,7 @@ require_relative 'text_converter'
 require_relative 'file_collection'
 require_relative 'text_linker'
 require_relative 'special_linker'
+require_relative 'article_linker'
 require_relative 'schema'
 require_relative 'typograf_client'
 
@@ -153,7 +154,7 @@ personas.
     links_array.map { |item| "<p>#{item[:fof].link_to(file, item[:title], 'texts')} </p>" }.join("\n")
   end
 
-  article_linker.process_links(file.contents)
+  found_articles = article_linker.process_links(file.contents)
   file.metadata[:linked_articles] = found_articles.map do |item|
     { :link => item[:fof].link_to(file, item[:title]) }
   end
@@ -234,7 +235,7 @@ thesaurus.
     nil
   end
 
-  article_linker.process_links(file.contents)
+  found_articles = article_linker.process_links(file.contents)
   if file.metadata[:linked_articles] = nil || file.metadata[:linked_articles].length == 0
     file.metadata[:linked_articles] = found_articles.map do |item|
       { :link => item[:fof].link_to(file, item[:title]) }
