@@ -236,7 +236,7 @@ thesaurus.
   end
 
   found_articles = article_linker.process_links(file.contents)
-  if file.metadata[:linked_articles] = nil || file.metadata[:linked_articles].length == 0
+  if file.metadata[:linked_articles] == nil || file.metadata[:linked_articles].length == 0
     file.metadata[:linked_articles] = found_articles.map do |item|
       { :link => item[:fof].link_to(file, item[:title]) }
       end
