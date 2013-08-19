@@ -13,12 +13,10 @@ $("#search-field").keyup(function(e){
             function(data) {
                 $results.empty();
                 $.each(data, function(i,item){
-                    var article_type = item.article_type == 'persona' ? "Персоналии" : "Глоссарий"
-                    var parent_link = item.article_type == 'persona' ? "../personas.html" : "../thesaurus.html"
                     $results.append(
                         '<div class="app_search_results">' +
-                        '<h4 class="app_thin"><a href="' + parent_link +
-                        '" class="app_lgray">' + article_type + '</a></h4>' +
+                        '<h4 class="app_thin"><a href="' + item.parent_link +
+                        '" class="app_lgray">' + item.article_type + '</a></h4>' +
                         '<h3 class="app_thin"><a href="' + item.url + '">' + item.name + '</a></h3>' +
                         '<p class="app_gray">' + item.excerpts + '</p></div>');
                 });
