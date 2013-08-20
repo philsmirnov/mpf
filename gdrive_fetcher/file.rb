@@ -106,7 +106,13 @@ module GDriveImporter
       folder = target_file.parent_folder == @parent_folder ? '' : "../#{@parent_folder.title_for_save}/"
       folder = "../#{path}/#{@parent_folder.title_for_save}/" if path
       "<a href='#{folder}#{@title_for_save}.html'>#{title}</a>"
-      "<%= link_to #{title}, /#{@title_for_save}.html %>"
+    end
+
+    def link_to2(target_file, title = nil, path = nil)
+      title ||= @title
+      folder = target_file.parent_folder == @parent_folder ? '' : "../#{@parent_folder.title_for_save}/"
+      folder = "../#{path}/#{@parent_folder.title_for_save}/" if path
+      "<%= link_to('#{title}', '/#{@title_for_save}.html') %>"
     end
   end
 end

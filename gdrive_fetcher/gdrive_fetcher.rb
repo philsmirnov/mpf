@@ -60,7 +60,6 @@ special_linker = GDriveImporter::SpecialLinker.new([collection, thesaurus, perso
 
 article_linker = GDriveImporter::ArticleLinker.new([thesaurus, personas])
 
-
 collection.files.each do |file|
   puts "#{file.number} #{file.title}"
   file.fetch
@@ -79,7 +78,12 @@ collection.files.each do |file|
 
   found_articles = article_linker.process_links(file.contents)
   file.metadata[:linked_articles] = found_articles.map do |item|
-    { :link => item[:fof].link_to(file) }
+    {
+        :file_link => item[:fof].link_to2(file),
+        :link => item[:fof].link_to(file, item[:title]),
+        :original_title => item[:title],
+        :file_title => item[:fof].title
+    }
   end
 
   #LEAD
@@ -156,7 +160,12 @@ personas.
 
   found_articles = article_linker.process_links(file.contents)
   file.metadata[:linked_articles] = found_articles.map do |item|
-    { :link => item[:fof].link_to(file) }
+    {
+        :file_link => item[:fof].link_to2(file),
+        :link => item[:fof].link_to(file, item[:title]),
+        :original_title => item[:title],
+        :file_title => item[:fof].title
+    }
   end
 
   file.contents = typograf.typografy(file.contents)
@@ -228,8 +237,10 @@ thesaurus.
   second_article_linker.process_links(file.contents) do |links_array|
     file.metadata[:linked_articles] = links_array.map do |item|
       {
+          :file_link => item[:fof].link_to2(file),
           :link => item[:fof].link_to(file, item[:title]),
-          :first_paragraph => item[:fof].respond_to?(:first_paragraph) ? item[:fof].first_paragraph : nil
+          :original_title => item[:title],
+          :file_title => item[:fof].title
       }
     end
     nil
@@ -238,7 +249,12 @@ thesaurus.
   found_articles = article_linker.process_links(file.contents)
   if file.metadata[:linked_articles] == nil || file.metadata[:linked_articles].length == 0
     file.metadata[:linked_articles] = found_articles.map do |item|
-      { :link => item[:fof].link_to(file) }
+      {
+          :file_link => item[:fof].link_to2(file),
+          :link => item[:fof].link_to(file, item[:title]),
+          :original_title => item[:title],
+          :file_title => item[:fof].title
+      }
       end
   end
 
