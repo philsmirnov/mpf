@@ -17,7 +17,6 @@
             <div class="keywords clearfix">
               <h4 class="app_title app_thin app_h4">Связанные понятия:</h4>
               <ul class="app_keywords">
-                <li><a href="#">контакт</a></li>
                 <% current_page.data.linked_articles.each do |la|  %>
                     <li><%=la[:link]%></li>
                 <% end %>

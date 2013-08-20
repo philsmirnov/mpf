@@ -16,10 +16,9 @@
     <div class="keywords clearfix">
       <h4 class="app_title app_thin app_h4">Ключевые слова</h4>
       <ul class="app_keywords">
-        <li><a href="#">бейсик</a></li>
-        <li><a href="#">психотерапия</a></li>
-        <li><a href="#">семейная история</a></li>
-        <li><a href="#">разотождествление</a></li>
+        <% current_page.data.linked_articles.each do |la|  %>
+            <li><%=la[:link]%></li>
+        <% end %>
       </ul>
     </div>
   </div>
