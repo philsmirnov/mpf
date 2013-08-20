@@ -15,7 +15,7 @@
   <% if current_page.data.linked_articles && !current_page.data.linked_articles.empty? %>
   <div class="large-12 bg_gray">
     <div class="keywords clearfix">
-      <h4 class="app_title app_thin app_h4">Ключевые слова</h4>
+      <h4 class="app_title app_thin app_h4">Связанные понятия</h4>
       <ul class="app_keywords">
         <% current_page.data.linked_articles.each do |la|  %>
             <li><%=la[:link]%></li>

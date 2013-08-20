@@ -27,6 +27,7 @@
       </div>
       <% end %>
 
+      <% if current_page.data.linked_texts && !current_page.data.linked_texts.empty? %>
       <div class="large-12 bg_gray">
         <div class="app_next">
           <h4 class="app_title app_thin app_h4">Читать по теме:</h4>
@@ -37,6 +38,7 @@
           </ul>
         </div>
       </div>
+      <% end %>
 
   </div>
 
