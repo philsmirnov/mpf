@@ -14,32 +14,9 @@
       </div>
     </div>
 
-      <% if current_page.data.linked_articles && !current_page.data.linked_articles.empty? %>
-      <div class="large-12 bg_gray">
-        <div class="keywords clearfix">
-          <h4 class="app_title app_thin app_h4">Связанные понятия:</h4>
-          <ul class="app_keywords">
-            <% current_page.data.linked_articles.each do |la|  %>
-                <li><%=la[:link]%></li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-      <% end %>
+    <%= partial 'linked_articles' %>
+    <%= partial 'linked_texts' %>
 
-      <% if current_page.data.linked_texts && !current_page.data.linked_texts.empty? %>
-      <div class="large-12 bg_gray">
-        <div class="app_next">
-          <h4 class="app_title app_thin app_h4">Читать по теме:</h4>
-          <ul class="ul_sub_cont app_dashed_top">
-            <li class="app_chapter"><a href="texts/labirint/praktika-ekzistentsialnogo-vybora.html">Практика экзистенциального выбора</a></li>
-            <li class="app_chapter"><a href="texts/labirint/tri-otstroyki-1-otstroyka-ot-sotsiuma.html">Три отстройки (1): отстройка от социума</a></li>
-            <li class="app_chapter"><a href="texts/labirint/drugaya-tochka-opory.html">Другая точка опоры</a></li>
-          </ul>
-        </div>
-      </div>
-      <% end %>
-
-  </div>
+    </div>
 
 <% end %>

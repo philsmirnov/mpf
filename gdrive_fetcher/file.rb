@@ -43,6 +43,26 @@ module GDriveImporter
       @original_contents = ::Unicode::normalize_C(@coder.decode(@original_contents))
     end
 
+    def has_no_linked_articles
+      @metadata[:linked_articles] == nil || @metadata[:linked_articles].length == 0
+    end
+
+    def to_linked_article(original_title)
+      {
+          :original_title => original_title,
+          :file_title => @title,
+          :file_name => @title_for_save,
+          :parent_folder => @parent_folder.title_for_save,
+          :is_folder => false
+      }
+    end
+
+    def set_linked_articles(found_articles)
+      @metadata[:linked_articles] = found_articles.map do |item|
+        item[:fof].to_linked_article(item[:title])
+      end
+    end
+
     def fetch_text
       sio = StringIO.new()
       url = @gdrive_file.document_feed_entry.css("content").first["src"] + "&format=txt"

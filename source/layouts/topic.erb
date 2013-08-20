@@ -12,31 +12,9 @@
         </div>
       </div>
 
-      <% if current_page.data.linked_articles && !current_page.data.linked_articles.empty? %>
-          <div class="large-12 bg_gray">
-            <div class="keywords clearfix">
-              <h4 class="app_title app_thin app_h4">Связанные понятия:</h4>
-              <ul class="app_keywords">
-                <% current_page.data.linked_articles.each do |la|  %>
-                    <li><%=la[:link]%></li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
-      <% end %>
+    <%= partial 'linked_articles' %>
 
-    <% if current_page.data.linked_texts && !current_page.data.linked_texts.empty? %>
-          <div class="large-12 bg_gray">
-            <div class="app_next">
-              <h4 class="app_title app_thin app_h4"><span class="zakl"><i></i>1</span>Тексты по теме:</h4>
-              <ul class="ul_sub_cont app_dashed_top">
-                <%current_page.data.linked_texts.each do |txt| %>
-                  <li class="app_chapter"><%= txt[:link] %></li>
-                <%end%>
-              </ul>
-            </div>
-          </div>
-    <% end %>
+    <%= partial 'linked_texts' %>
 
     </div>
 

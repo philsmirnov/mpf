@@ -77,13 +77,8 @@ collection.files.each do |file|
   end
 
   found_articles = article_linker.process_links(file.contents)
-  file.metadata[:linked_articles] = found_articles.map do |item|
-    {
-        :file_link => item[:fof].link_to2(file),
-        :link => item[:fof].link_to(file, item[:title]),
-        :original_title => item[:title],
-        :file_title => item[:fof].title
-    }
+  if file.has_no_linked_articles
+    file.set_linked_articles(found_articles)
   end
 
   #LEAD
@@ -159,13 +154,8 @@ personas.
   end
 
   found_articles = article_linker.process_links(file.contents)
-  file.metadata[:linked_articles] = found_articles.map do |item|
-    {
-        :file_link => item[:fof].link_to2(file),
-        :link => item[:fof].link_to(file, item[:title]),
-        :original_title => item[:title],
-        :file_title => item[:fof].title
-    }
+  if file.has_no_linked_articles
+    file.set_linked_articles(found_articles)
   end
 
   file.contents = typograf.typografy(file.contents)
@@ -235,27 +225,13 @@ thesaurus.
   end
 
   second_article_linker.process_links(file.contents) do |links_array|
-    file.metadata[:linked_articles] = links_array.map do |item|
-      {
-          :file_link => item[:fof].link_to2(file),
-          :link => item[:fof].link_to(file, item[:title]),
-          :original_title => item[:title],
-          :file_title => item[:fof].title
-      }
-    end
+    file.set_linked_articles(links_array)
     nil
   end
 
   found_articles = article_linker.process_links(file.contents)
-  if file.metadata[:linked_articles] == nil || file.metadata[:linked_articles].length == 0
-    file.metadata[:linked_articles] = found_articles.map do |item|
-      {
-          :file_link => item[:fof].link_to2(file),
-          :link => item[:fof].link_to(file, item[:title]),
-          :original_title => item[:title],
-          :file_title => item[:fof].title
-      }
-      end
+  if file.has_no_linked_articles
+    file.set_linked_articles(found_articles)
   end
 
   file.contents = file.contents.
