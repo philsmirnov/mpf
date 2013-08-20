@@ -14,6 +14,7 @@
       </div>
     </div>
 
+      <% if current_page.data.linked_articles && !current_page.data.linked_articles.empty? %>
       <div class="large-12 bg_gray">
         <div class="keywords clearfix">
           <h4 class="app_title app_thin app_h4">Связанные понятия:</h4>
@@ -24,6 +25,7 @@
           </ul>
         </div>
       </div>
+      <% end %>
 
       <div class="large-12 bg_gray">
         <div class="app_next">
