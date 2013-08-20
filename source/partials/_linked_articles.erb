@@ -4,7 +4,6 @@
         <h4 class="app_title app_thin app_h4">Связанные понятия:</h4>
         <ul class="app_keywords">
           <% current_page.data.linked_articles.each do |la|  %>
-              <%puts la%>
               <li><%= link_to(la[:file_title], "/#{la[:parent_folder]}/#{la[:file_name]}.html") %></li>
           <% end %>
         </ul>
