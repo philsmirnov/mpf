@@ -12,9 +12,8 @@
         </div>
       </div>
 
-    <%= partial 'linked_articles' %>
-
-    <%= partial 'linked_texts' %>
+      <%= partial :linked_articles %>
+      <%= partial :linked_texts, :locals => {:title => "Тексты по теме:"} %>
 
     </div>
 
