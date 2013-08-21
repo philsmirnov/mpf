@@ -5,8 +5,9 @@ class TypografClient
   end
 
   def typografy(text)
-    RestClient.post('http://typograf.ru/webservice/', :text => text, :chr => 'UTF-8', :xml => @typograph_settings).
-    gsub(/&lt;%/, '<%').
-    gsub(/%&gt;/, '%>')
+    text
+    #RestClient.post('http://typograf.ru/webservice/', :text => text, :chr => 'UTF-8', :xml => @typograph_settings).
+    #gsub(/&lt;%/, '<%').
+    #gsub(/%&gt;/, '%>')
   end
 end

@@ -68,7 +68,7 @@ collection.files.each do |file|
   file.save_original "./gdrive_fetcher/gdrive_originals/google_#{file.title}.html" if settings['mode'] == 'dev'
   text_converter.convert file
 
-  special_linker.process_links(file.contents)
+  found_articles = special_linker.process_links(file.contents)
 
   text_linker.process_links(file.contents) do |links_array|
     'см. ' + links_array.map { |item|
@@ -76,10 +76,8 @@ collection.files.each do |file|
     }.join(', ')
   end
 
-  found_articles = article_linker.process_links(file.contents)
-  if file.has_no_linked_articles
-    file.set_linked_articles(found_articles)
-  end
+  found_articles << article_linker.process_links(file.contents)
+  file.set_linked_articles(found_articles)
 
   #LEAD
   if file.contents =~ /LEAD(.*?)LEAD/
@@ -156,16 +154,14 @@ personas.
   file.save_original "./gdrive_fetcher/gdrive_originals/google_#{file.title}.html" if settings['mode'] == 'dev'
   text_converter.convert(file)
 
-  special_linker.process_links(file.contents)
+  found_articles = special_linker.process_links(file.contents)
 
   text_linker.process_links(file.contents) do |links_array|
     links_array.map { |item| "<p>#{item[:fof].link_to(file, item[:title], 'texts')} </p>" }.join("\n")
   end
 
-  found_articles = article_linker.process_links(file.contents)
-  if file.has_no_linked_articles
-    file.set_linked_articles(found_articles)
-  end
+  found_articles << article_linker.process_links(file.contents)
+  file.set_linked_articles(found_articles)
 
   file.contents = typograf.typografy(file.contents)
   file.show_next_three = false
@@ -221,7 +217,7 @@ thesaurus.
   #убираем отбивку
   file.contents.sub!('</p> <p>', ' ')
 
-  special_linker.process_links(file.contents)
+  found_articles = special_linker.process_links(file.contents)
 
   text_linker.process_links(file.contents) do |links_array|
     file.metadata[:linked_texts] = links_array.map do |item|
@@ -238,7 +234,7 @@ thesaurus.
     nil
   end
 
-  found_articles = article_linker.process_links(file.contents)
+  found_articles << article_linker.process_links(file.contents)
   if file.has_no_linked_articles
     file.set_linked_articles(found_articles)
   end

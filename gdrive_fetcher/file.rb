@@ -58,7 +58,7 @@ module GDriveImporter
     end
 
     def set_linked_articles(found_articles)
-      @metadata[:linked_articles] = found_articles.map do |item|
+      @metadata[:linked_articles] = found_articles.uniq.map do |item|
         item[:fof].to_linked_article(item[:title])
       end
     end
