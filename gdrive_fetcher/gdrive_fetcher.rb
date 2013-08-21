@@ -88,7 +88,6 @@ collection.files.each do |file|
 end
 
 collection.files.each do |file|
-  next if file =~ /intro/i
   path = file.parent_folder.generate_path(root_path)
   path.mkpath
   file.save(path + file.generate_filename)
@@ -104,7 +103,7 @@ collection.each do |folder|
   f.write(content_table)
   f.close
 
-  intro = folder.find {|f| f =~ /intro/i}
+  intro = folder.files.find {|f| f =~ /intro/i}
   if intro
     intro = intro.fetch_text
   else

@@ -26,7 +26,7 @@ class ArticleLinkerTest < Test::Unit::TestCase
     sp = GDriveImporter::ArticleLinker.new [c]
     res = "принадлежит <em class=\"underline\">you</em>, кроме обычных людей есть еще люди талантливые"
     sp.process_links res
-    expected = "принадлежит <%= link_to('<em class=\"underline\">you</em>',  '/personalii/title_for_save .html') %>, кроме обычных людей есть еще люди талантливые"
+    expected = "принадлежит <%= link_to('<em class=\"underline\">you</em>',  '/personalii/title_for_save.html') %>, кроме обычных людей есть еще люди талантливые"
     assert res == expected , lambda {"expected #{expected}, but got #{res}"}
   end
 end

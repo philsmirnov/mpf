@@ -41,12 +41,13 @@ module GDriveImporter
 
     def each
       @files.each do |file|
+        next if file =~ /intro/i
         yield file
       end
     end
 
     def save(path)
-      @files.each {|f| f.save(f.generate_path(path))}
+      each {|f| f.save(f.generate_path(path))}
     end
 
     def generate_path(path)
@@ -106,6 +107,7 @@ title: "#{title}"
 
     def pager(target)
       pager = {}
+      files = self.to_a
       i = find_index{|f| f == target}
       converter = lambda {|f|
         {
@@ -113,8 +115,8 @@ title: "#{title}"
             :link => "#{f.title_for_save}.html"
         }
       }
-      pager[:prev] = converter.call(@files[i-1]) if i - 1 > 0
-      pager[:next] = converter.call(@files[i+1]) if i + 1 < @files.count
+      pager[:prev] = converter.call(files[i-1]) if i - 1 > 0
+      pager[:next] = converter.call(files[i+1]) if i + 1 < files.count
       pager
     end
 
