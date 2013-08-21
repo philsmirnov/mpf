@@ -1,10 +1,11 @@
-<% if current_page.data.linked_articles && !current_page.data.linked_articles.empty? %>
+<% articles = current_page.data.linked_articles %>
+<% if articles && !articles.empty? %>
     <div class="large-12 bg_gray">
       <div class="keywords clearfix">
         <h4 class="app_title app_thin app_h4">Связанные понятия:</h4>
         <ul class="app_keywords">
-          <% current_page.data.linked_articles.each do |la|  %>
-              <li><%= link_to(la[:file_title], "/#{la[:parent_folder]}/#{la[:file_name]}.html") %></li>
+          <% articles.each do |article|  %>
+              <li><%= link_to(article[:file_title], "/#{article[:parent_folder]}/#{article[:file_name]}.html") %></li>
           <% end %>
         </ul>
       </div>
