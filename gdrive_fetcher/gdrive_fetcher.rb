@@ -90,6 +90,7 @@ collection.files.each do |file|
 end
 
 collection.files.each do |file|
+  next if file =~ /intro/i
   path = file.parent_folder.generate_path(root_path)
   path.mkpath
   file.save(path + file.generate_filename)
@@ -105,10 +106,18 @@ collection.each do |folder|
   f.write(content_table)
   f.close
 
+  intro = folder.find {|f| f =~ /intro/i}
+  if intro
+    intro = intro.fetch_text
+  else
+    intro = 'Пока еще не написано'
+  end
+
   chapter = {
       :roman_number => RomanNumerals.to_roman(folder.number),
       :number => folder.number,
       :title => folder.title,
+      :intro => intro,
       :title_for_save => folder.title_for_save,
       :files => folder.map do |file|
         {

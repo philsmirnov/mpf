@@ -33,7 +33,7 @@ module GDriveImporter
       #.gsub(/["](?=[\s\.!\?,:;\)\][[:space:]]])(?![>])/, '»')
       #.gsub(/“/, '«')
       #.gsub(/”/, '»')
-      file.first_paragraph = fragment.at_css('p').text unless file.first_paragraph
+      file.first_paragraph = fragment.at_css('p').text if !file.first_paragraph && fragment.at_css('p')
       fragment
     end
 

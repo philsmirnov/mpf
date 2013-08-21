@@ -18,6 +18,10 @@ title: Оглавление
             <% end %>
             </p>
             <div class="content" data-section-content>
+              <div class="li_activ_cont clearfix">
+                <p><%= chapter[:intro] %> </p>
+                <span class="corner"></span>
+              </div>
               <ul class="ul_sub_cont li_none">
                 <% chapter.files.each do |f| %>
                     <li class="app_chapter">
