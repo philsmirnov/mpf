@@ -76,7 +76,7 @@ collection.files.each do |file|
     }.join(', ')
   end
 
-  found_articles << article_linker.process_links(file.contents)
+  found_articles.concat article_linker.process_links(file.contents)
   file.set_linked_articles(found_articles)
 
   #LEAD
@@ -159,7 +159,7 @@ personas.
     links_array.map { |item| "<p>#{item[:fof].link_to(file, item[:title], 'texts')} </p>" }.join("\n")
   end
 
-  found_articles << article_linker.process_links(file.contents)
+  found_articles.concat article_linker.process_links(file.contents)
   file.set_linked_articles(found_articles)
 
   file.contents = typograf.typografy(file.contents)
@@ -233,7 +233,7 @@ thesaurus.
     nil
   end
 
-  found_articles << article_linker.process_links(file.contents)
+  found_articles.concat article_linker.process_links(file.contents)
   if file.has_no_linked_articles
     file.set_linked_articles(found_articles)
   end
