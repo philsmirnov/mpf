@@ -400,4 +400,15 @@
         }
     };
 
+    MBP.setFontSize = function(){
+        var fontSize = localStorage.getItem('fontSize');
+        if (fontSize){
+            document.write('<style>');
+            document.write('.app_text p {');
+            document.write('font-size: ' + fontSize);
+            document.write('}');
+            document.write('</style>')
+        }
+    };
+
 })(document);

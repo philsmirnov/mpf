@@ -5,8 +5,9 @@
     $(document).foundation();
     MBP.startupImage();
     MBP.preventZoom();
+    MBP.setFontSize();
 </script>
 
 <% if content_for? :js %>
-    <%= javascript_include_tag 'main.js' %>
+    <%= javascript_include_tag yield_content(:js) %>
 <% end %>
