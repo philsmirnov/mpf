@@ -46,7 +46,7 @@ module GDriveImporter
           :em => /font-style: italic/,
           :bold => /font-weight: bold/,
           :underline => /text-decoration: underline/,
-          :epigraph => /text-align:right/
+          :epigraph => /text-align: right/
       }
 
       good_rules = []
