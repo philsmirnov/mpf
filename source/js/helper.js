@@ -402,12 +402,14 @@
 
     MBP.setFontSize = function(){
         var fontSize = localStorage.getItem('fontSize');
-        if (fontSize){
-            document.write('<style>');
-            document.write('.app_text p {');
-            document.write('font-size: ' + fontSize);
-            document.write('}');
-            document.write('</style>')
+        if (fontSize) {
+            var head = document.getElementsByTagName('head')[0];
+            var styleElement = document.getElementById('app-font');
+            if (styleElement){
+                styleElement.innerHTML ='.app_text p {font-size: ' + fontSize + '}';
+            } else {
+                head.insertAdjacentHTML('beforeend', '<style id="app-font">.app_text p {font-size: ' + fontSize + '}</style>');
+            }
         }
     };
 

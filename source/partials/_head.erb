@@ -35,3 +35,10 @@
 
 
     <title><%=current_page_title%></title>
+    <script>
+        var fontSize = localStorage.getItem('fontSize');
+        if (fontSize) {
+            var head = document.getElementsByTagName('head')[0];
+            head.insertAdjacentHTML('beforeend', '<style id="app-font">.app_text p {font-size: ' + fontSize + '}</style>');
+        }
+    </script>
