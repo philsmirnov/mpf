@@ -73,15 +73,28 @@ module GDriveImporter
       sleep 1
 
       sio.write(body)
-      return sio.string
+      sio.string
     end
 
     def generate_metadata
-      @metadata.to_yaml << '---' << "\n\n"
+      if @show_next_three
+        read_later = @parent_folder.next_three(self)
+        @metadata['read_later'] = read_later if read_later
+      end
+      @metadata['pager'] = @parent_folder.pager(self)
+      @metadata
+    end
+
+    def first_paragraph
+      @metadata['first_paragraph']
+    end
+
+    def first_paragraph=(paragraph)
+      @metadata['first_paragraph'] = paragraph
     end
 
     def updated_at
-      Time.parse(@gdrive_file.document_feed_entry.css("updated").text)
+      Time.parse(@gdrive_file.document_feed_entry.css('updated').text)
     end
 
     def generate_path(path)
@@ -96,13 +109,8 @@ module GDriveImporter
       raise 'No content to save' unless @contents
       path ||= generate_filename
       f = ::File.new(path, 'w+')
-      if @show_next_three
-        read_later = @parent_folder.next_three(self)
-        @metadata['read_later'] = read_later if read_later
-      end
-      @metadata['first_paragraph'] = @first_paragraph
-      @metadata['pager'] = @parent_folder.pager(self)
-      f.write(generate_metadata)
+      generate_metadata
+      f.write(@metadata.to_yaml << '---' << "\n\n")
       f.write(@contents)
       f.close
     end

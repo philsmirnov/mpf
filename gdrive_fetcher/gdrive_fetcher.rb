@@ -24,7 +24,6 @@ I18n.locale = :'ru'
 I18n.reload!
 
 settings = YAML.load_file('fetcher_settings.yml')
-typograph_settings = IO.read('typograph.xml')
 
 #framework = ThinkingSphinx::Framework::Plain.new
 #ThinkingSphinx::Configuration.instance.framework = framework
@@ -60,31 +59,30 @@ special_linker = GDriveImporter::SpecialLinker.new([collection, thesaurus, perso
 
 article_linker = GDriveImporter::ArticleLinker.new([thesaurus, personas])
 
+
 collection.files.each do |file|
-  puts "#{file.number} #{file.title}"
-  file.fetch
-  Article.create_or_update(file, 'text', settings['base_url'])
 
-  file.save_original "./gdrive_fetcher/gdrive_originals/google_#{file.title}.html" if settings['mode'] == 'dev'
-  text_converter.convert file
+  Article.db_saver(file, 'text') do
+    file.fetch
+    text_converter.convert file
 
-  found_articles = special_linker.process_links(file.contents)
+    found_articles = special_linker.process_links(file.contents)
 
-  text_linker.process_links(file.contents) do |links_array|
-    'см. ' + links_array.map { |item|
-      item[:fof].link_to(file, item[:title])
-    }.join(', ')
+    text_linker.process_links(file.contents) do |links_array|
+      'см. ' + links_array.map { |item|
+        item[:fof].link_to(file, item[:title])
+      }.join(', ')
+    end
+
+    found_articles.concat article_linker.process_links(file.contents)
+    file.set_linked_articles(found_articles)
+
+    #LEAD
+    if file.contents =~ /LEAD(.*?)LEAD/
+      file.first_paragraph = file.contents.match(/LEAD(.*?)LEAD/)[1]
+    end
+    file.contents = typograf.typografy(file.contents)
   end
-
-  found_articles.concat article_linker.process_links(file.contents)
-  file.set_linked_articles(found_articles)
-
-  #LEAD
-  if file.contents =~ /LEAD(.*?)LEAD/
-    file.first_paragraph = file.contents.match(/LEAD(.*?)LEAD/)[1]
-  end
-  file.contents = typograf.typografy(file.contents)
-  sleep 1
 end
 
 collection.files.each do |file|
@@ -103,7 +101,7 @@ collection.each do |folder|
   f.write(content_table)
   f.close
 
-  intro = folder.files.find {|f| f =~ /intro/i}
+  intro = folder.files.find { |f| f =~ /intro/i }
   if intro
     intro = intro.fetch_text
   else
@@ -147,25 +145,24 @@ path.mkpath
 personas.
 #    take(2).
     each do |file|
-  puts "#{file.number} #{file.title}"
-  file.fetch
-  Article.create_or_update(file, 'persona', settings['base_url'])
-  file.save_original "./gdrive_fetcher/gdrive_originals/google_#{file.title}.html" if settings['mode'] == 'dev'
-  text_converter.convert(file)
+  Article.db_saver(file, 'persona') do
+    file.fetch
+    text_converter.convert(file)
 
-  found_articles = special_linker.process_links(file.contents)
+    found_articles = special_linker.process_links(file.contents)
 
-  text_linker.process_links(file.contents) do |links_array|
-    links_array.map { |item| "<p>#{item[:fof].link_to(file, item[:title], 'texts')} </p>" }.join("\n")
+    text_linker.process_links(file.contents) do |links_array|
+      links_array.map { |item| "<p>#{item[:fof].link_to(file, item[:title], 'texts')} </p>" }.join("\n")
+    end
+
+    found_articles.concat article_linker.process_links(file.contents)
+    file.set_linked_articles(found_articles)
+
+    file.contents = typograf.typografy(file.contents)
+    file.show_next_three = false
+    file.save(path + file.generate_filename)
+    sleep 1
   end
-
-  found_articles.concat article_linker.process_links(file.contents)
-  file.set_linked_articles(found_articles)
-
-  file.contents = typograf.typografy(file.contents)
-  file.show_next_three = false
-  file.save(path + file.generate_filename)
-  sleep 1
 end
 
 personas_yaml = {'title' => 'Персоналии'}
@@ -196,7 +193,7 @@ second_article_linker = GDriveImporter::TextLinker.new(
     [thesaurus],
     /(?<=<p>см. также:|ср\.:).*?(?=<\/p>)/i,
     [/(?<=<em class="underline">).*?(?=<\/em>)/i,
-    /([^,]*)/i]
+     /([^,]*)/i]
 )
 
 root_path = './source/'
@@ -207,47 +204,47 @@ thesaurus.
 #    drop(3).
 #    take(1).
     each do |file|
-  puts "#{file.number} #{file.title}"
-  file.fetch
-  Article.create_or_update(file, 'thesaurus', settings['base_url'])
-  file.save_original "./gdrive_fetcher/gdrive_originals/google_#{file.title}.html" if settings['mode'] == 'dev'
-  text_converter.convert(file)
+  Article.db_saver(file, 'thesaurus') do
+    file.fetch
+    text_converter.convert(file)
 
-  #убираем отбивку
-  file.contents.sub!('</p> <p>', ' ')
+    #убираем отбивку
+    file.contents.sub!('</p> <p>', ' ')
 
-  found_articles = special_linker.process_links(file.contents)
+    found_articles = special_linker.process_links(file.contents)
 
-  text_linker.process_links(file.contents) do |links_array|
-    file.metadata[:linked_texts] = links_array.map do |item|
-      {
-          :link => item[:fof].link_to(file, item[:title], 'texts'),
-          :first_paragraph => item[:fof].respond_to?(:first_paragraph) ? item[:fof].first_paragraph : nil
-      }
+    text_linker.process_links(file.contents) do |links_array|
+      file.metadata[:linked_texts] = links_array.map do |item|
+        {
+            :link => item[:fof].link_to(file, item[:title], 'texts'),
+            :first_paragraph => item[:fof].respond_to?(:first_paragraph) ? item[:fof].first_paragraph : nil
+        }
+      end
+      nil
     end
-    nil
+
+    second_article_linker.process_links(file.contents) do |links_array|
+      file.set_linked_articles(links_array)
+      nil
+    end
+
+    found_articles.concat article_linker.process_links(file.contents)
+    if file.has_no_linked_articles
+      file.set_linked_articles(found_articles)
+    end
+
+    file.contents = file.contents.
+        sub('<p>См. также:</p>', ' ').
+        sub('<p>Тексты на тему:</p>', ' ').
+        sub('<p>Cр.:</p>', ' ')
+
+
+    file.contents = typograf.typografy(file.contents)
+    file.show_next_three = false
+    file.save(path + file.generate_filename)
+    sleep 1
   end
 
-  second_article_linker.process_links(file.contents) do |links_array|
-    file.set_linked_articles(links_array)
-    nil
-  end
-
-  found_articles.concat article_linker.process_links(file.contents)
-  if file.has_no_linked_articles
-    file.set_linked_articles(found_articles)
-  end
-
-  file.contents = file.contents.
-      sub('<p>См. также:</p>', ' ').
-      sub('<p>Тексты на тему:</p>', ' ').
-      sub('<p>Cр.:</p>', ' ')
-
-
-  file.contents = typograf.typografy(file.contents)
-  file.show_next_three = false
-  file.save(path + file.generate_filename)
-  sleep 1
 end
 
 thesaurus_yaml = {'title' => 'Тезаурус'}

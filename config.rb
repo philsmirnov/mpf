@@ -79,6 +79,10 @@ helpers do
     (current_page.data.title? && current_page.data.title)  || 'PAPPUSH'
   end
 
+  def current_page_first_paragraph
+    (current_page.data.first_paragraph? && current_page.data.first_paragraph)  || 'философ'
+  end
+
   def active_class(regexps)
     ' active' if regexps.any?{|r| current_page.path =~ r}
   end

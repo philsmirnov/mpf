@@ -4,27 +4,51 @@ class Article < ActiveRecord::Base
   record_timestamps = false
   skip_time_zone_conversion_for_attributes = [:updated_at]
 
-  def self.create_or_update(file, article_type, base_url)
+  def needs_update?(updated_at)
+    self.updated_at < updated_at
+  end
+
+  def update_from_file(file)
+    source = file.original_contents
+    content = file.fetch_text
+    updated_at = file.updated_at
+    result = file.contents
+    metadata = file.metadata.to_yaml
+  end
+
+  def save_to_file(file)
+    file.original_contents = source
+    file.contents = result
+    file.metadata = YAML.load(metadata)
+  end
+
+  def self.by_resource_id(resource_id)
+    Article.where(:resource_id => resource_id).first
+  end
+
+  def self.create_or_update(file, article_type)
     a = Article.where(:resource_id => file.resource_id).first
     if a
       # update if needed
-      if a.updated_at < file.updated_at
-        a.content = file.fetch_text
-        a.updated_at = file.updated_at
+      if a.needs_update?(file.updated_at)
+        a.update_from_file(file)
       end
     else
       # save to db
-      a = Article.from_file(file, article_type, base_url)
+      a = Article.create_from_file(file, article_type)
     end
     a.save
   end
 
-  def self.from_file(file, article_type, base_url)
+  def self.create_from_file(file, article_type)
     self.new(
         :resource_id => file.resource_id,
         :name => file.title,
         :resource_type => file.resource_type,
+        :source => file.original_contents,
         :content => file.fetch_text,
+        :result => file.contents,
+        :metadata => file.metadata.to_yaml,
         :updated_at => file.updated_at,
         :article_type => article_type,
         :url => article_type == 'text' ?
@@ -41,4 +65,25 @@ class Article < ActiveRecord::Base
       a.metadata = file.metadata.to_yaml
     end
   end
+
+  def self.db_saver(file, article_type)
+    puts "#{file.number} #{file.title}"
+    a = Article.by_resource_id file.resource_id
+
+    if (a && a.needs_update?(file.updated_at)) || !a
+      yield
+      file.generate_metadata
+      if a
+        a.update_from_file(file)
+      else
+        a = Article.create_from_file(file, article_type)
+      end
+      a.save
+      sleep 1
+    else
+      a.save_to_file(file)
+    end
+  end
+
+
 end

@@ -1,5 +1,5 @@
 <% wrap_layout :layout do %>
-    <%= partial :pager, :locals => {:title => "Персоналии", :link => '../personas.html'} %>
+    <%= partial :pager, :locals => {:title => 'Персоналии', :link => '../personas.html'} %>
 
     <div class="row">
 
@@ -7,7 +7,11 @@
         <div class="app_person app_text">
         <% img_path = "../img/personas/#{current_page_title.parameterize}.png" %>
         <%= image_tag img_path, :class => 'app_photo text-center' %>
-        <h3 class="app_thin text-center"><%= current_page_title %><span class="character">философ</span></h3>
+        <h3 class="app_thin text-center"><%= current_page_title %>
+          <span class="character">
+            <%= current_page_first_paragraph %>
+          </span>
+        </h3>
         <p class="app_gray">
           <%= yield %>
         </p>
@@ -15,7 +19,7 @@
     </div>
 
     <%= partial :linked_articles %>
-    <%= partial :linked_texts, :locals => {:title => "Что почитать:"} %>
+    <%= partial :linked_texts, :locals => {:title => 'Что почитать:'} %>
 
     </div>
 
