@@ -18,6 +18,9 @@ role :db,  server_address, :primary => true # This is where Rails migrations wil
 require 'bundler/capistrano'
 set :bundle_flags, '--deployment --quiet --binstubs'
 
+set :whenever_command, 'bundle exec whenever'
+require 'whenever/capistrano'
+
 set :default_environment, {
     'PATH' => '/usr/local/rbenv/shims:/usr/local/rbenv/bin:$PATH'
 }

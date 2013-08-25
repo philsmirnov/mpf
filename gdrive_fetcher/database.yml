@@ -8,5 +8,5 @@ production:
   adapter: postgresql
   encoding: unicode
   database: mps_production
-  user: ubuntu
+  username: ubuntu
   password: 123
