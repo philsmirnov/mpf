@@ -160,9 +160,10 @@ personas.
 
     file.contents = typograf.typografy(file.contents)
     file.show_next_three = false
-    file.save(path + file.generate_filename)
     sleep 1
   end
+  file.show_next_three = false
+  file.save(path + file.generate_filename)
 end
 
 personas_yaml = {'title' => 'Персоналии'}
@@ -241,10 +242,10 @@ thesaurus.
 
     file.contents = typograf.typografy(file.contents)
     file.show_next_three = false
-    file.save(path + file.generate_filename)
     sleep 1
   end
-
+  file.show_next_three = false
+  file.save(path + file.generate_filename)
 end
 
 thesaurus_yaml = {'title' => 'Тезаурус'}
