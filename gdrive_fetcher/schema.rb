@@ -22,7 +22,7 @@ class Article < ActiveRecord::Base
     file.metadata = YAML.load(metadata)
   end
 
-  def self.by_resource_id(resource_id)
+  def self.get_by_resource_id(resource_id)
     Article.where(:resource_id => resource_id).first
   end
 
@@ -68,7 +68,7 @@ class Article < ActiveRecord::Base
 
   def self.db_saver(file, article_type)
     puts "#{file.number} #{file.title}"
-    a = Article.by_resource_id file.resource_id
+    a = Article.get_by_resource_id file.resource_id
 
     if (a && a.needs_update?(file.updated_at)) || !a
       yield

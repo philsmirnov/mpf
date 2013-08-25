@@ -21,3 +21,6 @@ gem 'mysql2'
 gem 'pg'
 gem 'thinking-sphinx', '>3', :require => nil
 gem 'rest-client'
+gem 'minitest-reporters', :group => :development
+gem 'whenever'
+gem 'capistrano', :group => :development
