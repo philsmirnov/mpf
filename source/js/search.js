@@ -5,7 +5,7 @@ $("#search-field").keyup(function(e){
         var $results = $("#results .search_cont");
         var q = $("#search-field").val();
         if (q.length == 0) {$results.empty().hide(); return;}
-        $.getJSON("http://ec2-54-217-232-182.eu-west-1.compute.amazonaws.com/articles/"+q+".jsonp?callback=?",
+        $.getJSON("http://37.139.29.122/articles/"+q+".jsonp?callback=?",
         //$.getJSON("http://localhost:3000/articles/"+q+".jsonp?callback=?",
 
             {
