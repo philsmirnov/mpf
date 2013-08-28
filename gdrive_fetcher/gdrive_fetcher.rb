@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 # encoding: UTF-8
 require 'bundler'
 require 'google_drive'
@@ -59,6 +60,12 @@ special_linker = GDriveImporter::SpecialLinker.new([collection, thesaurus, perso
 
 article_linker = GDriveImporter::ArticleLinker.new([thesaurus, personas])
 
+see_also_linker = GDriveImporter::TextLinker.new(
+    [thesaurus],
+    /(?<=<p>см. также:|ср\.:).*?(?=<\/p>)/i,
+    [/(?<=<em class="underline">).*?(?=<\/em>)/i, /([^,]*)/i]
+)
+
 
 collection.files.each do |file|
 
@@ -74,8 +81,15 @@ collection.files.each do |file|
       }.join(', ')
     end
 
+    see_also_linker.process_links(file.contents) do |links_array|
+      file.set_linked_articles(links_array)
+      nil
+    end
+
     found_articles.concat article_linker.process_links(file.contents)
-    file.set_linked_articles(found_articles)
+    if file.has_no_linked_articles
+      file.set_linked_articles(found_articles)
+    end
 
     #LEAD
     if file.contents =~ /LEAD(.*?)LEAD/
@@ -155,8 +169,16 @@ personas.
       links_array.map { |item| "<p>#{item[:fof].link_to(file, item[:title], 'texts')} </p>" }.join("\n")
     end
 
+
+    see_also_linker.process_links(file.contents) do |links_array|
+      file.set_linked_articles(links_array)
+      nil
+    end
+
     found_articles.concat article_linker.process_links(file.contents)
-    file.set_linked_articles(found_articles)
+    if file.has_no_linked_articles
+      file.set_linked_articles(found_articles)
+    end
 
     file.contents = typograf.typografy(file.contents)
     file.show_next_three = false
@@ -190,13 +212,6 @@ text_linker = GDriveImporter::TextLinker.new(
     [/(?<=<p>)(.*?)(?=<\/p>)/]
 )
 
-second_article_linker = GDriveImporter::TextLinker.new(
-    [thesaurus],
-    /(?<=<p>см. также:|ср\.:).*?(?=<\/p>)/i,
-    [/(?<=<em class="underline">).*?(?=<\/em>)/i,
-     /([^,]*)/i]
-)
-
 root_path = './source/'
 path = thesaurus.generate_path(root_path)
 path.mkpath
@@ -224,7 +239,7 @@ thesaurus.
       nil
     end
 
-    second_article_linker.process_links(file.contents) do |links_array|
+    see_also_linker.process_links(file.contents) do |links_array|
       file.set_linked_articles(links_array)
       nil
     end

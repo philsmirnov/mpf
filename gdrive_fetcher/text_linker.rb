@@ -43,6 +43,7 @@ module GDriveImporter
     def create_regex_and_find_item(k, is_folder)
       link_title = k.is_a?(Array) ? k.first : k
       link_title = regexp_helper link_title
+      return nil if s == ''
       if @regexp_lambda
         regexp = @regexp_lambda.call(link_title)
       else

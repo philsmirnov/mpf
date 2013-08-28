@@ -58,9 +58,10 @@ module GDriveImporter
     end
 
     def set_linked_articles(found_articles)
-      @metadata[:linked_articles] = found_articles.uniq.map do |item|
-        item[:fof].to_linked_article(item[:title])
-      end
+      @metadata[:linked_articles] = found_articles.
+          uniq.
+          select { |item| ['glossariy', 'personalii'].include? item[:fof].parent_folder.title_for_save }.
+          map { |item| item[:fof].to_linked_article(item[:title])}
     end
 
     def fetch_text
@@ -73,7 +74,7 @@ module GDriveImporter
       sleep 1
 
       sio.write(body)
-      sio.string
+      sio.string.gsub!(/^\xEF\xBB\xBF/, '')
     end
 
     def generate_metadata

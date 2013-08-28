@@ -9,11 +9,11 @@ class Article < ActiveRecord::Base
   end
 
   def update_from_file(file)
-    source = file.original_contents
-    content = file.fetch_text
-    updated_at = file.updated_at
-    result = file.contents
-    metadata = file.metadata.to_yaml
+    self.source = file.original_contents
+    self.content = file.fetch_text
+    self.updated_at = file.updated_at
+    self.result = file.contents
+    self.metadata = file.metadata.to_yaml
   end
 
   def save_to_file(file)
@@ -74,8 +74,10 @@ class Article < ActiveRecord::Base
       yield
       file.generate_metadata
       if a
+        puts "'#{file.title}' needed update: #{a.updated_at} < #{file.updated_at}"
         a.update_from_file(file)
       else
+        puts "'#{file.title}' was not in the database"
         a = Article.create_from_file(file, article_type)
       end
       a.save
