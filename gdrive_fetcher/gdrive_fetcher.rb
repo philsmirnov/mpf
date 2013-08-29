@@ -26,7 +26,7 @@ Bundler.setup
 I18n.locale = :'ru'
 I18n.reload!
 
-options = {:force_update = ['none']}
+options = {:force_update => ['none']}
 OptionParser.new do |opts|
   opts.banner = "Usage: gdrive_fetcher.rb [options]"
   opts.on('-f', '--force_update all,texts,personas,thesaurus', Array, 'Force update even if DB is up to date') { |v| options[:force_update] = v.map{|a| a.downcase} }
