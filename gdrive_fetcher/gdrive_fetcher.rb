@@ -177,7 +177,7 @@ personas.
   Article.db_saver(file, 'persona', should_force_update) do
     file.fetch
     text_converter.convert(file)
-    file.content.gsub!(/^<p>.*?<\/p>/, '')
+    file.contents.gsub!(/^<p>.*?<\/p>/, '')
 
     found_articles = special_linker.process_links(file.contents)
 
