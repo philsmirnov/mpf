@@ -66,11 +66,11 @@ class Article < ActiveRecord::Base
     end
   end
 
-  def self.db_saver(file, article_type)
+  def self.db_saver(file, article_type, force_update = false)
     puts "#{file.number} #{file.title}"
     a = Article.get_by_resource_id file.resource_id
 
-    if (a && a.needs_update?(file.updated_at)) || !a
+    if (a && a.needs_update?(file.updated_at)) || !a || force_update
       yield
       file.generate_metadata
       if a

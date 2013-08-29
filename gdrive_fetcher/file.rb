@@ -74,7 +74,7 @@ module GDriveImporter
       sleep 1
 
       sio.write(body)
-      sio.string.gsub!(/^\xEF\xBB\xBF/, '')
+      sio.string.force_encoding(Encoding::UTF_8).gsub!(/^\xEF\xBB\xBF/, '')
     end
 
     def generate_metadata

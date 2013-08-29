@@ -10,6 +10,8 @@ require 'active_support/core_ext/string/inflections'
 require 'russian'
 require 'thinking_sphinx'
 require 'rest_client'
+require 'optparse'
+
 
 require_relative 'text_converter'
 require_relative 'file_collection'
@@ -24,7 +26,13 @@ Bundler.setup
 I18n.locale = :'ru'
 I18n.reload!
 
-settings = YAML.load_file('fetcher_settings.yml')
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: gdrive_fetcher.rb [options]"
+  opts.on('-f', '--force_update all,texts,personas,thesaurus', Array, 'Force update even if DB is up to date') { |v| options[:force_update] = v.map{|a| a.downcase} }
+end.parse!
+
+settings = YAML.load_file('fetcher_settings.yml').merge(options)
 
 #framework = ThinkingSphinx::Framework::Plain.new
 #ThinkingSphinx::Configuration.instance.framework = framework
@@ -67,9 +75,10 @@ see_also_linker = GDriveImporter::TextLinker.new(
 )
 
 
+should_force_update = !(['all', 'texts'] & settings[:force_update]).empty?
 collection.files.each do |file|
 
-  Article.db_saver(file, 'text') do
+  Article.db_saver(file, 'text', should_force_update) do
     file.fetch
     text_converter.convert file
 
@@ -90,6 +99,10 @@ collection.files.each do |file|
     if file.has_no_linked_articles
       file.set_linked_articles(found_articles)
     end
+
+    file.contents = file.contents.
+        sub('<p>См. также:</p>', ' ').
+        sub('<p>Тексты на тему:</p>', ' ')
 
     #LEAD
     if file.contents =~ /LEAD(.*?)LEAD/
@@ -156,12 +169,15 @@ root_path = './source/'
 path = personas.generate_path(root_path)
 path.mkpath
 
+should_force_update = !(['all', 'personas'] & settings[:force_update]).empty?
+
 personas.
 #    take(2).
     each do |file|
-  Article.db_saver(file, 'persona') do
+  Article.db_saver(file, 'persona', should_force_update) do
     file.fetch
-    text_converter.convert(file)
+    doc = text_converter.convert(file)
+    doc.at_css('p').replace(' ')
 
     found_articles = special_linker.process_links(file.contents)
 
@@ -179,6 +195,10 @@ personas.
     if file.has_no_linked_articles
       file.set_linked_articles(found_articles)
     end
+
+    file.contents = file.contents.
+        sub('<p>См. также:</p>', ' ').
+        sub('<p>Тексты на тему:</p>', ' ')
 
     file.contents = typograf.typografy(file.contents)
     file.show_next_three = false
@@ -216,11 +236,13 @@ root_path = './source/'
 path = thesaurus.generate_path(root_path)
 path.mkpath
 
+should_force_update = !(['all', 'thesaurus'] & settings[:force_update]).empty?
+
 thesaurus.
 #    drop(3).
 #    take(1).
     each do |file|
-  Article.db_saver(file, 'thesaurus') do
+  Article.db_saver(file, 'thesaurus', should_force_update) do
     file.fetch
     text_converter.convert(file)
 
