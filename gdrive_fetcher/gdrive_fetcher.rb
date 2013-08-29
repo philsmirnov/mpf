@@ -176,15 +176,20 @@ personas.
     each do |file|
   Article.db_saver(file, 'persona', should_force_update) do
     file.fetch
-    doc = text_converter.convert(file)
-    doc.at_css('p').replace(' ')
+    text_converter.convert(file)
+    file.content.gsub!(/^<p>.*?<\/p>/, '')
 
     found_articles = special_linker.process_links(file.contents)
 
     text_linker.process_links(file.contents) do |links_array|
-      links_array.map { |item| "<p>#{item[:fof].link_to(file, item[:title], 'texts')} </p>" }.join("\n")
+      file.metadata[:linked_texts] = links_array.map do |item|
+        {
+            :link => item[:fof].link_to(file, item[:title], 'texts'),
+            :first_paragraph => item[:fof].respond_to?(:first_paragraph) ? item[:fof].first_paragraph : nil
+        }
+      end
+      nil
     end
-
 
     see_also_linker.process_links(file.contents) do |links_array|
       file.set_linked_articles(links_array)
@@ -225,12 +230,6 @@ personas_yaml['groups'] = groups
 f = File.new('./data/personas.yml', 'w+')
 f.write(personas_yaml.to_yaml)
 f.close
-
-text_linker = GDriveImporter::TextLinker.new(
-    [collection],
-    /(?<=Тексты на тему:<\/p>).(.*)/im,
-    [/(?<=<p>)(.*?)(?=<\/p>)/]
-)
 
 root_path = './source/'
 path = thesaurus.generate_path(root_path)
