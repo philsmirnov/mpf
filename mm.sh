@@ -3,7 +3,7 @@ set -e
 rm -rf  source/glossariy
 rm -fr source/texts
 
-bundle exec ruby ./gdrive_fetcher/gdrive_fetcher.rb $1
+bundle exec ruby ./gdrive_fetcher/gdrive_fetcher.rb $1 $2 $3 $4
 
 bundle exec middleman build --clean
 
