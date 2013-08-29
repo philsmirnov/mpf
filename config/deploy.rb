@@ -11,9 +11,7 @@ set (:deploy_to) { "/home/#{user}/apps/#{application}" }
 set :scm, :git
 set :ssh_options, { :forward_agent => true }
 
-role :web, server_address                           # Your HTTP server, Apache/etc
-role :app, server_address                           # This may be the same as your `Web` server
-role :db,  server_address, :primary => true # This is where Rails migrations will run
+server server_address, :app, :web, :db, :primary => true
 
 require 'bundler/capistrano'
 set :bundle_flags, '--deployment --quiet --binstubs'
