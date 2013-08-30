@@ -33,8 +33,6 @@ OptionParser.new do |opts|
   opts.on('-u', '--force-update all,texts,personas,thesaurus', Array, 'Force update even if DB is up to date') { |v| options[:force_update] = v.map{|a| a.downcase} }
 end.parse!
 
-ap options
-
 settings = YAML.load_file('fetcher_settings.yml').merge(options)
 
 require 'pry' if settings[:mode] == 'dev'
@@ -86,7 +84,6 @@ collection.files.each do |file|
 
   Article.db_saver(file, 'text', should_force_update) do |a|
     if a && settings[:no_full_update]
-      puts 'no full update, got it from db'
       file.original_contents = a.source
     else
       file.fetch
@@ -115,11 +112,8 @@ collection.files.each do |file|
     file.contents = file.contents.
         sub('<p>См. также:</p>', ' ').
         sub('<p>Тексты на тему:</p>', ' ')
-    if file =~ /\[image=(.*?)\]/
-      puts file.contents
-      file.contents = file.contents.gsub(/\[image=(.*?)\]/, '<%= picture \'\\1\' %>')
-      puts file.contents
-    end
+
+    file.contents = file.contents.gsub(/\[image=(.*?)\]/, '<%= picture \'\\1\' %>')
 
     #LEAD
     if file.contents =~ /LEAD(.*?)LEAD/
