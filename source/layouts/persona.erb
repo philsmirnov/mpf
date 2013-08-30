@@ -9,7 +9,7 @@
         <%= image_tag img_path, :class => 'app_photo text-center' %>
         <h3 class="app_thin text-center"><%= current_page_title %>
           <span class="character">
-            <%= current_page_first_paragraph %>
+            <%= current_page.data.years? && current_page.data.years %>
           </span>
         </h3>
         <p class="app_gray">

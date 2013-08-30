@@ -330,9 +330,9 @@ h3 {
 }
 
 .text_img {
-    background:#fff;
+    #background:#fff;
     padding:10px;
-    border:1px solid #f6f6f6;
+    #border:1px solid #f6f6f6;
     display:block;
     margin:0 auto;
     text-align: center;

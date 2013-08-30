@@ -188,8 +188,9 @@ personas.
       file.fetch
     end
     text_converter.convert(file)
-    file.contents.gsub!(/^<p>.*?<\/p>/, '')
-    file.first_paragraph = file.contents[/^<p>.*?<\/p>/]
+    file.contents = file.contents.gsub(/^<p>.*?<\/p>/, '').strip
+    file.metadata[:years] = file.first_paragraph
+    file.first_paragraph = file.contents[/^<p>.*?<\/p>/].gsub(/^<p>(.*?)<\/p>/, '\\1')
 
     found_articles = special_linker.process_links(file.contents)
 
@@ -233,7 +234,8 @@ personas.each_slice(3) do |group_of_files|
     {
         :link => "#{personas.title_for_save}/#{file.title_for_save}.html",
         :title => file.title,
-        :first_line => file.first_paragraph
+        :first_line => file.first_paragraph,
+        :years => file.metadata[:years]
     }
   end
 end

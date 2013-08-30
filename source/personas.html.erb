@@ -21,7 +21,10 @@ title: Персоналии
                           <%= image_tag "/img/personas/#{file[:title].parameterize}.png", :class => 'app_photo' %>
                         </a>
                       </td>
-                      <td><h3 class="app_thin"><a href="<%= file[:link] %>"><%= file[:title] %> <span class="character">(1905-1972)</span></a></h3></td>
+                      <td><h3 class="app_thin"><a href="<%= file[:link] %>"><%= file[:title] %>
+                        <span class="character">
+                          <%=file[:years]%></span>
+                      </a></h3></td>
                       <td class="td_read_more"><a href="<%= file[:link] %>" class="read_more"></a></td>
                     </tr>
                   </table>
