@@ -71,7 +71,7 @@ class Article < ActiveRecord::Base
     a = Article.get_by_resource_id file.resource_id
 
     if (a && a.needs_update?(file.updated_at)) || !a || force_update
-      yield
+      yield a
       file.generate_metadata
       if a
         puts "'#{file.title}' needed update: #{a.updated_at} < #{file.updated_at}"

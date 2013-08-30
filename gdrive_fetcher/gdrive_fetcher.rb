@@ -4,7 +4,7 @@ require 'bundler'
 require 'google_drive'
 require 'awesome_print'
 require 'htmlentities'
-require 'pry'
+
 require 'yaml'
 require 'active_support/core_ext/string/inflections'
 require 'russian'
@@ -29,10 +29,13 @@ I18n.reload!
 options = {:force_update => ['none']}
 OptionParser.new do |opts|
   opts.banner = "Usage: gdrive_fetcher.rb [options]"
-  opts.on('-f', '--force_update all,texts,personas,thesaurus', Array, 'Force update even if DB is up to date') { |v| options[:force_update] = v.map{|a| a.downcase} }
+  opts.on('-f', '--full_update', 'Full update - fetching text from Google drive. Otherwise use source from DB') { |v| options[:full_update] = v }
+  opts.on('-u', '--force_update all,texts,personas,thesaurus', Array, 'Force update even if DB is up to date') { |v| options[:force_update] = v.map{|a| a.downcase} }
 end.parse!
 
 settings = YAML.load_file('fetcher_settings.yml').merge(options)
+
+require 'pry' if settings[:mode] == 'dev'
 
 #framework = ThinkingSphinx::Framework::Plain.new
 #ThinkingSphinx::Configuration.instance.framework = framework
@@ -75,11 +78,17 @@ see_also_linker = GDriveImporter::TextLinker.new(
 )
 
 
-should_force_update = !(['all', 'texts'] & settings[:force_update]).empty?
+should_force_update = !(%w(all texts) & settings[:force_update]).empty?
+
 collection.files.each do |file|
 
-  Article.db_saver(file, 'text', should_force_update) do
-    file.fetch
+  Article.db_saver(file, 'text', should_force_update) do |a|
+    if a == nil || settings[:full_update]
+      file.fetch
+    else
+      file.original_contents = a.source
+    end
+
     text_converter.convert file
 
     found_articles = special_linker.process_links(file.contents)
@@ -109,6 +118,7 @@ collection.files.each do |file|
       file.first_paragraph = file.contents.match(/LEAD(.*?)LEAD/)[1]
     end
     file.contents = typograf.typografy(file.contents)
+    sleep 1
   end
 end
 
@@ -169,15 +179,20 @@ root_path = './source/'
 path = personas.generate_path(root_path)
 path.mkpath
 
-should_force_update = !(['all', 'personas'] & settings[:force_update]).empty?
+should_force_update = !(%w(all personas) & settings[:force_update]).empty?
 
 personas.
 #    take(2).
     each do |file|
   Article.db_saver(file, 'persona', should_force_update) do
-    file.fetch
+    if a == nil || settings[:full_update]
+      file.fetch
+    else
+      file.original_contents = a.source
+    end
     text_converter.convert(file)
     file.contents.gsub!(/^<p>.*?<\/p>/, '')
+    file.first_paragraph = file.contents[/^<p>.*?<\/p>/]
 
     found_articles = special_linker.process_links(file.contents)
 
@@ -235,14 +250,18 @@ root_path = './source/'
 path = thesaurus.generate_path(root_path)
 path.mkpath
 
-should_force_update = !(['all', 'thesaurus'] & settings[:force_update]).empty?
+should_force_update = !(%w(all thesaurus) & settings[:force_update]).empty?
 
 thesaurus.
 #    drop(3).
 #    take(1).
     each do |file|
   Article.db_saver(file, 'thesaurus', should_force_update) do
-    file.fetch
+    if a == nil || settings[:full_update]
+      file.fetch
+    else
+      file.original_contents = a.source
+    end
     text_converter.convert(file)
 
     #убираем отбивку
