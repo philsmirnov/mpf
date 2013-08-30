@@ -329,6 +329,15 @@ h3 {
 	width:255px;
 }
 
+.text_img {
+    background:#fff;
+    padding:10px;
+    border:1px solid #f6f6f6;
+    display:block;
+    margin:0 auto;
+    text-align: center;
+}
+
 .li_labirint.active {
 	
 }

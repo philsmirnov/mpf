@@ -107,6 +107,12 @@ helpers do
     end
   end
 
+  def picture(img_name)
+    content_tag :div, :class => 'text_img' do
+      image_tag("../../img/texts/#{img_name}.png")
+    end
+  end
+
 end
 
 set :css_dir, 'css'

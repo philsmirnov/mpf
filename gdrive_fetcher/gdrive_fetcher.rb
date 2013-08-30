@@ -29,9 +29,11 @@ I18n.reload!
 options = {:force_update => ['none']}
 OptionParser.new do |opts|
   opts.banner = "Usage: gdrive_fetcher.rb [options]"
-  opts.on('-f', '--full_update', 'Full update - fetching text from Google drive. Otherwise use source from DB') { |v| options[:full_update] = v }
-  opts.on('-u', '--force_update all,texts,personas,thesaurus', Array, 'Force update even if DB is up to date') { |v| options[:force_update] = v.map{|a| a.downcase} }
+  opts.on('-n', '--no-full-update', 'No full update - use source from DB. Otherwise, default behaviour - fetch text from Google drive.') { options[:no_full_update] = true }
+  opts.on('-u', '--force-update all,texts,personas,thesaurus', Array, 'Force update even if DB is up to date') { |v| options[:force_update] = v.map{|a| a.downcase} }
 end.parse!
+
+ap options
 
 settings = YAML.load_file('fetcher_settings.yml').merge(options)
 
@@ -83,10 +85,11 @@ should_force_update = !(%w(all texts) & settings[:force_update]).empty?
 collection.files.each do |file|
 
   Article.db_saver(file, 'text', should_force_update) do |a|
-    if a == nil || settings[:full_update]
-      file.fetch
-    else
+    if a && settings[:no_full_update]
+      puts 'no full update, got it from db'
       file.original_contents = a.source
+    else
+      file.fetch
     end
 
     text_converter.convert file
@@ -112,6 +115,11 @@ collection.files.each do |file|
     file.contents = file.contents.
         sub('<p>См. также:</p>', ' ').
         sub('<p>Тексты на тему:</p>', ' ')
+    if file =~ /\[image=(.*?)\]/
+      puts file.contents
+      file.contents = file.contents.gsub(/\[image=(.*?)\]/, '<%= picture \'\\1\' %>')
+      puts file.contents
+    end
 
     #LEAD
     if file.contents =~ /LEAD(.*?)LEAD/
@@ -138,18 +146,13 @@ collection.each do |folder|
   f.write(content_table)
   f.close
 
-  intro = folder.files.find { |f| f =~ /intro/i }
-  if intro
-    intro = intro.fetch_text
-  else
-    intro = 'Пока еще не написано'
-  end
+  intro = begin folder.files.find { |f| f =~ /intro/i }.fetch_text rescue nil end
 
   chapter = {
       :roman_number => RomanNumerals.to_roman(folder.number),
       :number => folder.number,
       :title => folder.title,
-      :intro => intro,
+      :intro => intro || 'Пока еще не написано',
       :title_for_save => folder.title_for_save,
       :files => folder.map do |file|
         {
@@ -184,11 +187,11 @@ should_force_update = !(%w(all personas) & settings[:force_update]).empty?
 personas.
 #    take(2).
     each do |file|
-  Article.db_saver(file, 'persona', should_force_update) do
-    if a == nil || settings[:full_update]
-      file.fetch
-    else
+  Article.db_saver(file, 'persona', should_force_update) do |a|
+    if a || settings[:no_full_update]
       file.original_contents = a.source
+    else
+      file.fetch
     end
     text_converter.convert(file)
     file.contents.gsub!(/^<p>.*?<\/p>/, '')
@@ -256,11 +259,11 @@ thesaurus.
 #    drop(3).
 #    take(1).
     each do |file|
-  Article.db_saver(file, 'thesaurus', should_force_update) do
-    if a == nil || settings[:full_update]
-      file.fetch
-    else
+  Article.db_saver(file, 'thesaurus', should_force_update) do |a|
+    if a || settings[:no_full_update]
       file.original_contents = a.source
+    else
+      file.fetch
     end
     text_converter.convert(file)
 
