@@ -425,13 +425,13 @@ h3 {
 	position:relative;
 	background:#fbfbfb;
 }
-.li_labirint .li_activ_cont {
+.li_labirint.active {
 	background-image:url(../img/labirint.png);
 	background-repeat:0 0;
 	background-repeat:no-repeat;
 }
 @media (-webkit-min-device-pixel-ratio: 2) {
-	.li_labirint .li_activ_cont {
+	.li_labirint.active {
 		background-image:url(../img/labirint@2x.png);
 		-webkit-background-size: 320px 169px;
 	}
