@@ -42,6 +42,9 @@ h1 span {
 	font-size:19px;
 	display:block;
 }
+a em, a {
+	font-style: normal;
+}
 h1 a, h1 a:hover, h1 a:active {
 	color:#1a1a1a;
 }
@@ -314,6 +317,9 @@ h3 {
 	margin:0 0 20px;
 	padding:0 10px;
 }
+.app_text p.app_epigraph {
+	margin:0;
+}
 .app_about p {
 	padding:0 10px;
 }
@@ -341,6 +347,42 @@ h3 {
 .li_labirint.active {
 	
 }
+.section-container {
+	border: none;
+}
+.section-container > section, .section-container > .section, .section-container.auto > section, .section-container.auto > .section {
+	border-bottom: 1px solid #e5e5e5;
+	background: #fff;
+}
+.section-container > section > .title {
+	background: none;
+	border: none;
+	font-size: 1.1em;
+}
+.section-container > section > .title a, .section-container .li_intro a {
+	padding: 8px 10px;
+}
+.section-container > section > .title a:visited {
+	color: #919191;
+}
+.section-container .li_intro {
+	border-bottom: 1px solid #e5e5e5;
+	background: #fff;
+}
+.section-container > section.active > .title {
+	background: url(../img/fill.png);
+	color: #fff;
+}
+.section-container > section.active > .title a {
+	color: #fff;
+}
+.section-container > section.active > .content {
+	padding: 120px 0 0;
+	background: none;
+}
+.app_chapter a {
+	padding-left: 10px;
+}
 .ul_cont {
 	background:#fbfbfb;
 	margin-bottom:0;
@@ -361,7 +403,7 @@ h3 {
 	position:relative;
 	margin-top:150px !important;
 }
-.ul_cont .corner {
+.li_activ_cont .corner {
 	position:absolute;
 	bottom:-7px;
 	left:10px;
@@ -399,6 +441,8 @@ h3 {
 	background-color:#fff;
 	border-bottom:1px solid #e5e5e5;
 	position:relative;
+	padding-left: 10px;
+	padding-bottom: 10px;
 }
 .ul_cont .active div>a {
 	display:block;
@@ -411,6 +455,10 @@ h3 {
 	padding-bottom:25px;
 	background:#fbfbfb;
 }
+.ul_sub_cont li.app_chapter {
+	margin-top: 0 !important;
+	padding-top: 10px;
+}
 .app_about .ul_sub_cont {
 	padding-bottom:0;
 }
@@ -420,7 +468,7 @@ h3 {
 .ul_cont li:last-child, .ul_sub_cont li:last-child {
 	border-bottom:none;
 }
-.app_sup_chapter .arrow {
+.section-container > section > .title .arrow {
 	display:block;
 	width:10px;
 	height:13px;
@@ -428,7 +476,7 @@ h3 {
 	float:right;
 	margin:5px 5px 0 10px;
 }
-.app_sup_chapter.active .arrow {
+.section-container > section.active > .title .arrow {
 	width:13px;
 	height:10px;
 	background:url(../img/li_a.png) no-repeat;
@@ -436,6 +484,7 @@ h3 {
 }
 .a_pager {
 	background:url(../img/pager.png) no-repeat;
+	z-index: 100;
 }
 .a_pager.prev {
 	background-position:-9px 0;
@@ -607,7 +656,9 @@ form {
 	padding: 0;
 	background: #fff;
 }
-
+.app_thes {
+	padding: 1.25em;
+}
 
 
 
