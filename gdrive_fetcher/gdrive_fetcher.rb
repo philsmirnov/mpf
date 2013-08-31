@@ -182,7 +182,7 @@ personas.
 #    take(2).
     each do |file|
   Article.db_saver(file, 'persona', should_force_update) do |a|
-    if a || settings[:no_full_update]
+    if a && settings[:no_full_update]
       file.original_contents = a.source
     else
       file.fetch
@@ -256,7 +256,7 @@ thesaurus.
 #    take(1).
     each do |file|
   Article.db_saver(file, 'thesaurus', should_force_update) do |a|
-    if a || settings[:no_full_update]
+    if a && settings[:no_full_update]
       file.original_contents = a.source
     else
       file.fetch
