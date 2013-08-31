@@ -72,7 +72,7 @@ special_linker = GDriveImporter::SpecialLinker.new([collection, thesaurus, perso
 article_linker = GDriveImporter::ArticleLinker.new([thesaurus, personas])
 
 see_also_linker = GDriveImporter::TextLinker.new(
-    [thesaurus],
+    [thesaurus, personas],
     /(?<=<p>см. также:|ср\.:).*?(?=<\/p>)/i,
     [/(?<=<em class="underline">).*?(?=<\/em>)/i, /([^,]*)/i]
 )
@@ -188,7 +188,7 @@ personas.
       file.fetch
     end
     text_converter.convert(file)
-    file.contents = file.contents.gsub(/^<p>.*?<\/p>/, '').strip
+    file.contents = file.contents.sub(/^<p>.*?<\/p>/, '').strip
     file.metadata[:years] = file.first_paragraph
     file.first_paragraph = file.contents[/^<p>.*?<\/p>/].gsub(/^<p>(.*?)<\/p>/, '\\1')
 
