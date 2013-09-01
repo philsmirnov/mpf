@@ -31,6 +31,7 @@ OptionParser.new do |opts|
   opts.banner = "Usage: gdrive_fetcher.rb [options]"
   opts.on('-n', '--no-full-update', 'No full update - use source from DB. Otherwise, default behaviour - fetch text from Google drive.') { options[:no_full_update] = true }
   opts.on('-u', '--force-update all,texts,personas,thesaurus', Array, 'Force update even if DB is up to date') { |v| options[:force_update] = v.map{|a| a.downcase} }
+  opts.on('-s', '--skip-typograph', 'Skip typograph web service call') { |v| options[:skip_typograph] = true }
 end.parse!
 
 settings = YAML.load_file('fetcher_settings.yml').merge(options)
@@ -47,7 +48,7 @@ session = GoogleDrive.login(settings['mail'], settings['password'])
 editable_text_collection = session.collection_by_url('https://docs.google.com/feeds/default/private/full/folder%3A0ByqVdNbTHZeOU09jVEtxNklOSEE?v=3')
 
 coder = HTMLEntities.new
-typograf = TypografClient.new(IO.read('typograph.xml'))
+typograf = TypografClient.new(settings[:skip_typograph], IO.read('typograph.xml'))
 collection = GDriveImporter::FileCollection.new(editable_text_collection, coder)
 
 text_converter = GDriveImporter::TextConverter.new
