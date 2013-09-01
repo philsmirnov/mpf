@@ -41,7 +41,7 @@ title: О приложении
     </div>
 
   </div>
-  <p class="slogan">Приложение обновлено <%= DateTime.now.strftime("%e %b %Y, %k:%M")%></p>
+  <p class="slogan">Приложение обновлено <%= Time.now.localtime('+04:00').strftime('%e %b %Y, %k:%M') %></p>
 
 </div>
 
