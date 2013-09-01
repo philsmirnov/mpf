@@ -17,9 +17,7 @@ module GDriveImporter
             map {|result| result['normalized'].encode('ISO-8859-1').force_encoding('UTF-8')}.
             map{|w| Regexp.escape(w) + '.{0,7}'}.
             join('')
-        regexp = Regexp.new(regexp_text, 'i')
-        puts regexp
-        regexp
+        Regexp.new(regexp_text, 'i')
       end
     end
 
@@ -39,5 +37,4 @@ module GDriveImporter
     end
 
   end
-
 end

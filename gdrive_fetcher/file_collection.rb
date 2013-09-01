@@ -6,9 +6,12 @@ module GDriveImporter
   class FileCollection
     include Enumerable
 
+    attr_reader :title
+
     def initialize(collection, coder)
       @folders = []
       @coder = coder
+      @title = collection.title
       collection.subcollections.
         sort_by {|f| f.title}.
         each{|folder| import_folder folder}
