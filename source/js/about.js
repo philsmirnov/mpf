@@ -1,5 +1,5 @@
 $(function(){
-    resize = function(){
+    var resize = function(){
         var fontSize = localStorage.getItem('fontSize');
         if (fontSize) {
             $('.app_fonts .columns').removeClass('active')
