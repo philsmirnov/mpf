@@ -143,5 +143,12 @@ module GDriveImporter
       folder = "../#{path}/#{@parent_folder.title_for_save}/" if path
       "<%= link_to('#{title}', '/#{@title_for_save}.html') %>"
     end
+
+    def to_pager
+      {
+        :title => @title,
+        :link => "#{@title_for_save}.html"
+      }
+    end
   end
 end
