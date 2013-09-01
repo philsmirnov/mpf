@@ -312,7 +312,8 @@ thesaurus.each_slice(3) do |group_of_files|
     {
         :link => "#{thesaurus.title_for_save}/#{file.title_for_save}.html",
         :title => file.title,
-        :first_line => file.first_paragraph
+        :first_line => file.first_paragraph,
+        :linked_articles_count => (file.metadata[:linked_texts]||[]).count,
     }
   end
 end
