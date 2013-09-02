@@ -60,6 +60,7 @@ module GDriveImporter
           raw_link_text.scan(regexp) do |link|
             modified_link = preprocess_link_title(link)
             next if modified_link == ''
+            link = link.is_a?(Array) ? link.first : link
             item, used_regexp = create_regex_and_find_item(link, is_folder)
             if item
               items << item
