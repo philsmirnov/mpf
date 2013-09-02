@@ -40,10 +40,11 @@ module GDriveImporter
     end
 
     def create_regex_and_find_item(link_title, is_folder)
+      regex_source = preprocess_link_title(link_title)
       if @regexp_lambda
-        regexp = @regexp_lambda.call(link_title)
+        regexp = @regexp_lambda.call(regex_source)
       else
-        regexp = Regexp.new(Regexp.escape(link_title), 'i')
+        regexp = Regexp.new(Regexp.escape(regex_source), 'i')
       end
       [find_item_in_collection(regexp, link_title, is_folder), regexp]
     end
@@ -57,14 +58,14 @@ module GDriveImporter
         @regexps.each do |regexp|
           break unless items.empty?
           raw_link_text.scan(regexp) do |link|
-            link_title = preprocess_link_title(link)
-            next if link_title == ''
-            item, used_regexp = create_regex_and_find_item(link_title, is_folder)
+            modified_link = preprocess_link_title(link)
+            next if modified_link == ''
+            item, used_regexp = create_regex_and_find_item(link, is_folder)
             if item
               items << item
-              not_found.delete(link_title)
+              not_found.delete(modified_link)
             else
-              not_found[link_title] = "Link not found: #{link_title} \n\tRaw text: #{raw_link_text} \n\tSearched: #{link}\n\t" +
+              not_found[modified_link] = "Link not found: #{modified_link} \n\tRaw text: #{raw_link_text} \n\tSearched: #{link}\n\t" +
                   'Collections: ' + @collections.map{|c| c.title.gsub(/[\.]/, ' ').squish}.join(', ') +
                   "\n\tIs folder: #{!!is_folder}" +
                   "\n\tRegexp: #{used_regexp}"
