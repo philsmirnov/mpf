@@ -100,7 +100,7 @@ title: "#{title}"
 
     def pager(target)
       return @parent_folder.pager(target, 'texts') if @parent_folder
-      super(target, Enumerator.new(self, :each))
+      super(target, to_enum(:each))
     end
 
     def next_three(target)
