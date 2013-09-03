@@ -102,9 +102,9 @@ helpers do
   def pager(direction)
     pager_data = current_page.data.pager
     if pager_data && pager_data[direction]
-      link_to pager_data[direction][:title],  pager_data[direction][:link]
+      link_to('',  pager_data[direction][:link], {:class => 'a_pager ' + direction.to_s})
     else
-      "#"
+      link_to('', '#', {:class => 'a_pager ' + direction.to_s})
     end
   end
 
@@ -160,6 +160,6 @@ ready do
 		all_pages.each do|page|
       cache page if ALLOWED_EXTS.any? {|ext| ext == page[/(\w+)$/]}
     end
-    network "*"
+    network '*'
 	end
 end
