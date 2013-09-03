@@ -6,7 +6,9 @@ require 'unicode'
 require 'roman-numerals'
 
 require_relative 'file_utils'
+require_relative 'folder_utils'
 require_relative 'file'
+
 
 module GDriveImporter
 
@@ -14,12 +16,14 @@ module GDriveImporter
 
     include Enumerable
     include FileUtils
+    include FolderUtils
 
-    attr_reader :files, :title, :title_for_search, :title_for_save, :number
+    attr_reader :files, :title, :title_for_search, :title_for_save, :number, :parent_folder
 
-    def initialize(gdrive_folder, coder)
+    def initialize(gdrive_folder, coder, parent_folder = nil)
       @gdrive_folder = gdrive_folder
       @coder = coder
+      @parent_folder = parent_folder
       @files = []
 
       @title = gdrive_folder.title
@@ -54,10 +58,9 @@ module GDriveImporter
       Pathname.new(path) + @title_for_save
     end
 
-    def link_to(target_file, title = nil)
+    def link_to(title = nil)
       title ||= @title
-      folder = target_file.parent_folder  == self ? '' : "../#{@title_for_save}/"
-      "<a href='#{folder}index.html'>#{title}</a>"
+      "<%= link_to('#{title}', '/home.html', :fragment => '#{self.title_for_save}') %>"
     end
 
     def content_table
@@ -91,29 +94,17 @@ title: "#{title}"
       result << '</div>'
     end
 
-    def next_three(target)
-      files_to_skip = find_index{|f| f == target} + 1
-      return nil if files_to_skip >= @files.count
-
-      drop(files_to_skip).take(3).map do |file|
-        {
-            :title => file.title,
-            :link  => "#{file.title_for_save}.html",
-            :number => file.number,
-            :first_paragraph => file.first_paragraph
-        }
-      end
+    def parent_folder_title
+      @parent_folder.title_for_save =~ /glos/ ? 'glossariy' : 'personalii'
     end
 
     def pager(target)
-      files = self.to_a
-      i = find_index{|f| f == target}
-      prev_file = i == 0 ? files.last : files[i-1]
-      next_file = i == files.count-1 ? files.first : files[i+1]
-      {
-          :prev => prev_file.to_pager,
-          :next => next_file.to_pager
-      }
+      return @parent_folder.pager(target, 'texts') if @parent_folder
+      super(target, Enumerator.new(self, :each))
+    end
+
+    def next_three(target)
+      @parent_folder.next_three(target, 'texts') if @parent_folder
     end
   end
 end

@@ -96,7 +96,7 @@ collection.files.each do |file|
 
     text_linker.process_links(file.contents) do |links_array|
       'см. ' + links_array.map { |item|
-        item[:fof].link_to(file, item[:title])
+        item[:fof].link_to(item[:title])
       }.join(', ')
     end
 
@@ -121,7 +121,7 @@ collection.files.each do |file|
       file.first_paragraph = file.contents.match(/LEAD(.*?)LEAD/)[1]
     end
     file.contents = typograf.typografy(file.contents)
-    sleep 1
+    sleep 1 unless settings[:skip_typograph]
   end
 end
 
@@ -198,7 +198,7 @@ personas.
     text_linker.process_links(file.contents) do |links_array|
       file.metadata[:linked_texts] = links_array.map do |item|
         {
-            :link => item[:fof].link_to(file, item[:title], 'texts'),
+            :link => item[:fof].link_to(item[:title]),
             :first_paragraph => item[:fof].respond_to?(:first_paragraph) ? item[:fof].first_paragraph : nil
         }
       end
@@ -221,7 +221,7 @@ personas.
 
     file.contents = typograf.typografy(file.contents)
     file.show_next_three = false
-    sleep 1
+    sleep 1 unless settings[:skip_typograph]
   end
   file.show_next_three = false
   file.save(path + file.generate_filename)
@@ -265,14 +265,15 @@ thesaurus.
     text_converter.convert(file)
 
     #убираем отбивку
-    file.contents.sub!('</p> <p>', ' ')
+    file.contents.sub!('</p> <p>', '')
+    file.contents.strip!
 
     found_articles = special_linker.process_links(file.contents)
 
     text_linker.process_links(file.contents) do |links_array|
       file.metadata[:linked_texts] = links_array.map do |item|
         {
-            :link => item[:fof].link_to(file, item[:title], 'texts'),
+            :link => item[:fof].link_to(item[:title]),
             :first_paragraph => item[:fof].respond_to?(:first_paragraph) ? item[:fof].first_paragraph : nil
         }
       end
@@ -296,8 +297,9 @@ thesaurus.
 
 
     file.contents = typograf.typografy(file.contents)
+    file.first_paragraph = file.contents[/^<p>.*?<\/p>/].gsub(/^<p>(.*?)<\/p>/, '\\1')
     file.show_next_three = false
-    sleep 1
+    sleep 1 unless settings[:skip_typograph]
   end
   file.show_next_three = false
   file.save(path + file.generate_filename)

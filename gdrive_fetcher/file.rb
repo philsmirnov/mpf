@@ -60,13 +60,13 @@ module GDriveImporter
     def set_linked_articles(found_articles)
       @metadata[:linked_articles] = found_articles.
           uniq.
-          select { |item| ['glossariy', 'personalii'].include? item[:fof].parent_folder.title_for_save }.
+          select { |item| %w(glossariy personalii).include? item[:fof].parent_folder.title_for_save }.
           map { |item| item[:fof].to_linked_article(item[:title])}
     end
 
     def fetch_text
       sio = StringIO.new()
-      url = @gdrive_file.document_feed_entry.css("content").first["src"] + "&format=txt"
+      url = @gdrive_file.document_feed_entry.css('content').first['src'] + '&format=txt'
       session = @gdrive_file.instance_variable_get :@session
 
       body = session.request(:get, url, :response_type => :raw, :auth => :writely)
@@ -130,24 +130,28 @@ module GDriveImporter
       f.close
     end
 
-    def link_to(target_file, title = nil, path = nil)
+    #def link_to(target_file, title = nil, path = nil)
+    #  title ||= @title
+    #  folder = target_file.parent_folder == @parent_folder ? '' : "../#{@parent_folder.title_for_save}/"
+    #  folder = "../#{path}/#{@parent_folder.title_for_save}/" if path
+    #  "<a href='#{folder}#{@title_for_save}.html'>#{title}</a>"
+    #end
+
+    def link_to(title = nil)
       title ||= @title
-      folder = target_file.parent_folder == @parent_folder ? '' : "../#{@parent_folder.title_for_save}/"
-      folder = "../#{path}/#{@parent_folder.title_for_save}/" if path
-      "<a href='#{folder}#{@title_for_save}.html'>#{title}</a>"
+      "<%= link_to('#{title}', '#{absolute_link}') %>"
     end
 
-    def link_to2(target_file, title = nil, path = nil)
-      title ||= @title
-      folder = target_file.parent_folder == @parent_folder ? '' : "../#{@parent_folder.title_for_save}/"
-      folder = "../#{path}/#{@parent_folder.title_for_save}/" if path
-      "<%= link_to('#{title}', '/#{@title_for_save}.html') %>"
+    def absolute_link
+      link = "/#{@parent_folder.title_for_save}/#{@title_for_save}.html"
+      link = '/texts' + link if @parent_folder.parent_folder
+      link
     end
 
     def to_pager
       {
         :title => @title,
-        :link => "#{@title_for_save}.html"
+        :link => absolute_link
       }
     end
   end

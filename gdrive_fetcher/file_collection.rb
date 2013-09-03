@@ -1,10 +1,13 @@
 # encoding: UTF-8
 
 require_relative 'folder'
+require_relative 'folder_utils'
 
 module GDriveImporter
+
   class FileCollection
     include Enumerable
+    include FolderUtils
 
     attr_reader :title
 
@@ -18,7 +21,7 @@ module GDriveImporter
     end
 
     def import_folder(folder)
-      folder = GDriveImporter::Folder.new(folder, @coder)
+      folder = GDriveImporter::Folder.new(folder, @coder, self)
       folder.import
       @folders << folder unless @folders.include? folder
     end
@@ -39,6 +42,14 @@ module GDriveImporter
 
     def files
       enum_for(:each_file)
+    end
+
+    def pager(target, path)
+      super(target, Enumerator.new(self, :each_file), path)
+    end
+
+    def next_three(target, path)
+      super(target, Enumerator.new(self, :each_file), path)
     end
 
     def save(path)
