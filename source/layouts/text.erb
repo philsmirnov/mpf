@@ -18,7 +18,7 @@
       <h4 class="app_title app_thin app_h4">Читать дальше:</h4>
       <ul class="ul_sub_cont app_dashed_top">
         <% current_page.data.read_later.each do |text| %>
-        <li class="app_chapter"><a href="<%= text[:link] %>"><%= text[:title] %></a></li>
+        <li class="app_chapter"><%= link_to text[:title], text[:link] %></li>
         <% end %>
       </ul>
     </div>
