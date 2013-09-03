@@ -45,11 +45,11 @@ module GDriveImporter
     end
 
     def pager(target, path)
-      super(target, Enumerator.new(self, :each_file), path)
+      super(target, to_enum(:each_file), path)
     end
 
     def next_three(target, path)
-      super(target, Enumerator.new(self, :each_file), path)
+      super(target, to_enum(:each_file), path)
     end
 
     def save(path)
