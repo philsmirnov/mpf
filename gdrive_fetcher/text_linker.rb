@@ -27,12 +27,13 @@ module GDriveImporter
     end
 
     def find_item_in_collection(regexp, title, is_folder)
+      found_items = []
       @collections.each do |collection|
         iterator = is_folder ? collection : collection.files
-        item = iterator.select { |f| f =~ regexp}.min_by{|i| i.title.length}
-        return {:title => title, :fof => item} if item
+        found_items << iterator.select { |f| f =~ regexp}
       end
-      nil
+      item = found_items.flatten.min_by{|i| i.title.length}
+      item ? {:title => title, :fof => item} : nil
     end
 
     def preprocess_link_title(k)
