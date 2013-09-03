@@ -27,7 +27,7 @@ module FolderUtils
     iterator.drop(files_to_skip).take(3).map do |file|
       {
           :title => file.title,
-          :link  => file.absolute_path,
+          :link  => file.absolute_link,
           :number => file.number,
           :first_paragraph => file.first_paragraph
       }
