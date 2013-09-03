@@ -148,6 +148,14 @@ module GDriveImporter
       link
     end
 
+    def to_linked_text(title = nil)
+      {
+          :link => absolute_link,
+          :title => title,
+          :first_paragraph =>first_paragraph
+      }
+    end
+
     def to_pager
       {
         :title => @title,

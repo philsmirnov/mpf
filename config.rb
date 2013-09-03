@@ -100,8 +100,9 @@ helpers do
   end
 
   def pager(direction)
-    if current_page.data.pager && current_page.data.pager[direction]
-      current_page.data.pager[direction][:link]
+    pager_data = current_page.data.pager
+    if pager_data && pager_data[direction]
+      link_to pager_data[direction][:title],  pager_data[direction][:link]
     else
       "#"
     end

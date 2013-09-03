@@ -5,7 +5,7 @@
         <h4 class="app_title app_thin app_h4"><span class="zakl"><i></i><%=linked_texts.count%></span><%= title %></h4>
         <ul class="ul_sub_cont app_dashed_top">
           <% linked_texts.each do |txt| %>
-              <li class="app_chapter"><%= txt[:link] %></li>
+              <li class="app_chapter"><%= link_to(txt[:title], txt[:link] ) %></li>
           <% end %>
         </ul>
       </div>

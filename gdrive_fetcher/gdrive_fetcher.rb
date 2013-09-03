@@ -197,10 +197,7 @@ personas.
 
     text_linker.process_links(file.contents) do |links_array|
       file.metadata[:linked_texts] = links_array.map do |item|
-        {
-            :link => item[:fof].link_to(item[:title]),
-            :first_paragraph => item[:fof].respond_to?(:first_paragraph) ? item[:fof].first_paragraph : nil
-        }
+        item[:fof].to_linked_text(item[:title])
       end
       nil
     end
@@ -271,10 +268,7 @@ thesaurus.
 
     text_linker.process_links(file.contents) do |links_array|
       file.metadata[:linked_texts] = links_array.map do |item|
-        {
-            :link => item[:fof].link_to(item[:title]),
-            :first_paragraph => item[:fof].respond_to?(:first_paragraph) ? item[:fof].first_paragraph : nil
-        }
+        item[:fof].to_linked_text(item[:title])
       end
       nil
     end
