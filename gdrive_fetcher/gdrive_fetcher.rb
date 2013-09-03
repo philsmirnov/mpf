@@ -266,7 +266,6 @@ thesaurus.
 
     #убираем отбивку
     file.contents.sub!('</p> <p>', '')
-    file.contents.strip!
 
     found_articles = special_linker.process_links(file.contents)
 
@@ -297,7 +296,7 @@ thesaurus.
 
 
     file.contents = typograf.typografy(file.contents)
-    file.first_paragraph = file.contents[/^<p>.*?<\/p>/].gsub(/^<p>(.*?)<\/p>/, '\\1')
+    #file.first_paragraph = file.contents[/^<p>.*?<\/p>/].gsub(/^<p>(.*?)<\/p>/, '\\1')
     file.show_next_three = false
     sleep 1 unless settings[:skip_typograph]
   end
