@@ -1,6 +1,6 @@
 <% wrap_layout :layout do %>
 <% c = current_chapter %>
-<%= partial :pager, :locals => {:title => "Глава #{c[:number]}. #{c[:title]}", :link => '/home.html'} %>
+<%= partial :pager, :locals => {:title => "Глава #{c[:number]}. #{c[:title]}", :link => "/home.html##{c[:title_for_save]}"} %>
 
 <div class="row">
   <div class="large-12 bg_gray">
@@ -27,5 +27,5 @@
 
 
 </div>
-<%= partial :pager, :locals => {:title => "Глава #{c[:number]}. #{c[:title]}", :link => '/home.html'} %>
+<%= partial :pager, :locals => {:title => "Глава #{c[:number]}. #{c[:title]}", :link => "/home.html##{c[:title_for_save]}"} %>
 <% end %>
