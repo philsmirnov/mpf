@@ -5,7 +5,6 @@ title: Оглавление
 <div class="row">
   <div class="large-12">
     <h3 class="app_thin app_gray text-center">Оглавление</h3>
-    <!--ul class="ul_cont app_spaced li_none"-->
       <div class="section-container accordion" data-section="accordion" data-options="deep_linking: true">
       <div class="app_sup_chapter li_intro"><a href="intro.html">Введение</a></div>
 
@@ -34,5 +33,15 @@ title: Оглавление
     </div>
   </div>
 </div>
+
+<% content_for(:js) do %>
+    $(document)
+    .foundation('section', {
+    callback: function (){
+    var containerPos = $('section.active').offset().top;
+    $('html, body').animate({ scrollTop: containerPos }, 200);
+    }
+    });
+<% end %>
 
 
