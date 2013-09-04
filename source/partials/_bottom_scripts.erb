@@ -6,6 +6,13 @@
     MBP.startupImage();
     MBP.preventZoom();
     MBP.setFontSize();
+    $(document)
+            .foundation('section', {
+                callback: function (){
+                    var containerPos = $('section.active').offset().top;
+                    $('html, body').animate({ scrollTop: containerPos }, 200);
+                }
+            });
 </script>
 
 <% if content_for? :js %>
