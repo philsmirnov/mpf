@@ -11,9 +11,8 @@ title: Оглавление
 
       <% data.home.chapters.each do |chapter|  %>
           <section class="li_labirint">
-          <!--li class="app_sup_chapter"-->
             <p class="title" data-section-title>
-            <% link_to "javascript:void(0);" do %>
+            <% link_to "##{chapter[:title_for_save]}" do %>
                 <span class="arrow"></span><%= "Глава #{chapter[:number]}. #{chapter[:title]}" %>
             <% end %>
             </p>
