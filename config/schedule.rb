@@ -9,5 +9,5 @@ set :output, '/home/deploy/apps/mpf/shared/log/cron.log'
 job_type :command, 'cd :path && :task :output'
 
  every 15.minutes do
-   command './mm.sh'
+   command './mm.sh -s'
 end
