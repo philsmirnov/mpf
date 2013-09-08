@@ -262,7 +262,7 @@ thesaurus.
     text_converter.convert(file)
 
     #убираем отбивку
-    file.contents.sub!('</p> <p>', '')
+    file.contents.sub!('</p> <p>', ' ')
 
     found_articles = special_linker.process_links(file.contents)
 
