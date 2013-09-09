@@ -35,14 +35,16 @@ title: Оглавление
 </div>
 
 <% content_for(:js) do %>
-    $(document).foundation('section', {
-        callback: function (){
-            if ($('section.active').length > 0) {
-                var containerPos = $('section.active').offset().top;
-                $('html, body').animate({ scrollTop: containerPos }, 200);
-            }
+    var section_callback = function() {
+        if ($('section.active').length > 0) {
+        var containerPos = $('section.active').offset().top;
+        $('html, body').animate({ scrollTop: containerPos }, 200);
         }
+    };
+    $(document).foundation('section', {
+        callback: section_callback
     });
+    $(section_callback)
 <% end %>
 
 
