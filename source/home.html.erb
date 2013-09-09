@@ -9,7 +9,7 @@ title: Оглавление
       <div class="app_sup_chapter li_intro"><a href="intro.html">Введение</a></div>
 
       <% data.home.chapters.each do |chapter|  %>
-          <section class="chapter <% = chapter[:number] %>">
+          <section class="chapter <%= chapter[:number] %>">
             <p class="title" data-section-title>
             <% link_to "##{chapter[:title_for_save]}" do %>
                 <span class="arrow"></span><%= "Глава #{chapter[:number]}. #{chapter[:title]}" %>
