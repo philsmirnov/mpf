@@ -477,15 +477,59 @@ h3 {
 	position:relative;
 	background:#fbfbfb;
 }
-.li_labirint.active {
-	background-image:url(../img/labirint.png);
+.section-container > section {
 	background-repeat:0 0;
 	background-repeat:no-repeat;
 }
+.chapter_1.active {
+	background-image:url(../img/sections/lab.png);
+}
+.chapter_2.active {
+	background-image:url(../img/sections/res.png);
+}
+.chapter_3.active {
+	background-image:url(../img/sections/rabota.png);
+}
+.chapter_7.active {
+	background-image:url(../img/sections/therapy.png);
+}
+.chapter_8.active {
+	background-image:url(../img/sections/nerv.png);
+}
+.chapter_9.active {
+	background-image:url(../img/sections/socium.png);
+}
+.chapter_10.active {
+	background-image:url(../img/sections/family.png);
+}
 @media (-webkit-min-device-pixel-ratio: 2) {
-	.li_labirint.active {
-		background-image:url(../img/labirint@2x.png);
-		-webkit-background-size: 320px 169px;
+	.chapter_1.active {
+		background-image:url(../img/sections/lab@2x.png);
+		-webkit-background-size: 320px 141px;
+	}
+	.chapter_2.active {
+		background-image:url(../img/sections/res@2x.png);
+		-webkit-background-size: 320px 202px;
+	}
+	.chapter_3.active {
+		background-image:url(../img/sections/rabota@2x.png);
+		-webkit-background-size: 320px 183px;
+	}
+	.chapter_7.active {
+		background-image:url(../img/sections/therapy@2x.png);
+		-webkit-background-size: 320px 222px;
+	}
+	.chapter_8.active {
+		background-image:url(../img/sections/nerv@2x.png);
+		-webkit-background-size: 320px 106px;
+	}
+	.chapter_9.active {
+		background-image:url(../img/sections/socium@2x.png);
+		-webkit-background-size: 320px 240px;
+	}
+	.chapter_10.active {
+		background-image:url(../img/sections/family@2x.png);
+		-webkit-background-size: 320px 97px;
 	}
 }
 
