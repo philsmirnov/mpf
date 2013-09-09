@@ -94,8 +94,9 @@ collection.files.each do |file|
 
     found_articles = special_linker.process_links(file.contents)
 
-    text_linker.process_links(file.contents) do |links_array|
-      'см. ' + links_array.map { |item|
+    text_linker.process_links(file.contents) do |links_array, raw_link_text|
+      prefix = raw_link_text =~ /\s?см\./i ? 'см. ' : 'ср. '
+      prefix + links_array.map { |item|
         item[:fof].link_to(item[:title])
       }.join(', ')
     end
