@@ -4,6 +4,8 @@ rm -rf  source/glossariy source/texts
 
 bundle exec ruby ./gdrive_fetcher/gdrive_fetcher.rb "$@"
 
+RAILS_ENV=production bundle exec rake ts:rebuild
+
 bundle exec middleman build --clean
 
 touch build/texts build/glossariy
