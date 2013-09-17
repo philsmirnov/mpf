@@ -12,5 +12,5 @@ ssh u48777@u48777.ssh.masterhost.ru rm -rf ~/gerome.ru/www/mp3/*
 
 scp  -r build/. u48777@u48777.ssh.masterhost.ru:~/gerome.ru/www/mp3
 
-cd ../../mps/current/
+cd ../../../mps/current/
 RAILS_ENV=production bundle exec rake ts:rebuild
