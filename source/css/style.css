@@ -426,14 +426,14 @@ h3 {
 	background: #fff;
 }
 .section-container > section.active > .title {
-	background: url(../img/fill.png);
-	color: #fff;
+	color: #afafaf;
+	background:none;
 }
 .section-container > section.active > .title a {
-	color: #fff;
+	color: #afafaf;
 }
 .section-container > section.active > .content {
-	padding: 120px 0 0;
+	padding: 0;
 	background: none;
 }
 .app_chapter a {
