@@ -642,6 +642,9 @@ h3 {
 .keywords, .app_next {
 	padding:0;
 }
+.keywords {
+	padding-bottom:20px;
+}
 .keywords h4, .app_next h4 {
 	padding:0 4%;
 }
