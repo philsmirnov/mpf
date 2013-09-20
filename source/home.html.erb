@@ -10,6 +10,7 @@ title: Оглавление
 
       <% data.home.chapters.each do |chapter|  %>
           <section class="chapter_<%= chapter[:number] %>">
+		  <img />
             <p class="title" data-section-title>
             <% link_to "##{chapter[:title_for_save]}" do %>
                 <span class="arrow"></span><%= "Глава #{chapter[:number]}. #{chapter[:title]}" %>
