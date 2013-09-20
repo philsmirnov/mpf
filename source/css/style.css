@@ -427,29 +427,34 @@ h3 {
 	border: none;
 	font-size: 1.1em;
 }
-.section-container > section > .title a, .section-container .li_intro a {
-	padding: 8px 10px;
+.section-container > section > .title a {
+	padding: .75em 4% .75em 4%;
+	display:block;
 }
-.section-container > section > .title a:visited {
-	color: #919191;
+.section-container .li_intro a {
+	padding: .75em 4%;
 }
 .section-container .li_intro {
 	border-bottom: 1px solid #e5e5e5;
 	background: #fff;
 }
 .section-container > section.active > .title {
-	color: #afafaf;
+	color: #333;
 	background:none;
 }
 .section-container > section.active > .title a {
-	color: #afafaf;
+	color: #333;
+	padding: .9em 4% .3em 4%;
 }
 .section-container > section.active > .content {
 	padding: 0;
 	background: none;
 }
 .app_chapter a {
-	padding-left: 10px;
+	padding-left:4%;
+}
+.ul_sub_cont .app_chapter a {
+	padding-left:0;
 }
 .ul_cont {
 	background:#fbfbfb;
@@ -474,7 +479,7 @@ h3 {
 .li_activ_cont .corner {
 	position:absolute;
 	bottom:-7px;
-	left:10px;
+	left:4%;
 	background:url(../img/corner.png) no-repeat;
 	display:block;
 	width:18px;
