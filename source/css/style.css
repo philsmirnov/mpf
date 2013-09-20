@@ -3,6 +3,7 @@ html {
 	position:relative;
 	max-width:1004px;
 	margin:0 auto;
+	background:#f1f1f1;
 }
 body {
 	background:#fff;
@@ -366,11 +367,14 @@ h3 {
 }
 .app_text p {
 	font-size:1.05em;
-	margin:0 0 20px;
-	padding:0 10px;
+	margin:0 0 1.25em;
+	padding:0 2%;
 }
-.app_text p.app_epigraph {
-	margin:0;
+.app_text .app_epigraph p {
+	margin:0 0 0;
+}
+.app_text div.app_epigraph {
+	margin:0 0 1.2em;
 }
 .app_about p {
 	padding:0 10px;
@@ -755,6 +759,7 @@ form {
 .app_thes {
 	padding: 1.25em;
 }
+.app_personas {padding:0;}
 
 
 
