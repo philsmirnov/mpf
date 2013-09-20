@@ -1,8 +1,8 @@
 /* overrides */
 a {color:#1876d8;}
 a:active {color:#3e91e8;}
-p {line-height:1.45em}
-.body_bg_gray {background:#fbfbfb;}
+p {line-height:1.45em;}
+.body_bg_gray {background:#fbfbfb; min-height:500px;}
 .li_bg_gray {background:#fbfbfb; padding-bottom:0 !important;}
 a.li_bg_gray {padding-bottom:10px !important;}
 .app_thin {font-weight: 200 !important; font-family:Helvetica, HelveticaNeue-Light, Open Sans, arial;}
@@ -16,26 +16,28 @@ a.li_bg_gray {padding-bottom:10px !important;}
 .app_dashed_top {border-top:1px dashed #efefef !important;}
 .app_title {font-family:Helvetica, HelveticaNeue-Light, Open Sans, arial; font-size:26px; line-height: 110%; margin: 0 0 25px 0; padding:0 4%;}
 .placeholder {color:#b2b2b2; background:#f8f8f8 !important; font-style:italic;}
+.body_bg_gray .placeholder {background:#fff !important;}
 .app_h4 {text-align:left;font-size:20px; color:#4d4d4d; margin: 0 0 10px 0}
 .app_epigraph {text-align:right;font-family:Helvetica, HelveticaNeue-Light, Open Sans, arial; color:#808080;}
 .app_thes {font-size: 90%;}
 .app_sup_chapter {font-family:Helvetica, HelveticaNeue-Light, Open Sans, arial; line-height: 130%; font-size: 16px;padding:0;}
-.li_intro {background: #fbfbfb; font-size: 14px;}
+.li_intro {background: #fbfbfb; font-size: 0.875em;}
 .li_intro a {background: #fbfbfb;}
 .app_sup_chapter.active {padding:0;}
 .app_sup_chapter.active p {}
 .app_sup_chapter a {color:#4d4d4d; display:block !important; padding-bottom:0;}
 .app_sup_chapter a:visited {color:#919191;}
-.app_chapter {line-height: 110%; margin: 12px 0 0 !important; padding-bottom:12px; font-size: 14px}
+.app_chapter {line-height: 110%; margin: 12px 0 0 !important; font-size: 14px}
+.home_content .app_chapter {font-size: 0.875em}
 .app_chapter a {color:#1876d8; display:block !important;}
 .app_chapter a:visited {color:#919191;}
-.li_activ_cont p, .panel p {line-height: 140%; margin: 24px 0 6px 0 !important; font-family:Georgia; color:#4d4d4d; font-size:0.875em;}
-.panel p {margin-top:0 !important;}
+.li_activ_cont p, .panel p {line-height: 140%; margin: 0 0 6px 0 !important; font-family:Georgia; color:#4d4d4d; font-size:0.875em;}
 .app_personas p {padding:.75em 1em;}
 .search_cont p {padding:0 0 30px; font-size:0.75em;}
 .search_cont .app_search_results p {font-size:.75em; padding:0;}
 .app_search_results {padding:0 20px 10px 20px;}
-.app_about p, .app_about h2, .app_about li {padding:0 4% 10px;}
+.app_about p, .app_about h2 {padding:0 4% 10px;}
+.app_about li {padding:0;}
 .app_search_results h3 {font-size:.9em;border:none; margin-top:0;margin-bottom:5px; padding-bottom:0;}
 .app_person h3 {border:none;}
 .app_search_results h4 {font-size:.7em;margin-top:0;}
