@@ -116,8 +116,9 @@ h3 {
 .panel .pers_top h3 span {
 	font-size:.75em;
 	display:block;
-	margin-top:3px;
+	margin-top:.45em;
 	color:#808080;
+	line-height:1.2em;
 }
 .app_person h3 span.character {
 	font-size:.75em;
@@ -130,6 +131,9 @@ h3 {
 	font-size:17px;
 	color:#808080;
 }
+.slogan a, .slogan a:hover, .slogan a:active {
+	color:#808080;
+}
 @media screen and (max-width: 320px) {
 	.slogan {
 		font-size:12px;
@@ -140,6 +144,11 @@ h3 {
 	height:102px;
 	background:url(../img/logo.png) no-repeat;
 	margin:0 auto;
+}
+.logo a {
+	width:278px;
+	height:102px;
+	display:block;
 }
 @media (-webkit-min-device-pixel-ratio: 2) {
 	.logo {
@@ -368,7 +377,7 @@ h3 {
 .app_text p {
 	font-size:1.05em;
 	margin:0 0 1.25em;
-	padding:0 2%;
+	padding:0 4%;
 }
 .app_text .app_epigraph p {
 	margin:0 0 0;
@@ -377,7 +386,7 @@ h3 {
 	margin:0 0 1.2em;
 }
 .app_about p {
-	padding:0 10px;
+	padding:0 4%;
 }
 .app_text p:last-child {
 	margin-bottom:0;
@@ -416,7 +425,7 @@ h3 {
 	font-size: 1.1em;
 }
 .section-container > section > .title a, .section-container .li_intro a {
-	padding: 8px 10px;
+	padding: .75em 4%;
 }
 .section-container > section > .title a:visited {
 	color: #919191;
@@ -437,7 +446,10 @@ h3 {
 	background: none;
 }
 .app_chapter a {
-	padding-left: 10px;
+	padding-left:4%;
+}
+.ul_sub_cont .app_chapter a {
+	padding-left:0;
 }
 .ul_cont {
 	background:#fbfbfb;
@@ -462,7 +474,7 @@ h3 {
 .li_activ_cont .corner {
 	position:absolute;
 	bottom:-7px;
-	left:10px;
+	left:4%;
 	background:url(../img/corner.png) no-repeat;
 	display:block;
 	width:18px;
@@ -492,47 +504,65 @@ h3 {
 	display:inline-block;
 }
 .chapter_1.active img {
-	content:url(../img/sections/lab.png);
+	content:url(../img/sections/01lab.png);
 }
 .chapter_2.active img {
-	content:url(../img/sections/res.png);
+	content:url(../img/sections/02res.png);
 }
 .chapter_3.active img {
-	content:url(../img/sections/rabota.png);
+	content:url(../img/sections/03rabota.png);
+}
+.chapter_4.active img {
+	content:url(../img/sections/04understanding.png);
+}
+.chapter_5.active img {
+	content:url(../img/sections/05tech.png);
+}
+.chapter_6.active img {
+	content:url(../img/sections/06basic.png);
 }
 .chapter_7.active img {
-	content:url(../img/sections/therapy.png);
+	content:url(../img/sections/07therapy.png);
 }
 .chapter_8.active img {
-	content:url(../img/sections/nerv.png);
+	content:url(../img/sections/08nerv.png);
 }
 .chapter_9.active img {
-	content:url(../img/sections/socium.png);
+	content:url(../img/sections/09socium.png);
 }
 .chapter_10.active img {
-	content:url(../img/sections/family.png);
+	content:url(../img/sections/10family.png);
 }
 @media (-webkit-min-device-pixel-ratio: 2) {
 	.chapter_1.active img {
-		content:url(../img/sections/lab@2x.png);
+		content:url(../img/sections/01lab@2x.png);
 	}
 	.chapter_2.active img {
-		content:url(../img/sections/res@2x.png);
+		content:url(../img/sections/02res@2x.png);
 	}
 	.chapter_3.active img {
-		content:url(../img/sections/rabota@2x.png);
+		content:url(../img/sections/03rabota@2x.png);
 	}
 	.chapter_7.active img {
-		content:url(../img/sections/therapy@2x.png);
+		content:url(../img/sections/04understanding@2x.png);
+	}
+	.chapter_7.active img {
+		content:url(../img/sections/05tech@2x.png);
+	}
+	.chapter_7.active img {
+		content:url(../img/sections/06basic@2x.png);
+	}
+	.chapter_7.active img {
+		content:url(../img/sections/07therapy@2x.png);
 	}
 	.chapter_8.active img {
-		content:url(../img/sections/nerv@2x.png);
+		content:url(../img/sections/08nerv@2x.png);
 	}
 	.chapter_9.active img {
-		content:url(../img/sections/socium@2x.png);
+		content:url(../img/sections/09socium@2x.png);
 	}
 	.chapter_10.active img {
-		content:url(../img/sections/family@2x.png);
+		content:url(../img/sections/10family@2x.png);
 	}
 }
 
@@ -540,7 +570,7 @@ h3 {
 	background-color:#fff;
 	border-bottom:1px solid #e5e5e5;
 	position:relative;
-	padding: 0 3% 10px;
+	padding: 0 4% 10px;
 }
 .ul_cont .active div>a {
 	display:block;
@@ -556,6 +586,7 @@ h3 {
 .ul_sub_cont li.app_chapter {
 	margin-top: 0 !important;
 	padding-top: 10px;
+	padding:10px 4%;
 }
 .app_about .ul_sub_cont {
 	padding-bottom:0;
@@ -568,18 +599,23 @@ h3 {
 }
 .section-container > section > .title .arrow {
 	display:block;
-	width:10px;
-	height:13px;
+	width:7px;
+	height:17px;
 	background:url(../img/li_na.png) no-repeat;
 	float:right;
 	margin:5px 5px 0 10px;
 }
 .section-container > section.active > .title .arrow {
-	width:13px;
-	height:10px;
-	background:url(../img/li_a.png) no-repeat;
-	margin:7px 0;
+	display:none;
 }
+@media (-webkit-min-device-pixel-ratio: 2) {
+	.section-container > section.active > .title .arrow  {
+		background-image:url(../img/li_na@2x.png);
+		-webkit-background-size: 7px 17px;
+	}
+}
+
+
 .a_pager {
 	background:url(../img/pager.png) no-repeat;
 	z-index: 100;
@@ -592,23 +628,23 @@ h3 {
 }
 .bg_gray {
 	background:#fbfbfb;
-	padding-top:25px;
+	padding-top:15px;
 }
 .keywords, .app_next {
 	padding:0;
 }
 .keywords h4, .app_next h4 {
-	padding:0 10px;
+	padding:0 4%;
 }
 .keywords ul, .app_next li {
-	padding:0 10px;
+	padding:0 4%;
 }
 .app_next ul {
 	margin:0 !important;
 	border-bottom:1px solid #e5e5e5;
 }
 .app_next li {
-	padding:10px;
+	padding:10px 0;
 	margin:0 !important;
 	list-style-type:none;
 }
@@ -671,7 +707,7 @@ form {
 	margin-bottom:0;
 }
 .has-form {
-	padding:20px 10px 10px 10px;
+	padding:20px 4% 10px;
 	background:#fff;
 }
 .body_bg_gray .has-form {
@@ -691,9 +727,10 @@ form {
 	background:#fff;
 	border:1px solid #cccccc;
 	padding:7px 15px;
-	color:#808080;
+	color:#666;
 	margin-left:0;
 	font-family:Helvetica, Open Sans, arial;
+	font-size:1em;
 }
 
 .app_fonts div {
@@ -721,12 +758,13 @@ form {
 	-moz-border-radius-bottomleft: 10px;
 	border-top-left-radius: 10px;
 	border-bottom-left-radius: 10px;
+	width:33%;
 }
 .app_fonts .mid-font {
-	
+	width:33%;
+	border-right:none;
 }
 .app_fonts .big-font {
-	border-left:none;
 	-webkit-border-top-right-radius: 10px;
 	-webkit-border-bottom-right-radius: 10px;
 	-moz-border-radius-topright: 10px;
@@ -734,17 +772,12 @@ form {
 	border-top-right-radius: 10px;
 	border-bottom-right-radius: 10px;
 	padding:14px 0 16px 0;
+	width:34%;
+	border-left:none;
 }
-.app_fonts .small-font p {
+.app_fonts p {
 	font-size: 0.875em;
 }
-.app_fonts .mid-font p {
-	font-size: 1.05em;
-}
-.app_fonts .big-font p {
-	font-size: 1.2em;
-}
-
 
 .panel {
 	border-style: solid;
@@ -759,6 +792,9 @@ form {
 }
 .app_personas {padding:0;}
 
+.search_head {
+	background:#fff;
+}
 
 
 /* Footer
