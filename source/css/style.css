@@ -534,8 +534,7 @@ h3 {
 	background-color:#fff;
 	border-bottom:1px solid #e5e5e5;
 	position:relative;
-	padding-left: 10px;
-	padding-bottom: 10px;
+	padding: 0 3% 10px;
 }
 .ul_cont .active div>a {
 	display:block;
