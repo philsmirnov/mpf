@@ -427,34 +427,29 @@ h3 {
 	border: none;
 	font-size: 1.1em;
 }
-.section-container > section > .title a {
-	padding: .75em 4% .75em 4%;
-	display:block;
+.section-container > section > .title a, .section-container .li_intro a {
+	padding: 8px 10px;
 }
-.section-container .li_intro a {
-	padding: .75em 4%;
+.section-container > section > .title a:visited {
+	color: #919191;
 }
 .section-container .li_intro {
 	border-bottom: 1px solid #e5e5e5;
 	background: #fff;
 }
 .section-container > section.active > .title {
-	color: #333;
+	color: #afafaf;
 	background:none;
 }
 .section-container > section.active > .title a {
-	color: #333;
-	padding: .9em 4% .3em 4%;
+	color: #afafaf;
 }
 .section-container > section.active > .content {
 	padding: 0;
 	background: none;
 }
 .app_chapter a {
-	padding-left:4%;
-}
-.ul_sub_cont .app_chapter a {
-	padding-left:0;
+	padding-left: 10px;
 }
 .ul_cont {
 	background:#fbfbfb;
@@ -479,7 +474,7 @@ h3 {
 .li_activ_cont .corner {
 	position:absolute;
 	bottom:-7px;
-	left:4%;
+	left:10px;
 	background:url(../img/corner.png) no-repeat;
 	display:block;
 	width:18px;
@@ -511,66 +506,66 @@ h3 {
 	margin:0 auto;
 }
 .chapter_1.active img {
-	content:url(../img/sections/01lab.png);
+	content:url(../img/sections/lab.jpg);
 }
 .chapter_2.active img {
-	content:url(../img/sections/02res.png);
+	content:url(../img/sections/res.jpg);
 }
 .chapter_3.active img {
-	content:url(../img/sections/03rabota.png);
+	content:url(../img/sections/rabota.jpg);
 }
 .chapter_4.active img {
-	content:url(../img/sections/04understanding.png);
+	content:url(../img/sections/understanding.jpg);
 }
 .chapter_5.active img {
-	content:url(../img/sections/05tech.png);
+	content:url(../img/sections/tech.jpg);
 }
 .chapter_6.active img {
-	content:url(../img/sections/06basic.png);
+	content:url(../img/sections/basic.jpg);
 }
 .chapter_7.active img {
-	content:url(../img/sections/07therapy.png);
+	content:url(../img/sections/therapy.jpg);
 }
 .chapter_8.active img {
-	content:url(../img/sections/08nerv.png);
+	content:url(../img/sections/nerv.jpg);
 }
 .chapter_9.active img {
-	content:url(../img/sections/09socium.png);
+	content:url(../img/sections/socium.jpg);
 }
 .chapter_10.active img {
-	content:url(../img/sections/10family.png);
+	content:url(../img/sections/family.jpg);
 }
 @media (-webkit-min-device-pixel-ratio: 2) {
-	.chapter_1.active img {
-		content:url(../img/sections/01lab@2x.png);
-	}
-	.chapter_2.active img {
-		content:url(../img/sections/02res@2x.png);
-	}
-	.chapter_3.active img {
-		content:url(../img/sections/03rabota@2x.png);
-	}
-	.chapter_7.active img {
-		content:url(../img/sections/04understanding@2x.png);
-	}
-	.chapter_7.active img {
-		content:url(../img/sections/05tech@2x.png);
-	}
-	.chapter_7.active img {
-		content:url(../img/sections/06basic@2x.png);
-	}
-	.chapter_7.active img {
-		content:url(../img/sections/07therapy@2x.png);
-	}
-	.chapter_8.active img {
-		content:url(../img/sections/08nerv@2x.png);
-	}
-	.chapter_9.active img {
-		content:url(../img/sections/09socium@2x.png);
-	}
-	.chapter_10.active img {
-		content:url(../img/sections/10family@2x.png);
-	}
+    .chapter_1.active img {
+        content:url(../img/sections/lab@2x.jpg);
+    }
+    .chapter_2.active img {
+        content:url(../img/sections/res@2x.jpg);
+    }
+    .chapter_3.active img {
+        content:url(../img/sections/rabota@2x.jpg);
+    }
+    .chapter_4.active img {
+        content:url(../img/sections/understanding@2x.jpg);
+    }
+    .chapter_5.active img {
+        content:url(../img/sections/tech@2x.jpg);
+    }
+    .chapter_6.active img {
+        content:url(../img/sections/basic@2x.jpg);
+    }
+    .chapter_7.active img {
+        content:url(../img/sections/therapy@2x.jpg);
+    }
+    .chapter_8.active img {
+        content:url(../img/sections/nerv@2x.jpg);
+    }
+    .chapter_9.active img {
+        content:url(../img/sections/socium@2x.jpg);
+    }
+    .chapter_10.active img {
+        content:url(../img/sections/family@2x.jpg);
+    }
 }
 
 .li_activ_cont {
