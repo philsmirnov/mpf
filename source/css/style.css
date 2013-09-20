@@ -485,6 +485,12 @@ h3 {
 	background-repeat:0 0;
 	background-repeat:no-repeat;
 }
+.section-container > section img {
+	display:none;
+}
+.section-container > section.active img {
+	display:inline-block;
+}
 .chapter_1.active img {
 	content:url(../img/sections/lab.png);
 }
