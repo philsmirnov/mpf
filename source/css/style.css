@@ -593,6 +593,7 @@ h3 {
 .ul_sub_cont li.app_chapter {
 	margin-top: 0 !important;
 	line-height:1.3em;
+	font-size:.95em;
 }
 .ul_sub_cont li.app_chapter a {
 	padding:10px 4%;

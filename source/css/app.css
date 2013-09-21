@@ -21,16 +21,16 @@ a.li_bg_gray {padding-bottom:10px !important;}
 .app_epigraph {text-align:right;font-family:Helvetica, HelveticaNeue-Light, Open Sans, arial; color:#808080;}
 .app_thes {font-size: 90%;}
 .app_sup_chapter {font-family:Helvetica, HelveticaNeue-Light, Open Sans, arial; line-height: 130%; font-size: 16px;padding:0;}
-.li_intro {background: #fbfbfb; font-size: 0.875em;}
+.li_intro {background: #fbfbfb; font-size: 0.95em;}
 .li_intro a {background: #fbfbfb;}
 .app_sup_chapter.active {padding:0;}
 .app_sup_chapter.active p {}
 .app_sup_chapter a {color:#4d4d4d; display:block !important; padding-bottom:0;}
-.app_sup_chapter a:visited {color:#919191;}
+.app_sup_chapter a:visited {color:#4d4d4d;}
 .app_chapter {line-height: 110%; margin: 12px 0 0 !important; font-size: 14px}
-.home_content .app_chapter {font-size: 0.875em}
+.home_content .app_chapter {font-size: 0.95em}
 .app_chapter a {color:#1876d8; display:block !important;}
-.app_chapter a:visited {color:#919191;}
+.app_chapter a:visited {color:#4d4d4d;}
 .li_activ_cont p, .panel p {line-height: 140%; margin: 0 0 6px 0 !important; font-family:Georgia; color:#4d4d4d; font-size:0.875em;}
 .app_personas p {padding:.75em 1em;}
 .search_cont p {padding:0 0 30px; font-size:0.75em;}
