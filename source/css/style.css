@@ -630,6 +630,12 @@ h3 {
 	background:url(../img/pager.png) no-repeat;
 	z-index: 100;
 }
+@media (-webkit-min-device-pixel-ratio: 2) {
+	.a_pager  {
+		background-image:url(../img/pager@2x.png);
+		-webkit-background-size: 19px 20px;
+	}
+}
 .a_pager.prev {
 	background-position:-9px 0;
 }
