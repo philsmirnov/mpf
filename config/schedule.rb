@@ -8,6 +8,6 @@
 set :output, '/home/deploy/apps/mpf/shared/log/cron.log'
 job_type :command, 'cd :path && :task :output'
 
- every 15.minutes do
+ every 3.hours do
    command './mm.sh -s'
 end
