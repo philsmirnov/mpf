@@ -59,6 +59,9 @@ end
 set :relative_links, true
 
 set :offline, false
+if ENV['OFFLINE'] == 'true'
+  set :offline, true
+end
 
 
 # Proxy (fake) files
@@ -156,10 +159,13 @@ ALLOWED_EXTS = %w(css eot gif html jpg png svg ttf txt woff xml js)
 
 ready do
   all_pages = sitemap.resources.map{|r| r.destination_path }
+
 	offline = Rack::Offline.configure do
-		all_pages.each do|page|
+
+    all_pages.each do |page|
       cache page if ALLOWED_EXTS.any? {|ext| ext == page[/(\w+)$/]}
     end
     network '*'
-	end
+
+  end
 end
